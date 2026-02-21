@@ -2,6 +2,8 @@
 
 This doc explains how to get the full flow working: **Pay with Stripe → instant PDF download → collect name/email → create Progress Tracker user → email login details (first login = change password)**.
 
+**Developer prompt:** When working on post-purchase or tracker integration, use **[LANDING_PAGE_DEVELOPER_PROMPT.md](./LANDING_PAGE_DEVELOPER_PROMPT.md)** for responsibilities, config, and API contract.
+
 **Quick start (Stripe + PDF only):** Add **STRIPE_SECRET_KEY** (your Stripe secret key) and **STRIPE_PRICE_ID** (from Stripe Dashboard → Products → your product → Price ID) as environment variables on Render. **Never commit these keys to git.** After payment, customers are sent to a thank-you page where they can download **handstand.pdf** (served from this repo). No need to set `PDF_DOWNLOAD_URL` unless you use a different PDF URL.
 
 ## Flow overview
