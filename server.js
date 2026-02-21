@@ -23,7 +23,15 @@ app.use('/api', (req, res, next) => {
   if (path.extname(req.path)) return res.status(404).end();
   next();
 });
-app.use(express.static(path.join(__dirname)));
+
+const staticDir = path.join(__dirname);
+
+// Explicit routes for main pages (avoids 404 on Render and other hosts)
+app.get('/', (req, res) => res.sendFile(path.join(staticDir, 'index.html')));
+app.get('/index.html', (req, res) => res.sendFile(path.join(staticDir, 'index.html')));
+app.get('/thank-you.html', (req, res) => res.sendFile(path.join(staticDir, 'thank-you.html')));
+
+app.use(express.static(staticDir));
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
