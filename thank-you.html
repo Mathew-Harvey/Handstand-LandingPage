@@ -99,7 +99,9 @@
           const d = result.data;
           contentEl.style.display = 'block';
           var pdfLink = document.getElementById('pdf-download');
-          pdfLink.href = d.downloadUrl || '#';
+          var url = d.downloadUrl || '/handstand.pdf';
+          pdfLink.href = url.startsWith('http') ? url : (window.location.origin + (url.startsWith('/') ? url : '/' + url));
+          pdfLink.download = 'handstand.pdf';
           if (d.email) {
             document.getElementById('email').value = d.email;
           }

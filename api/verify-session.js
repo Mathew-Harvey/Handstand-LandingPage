@@ -16,7 +16,7 @@ module.exports = async (req, res) => {
   }
 
   const stripeSecret = process.env.STRIPE_SECRET_KEY;
-  const pdfUrl = process.env.PDF_DOWNLOAD_URL;
+  const pdfUrl = process.env.PDF_DOWNLOAD_URL || '/handstand.pdf';
 
   if (!stripeSecret) {
     console.error('STRIPE_SECRET_KEY is not set');
@@ -38,7 +38,7 @@ module.exports = async (req, res) => {
 
     return res.status(200).json({
       email: email || null,
-      downloadUrl: pdfUrl || null
+      downloadUrl: pdfUrl
     });
   } catch (err) {
     console.error('Stripe session retrieval failed:', err.message);

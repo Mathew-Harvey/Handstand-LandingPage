@@ -2,6 +2,8 @@
 
 This doc explains how to get the full flow working: **Pay with Stripe → instant PDF download → collect name/email → create Progress Tracker user → email login details (first login = change password)**.
 
+**Quick start (Stripe + PDF only):** Add **STRIPE_SECRET_KEY** (your Stripe secret key) and **STRIPE_PRICE_ID** (from Stripe Dashboard → Products → your product → Price ID) as environment variables on Render. **Never commit these keys to git.** After payment, customers are sent to a thank-you page where they can download **handstand.pdf** (served from this repo). No need to set `PDF_DOWNLOAD_URL` unless you use a different PDF URL.
+
 ## Flow overview
 
 1. User clicks **Download Now** → goes to `/api/create-checkout` → redirected to Stripe Checkout.
@@ -51,7 +53,7 @@ Set these in your host (Render: Dashboard → your Web Service → Environment).
 | `STRIPE_SECRET_KEY` | Yes | Stripe secret key (sk_live_... or sk_test_...) |
 | `STRIPE_PRICE_ID` | Yes | Price ID for the guide (e.g. price_xxx from Stripe Dashboard → Products) |
 | `SITE_URL` | On Render: optional | Full site URL (e.g. `https://yourservice.onrender.com` or custom domain). On Render, defaults to **RENDER_EXTERNAL_URL** if not set. |
-| `PDF_DOWNLOAD_URL` | Yes | URL that serves the PDF (e.g. S3/CloudFront signed URL, or a fixed URL if the PDF is public). For one-time links you’d generate this in a webhook and store by session_id. |
+| `PDF_DOWNLOAD_URL` | Optional | Defaults to **/handstand.pdf** (the PDF in this repo). Set only if you serve the PDF from another URL. |
 | `TRACKER_API_URL` | Yes* | Progress Tracker API endpoint to create a user, e.g. `https://tracker.yoursite.com/api/users`. |
 | `TRACKER_API_SECRET` | Yes* | Secret or API key your tracker API expects to authorize create-user requests. |
 | `TRACKER_LOGIN_URL` | Recommended | Full URL to the tracker login page (e.g. `https://tracker.yoursite.com/login`), used in the email. |
