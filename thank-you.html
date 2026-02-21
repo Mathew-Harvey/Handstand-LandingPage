@@ -131,7 +131,13 @@
             email: document.getElementById('email').value.trim()
           })
         })
-          .then(function(r) { return r.json().then(function(data) { return { ok: r.ok, data: data }; }); })
+          .then(function(r) {
+            return r.text().then(function(text) {
+              var data;
+              try { data = text ? JSON.parse(text) : {}; } catch (e) { data = {}; }
+              return { ok: r.ok, status: r.status, data: data };
+            });
+          })
           .then(function(result) {
             btn.disabled = false;
             btn.textContent = 'Send me my tracker login';
@@ -141,15 +147,16 @@
               document.getElementById('tracker-form').style.display = 'none';
             } else {
               msg.className = 'message error';
-              msg.textContent = result.data.error || 'Something went wrong. Please try again or contact support.';
+              msg.textContent = result.data.error || ('Request failed (' + result.status + '). Check your spam folder or try again.');
+
             }
             msg.style.display = 'block';
           })
-          .catch(function() {
+          .catch(function(err) {
             btn.disabled = false;
             btn.textContent = 'Send me my tracker login';
             msg.className = 'message error';
-            msg.textContent = 'Request failed. Please try again.';
+            msg.textContent = 'Request failed. Check Render logs or try again.';
             msg.style.display = 'block';
           });
       });

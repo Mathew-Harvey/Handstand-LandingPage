@@ -37,7 +37,7 @@ module.exports = async (req, res) => {
 
     return res.redirect(302, session.url);
   } catch (err) {
-    console.error('Checkout session create failed:', err.message);
+    console.error('Checkout session create failed:', err.message, err.code || '', err.type || '');
     return res.status(500).send('Could not start checkout. Please try again.');
   }
 };

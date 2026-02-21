@@ -62,8 +62,10 @@ Set these in your host (Render: Dashboard → your Web Service → Environment).
 | `RESEND_API_KEY` | If Resend | From Resend.com. |
 | `SENDGRID_API_KEY` | If SendGrid | From SendGrid. |
 
-\* Omit if you don’t have a tracker API yet; then the “create user” step is skipped and you can still send the email with a temporary password (you’d create the user manually or via another process).  
-\** Omit if you don’t send email yet; the API will return success but no email is sent.
+\* Omit if you don’t have a tracker API yet; the “create user” step is skipped but the login email can still be sent (e.g. you create the user manually or the tracker supports sign-up via the link).  
+\** **Required for the “Send me my tracker login” form.** If `EMAIL_FROM` and one of `RESEND_API_KEY` / `SENDGRID_API_KEY` are not set, the form returns a clear message asking the customer to contact support instead of falsely saying “Check your email.”
+
+**To get login emails working:** Set `EMAIL_FROM` (e.g. `The Bodyweight Gym <noreply@yourdomain.com>`), set `TRACKER_LOGIN_URL` (the URL where customers log in and set their password), and either `RESEND_API_KEY` (from [Resend](https://resend.com)) or `SENDGRID_API_KEY` (from SendGrid). Optionally set `EMAIL_PROVIDER` to `resend` or `sendgrid`; if unset, Resend is used when `RESEND_API_KEY` is present. The email is sent in both HTML (branded) and plain text, with a “Set your password & log in” button linking to `TRACKER_LOGIN_URL`.
 
 ---
 
@@ -111,13 +113,13 @@ Implement “force password change on first login” in the tracker app (e.g. a 
 
 ## 6. Email (login details)
 
-We send one email after the form is submitted, containing:
+After the customer submits name and email on the thank-you page, we send a single email (HTML + plain text) with:
 
-- Login page link (`TRACKER_LOGIN_URL`)
-- Email and temporary password
-- A line saying they’ll be asked to set a new password on first login
+- A **“Set your password & log in”** button linking to `TRACKER_LOGIN_URL`
+- Their email and a temporary password
+- A note that they’ll be asked to set a new password on first sign-in
 
-Configure either **Resend** or **SendGrid** and set the corresponding env vars (`EMAIL_PROVIDER`, `EMAIL_FROM`, and `RESEND_API_KEY` or `SENDGRID_API_KEY`).
+Configure **Resend** (recommended) or **SendGrid**: set `EMAIL_FROM`, `TRACKER_LOGIN_URL`, and either `RESEND_API_KEY` or `SENDGRID_API_KEY`. Without these, the form shows a message that login emails aren’t set up and asks the customer to contact support.
 
 ---
 
@@ -132,7 +134,20 @@ The thank-you page and `/api/create-tracker-user` can remain the main path; the 
 
 ---
 
-## 8. Summary checklist
+## 8. Troubleshooting: “No email received”
+
+- **Check the message on the thank-you page.** After clicking “Send me my tracker login”, if something went wrong you’ll see an error in red (e.g. “Invalid session”, “Payment not completed”, or the exact message from Resend). Fix that first.
+- **Use a real payment to test.** The form only runs after a paid Stripe session. Open the thank-you page from the Stripe success redirect (with `?session_id=cs_...` in the URL), not by typing the URL.
+- **Check Render logs.** In Render → your service → **Logs**, trigger the form again and look for:
+  - `Sending tracker login email to ...` → the handler ran and tried to send.
+  - `Resend sent successfully` → Resend accepted the email.
+  - `Resend error: ...` → Resend rejected the request; the logged object has the reason.
+- **Check spam/junk** for the recipient address.
+- **Resend “from” address:** Use `The Bodyweight Gym <onboarding@resend.dev>` for testing (set `EMAIL_FROM` in Render). For production, verify your own domain in Resend and use e.g. `noreply@yourdomain.com`.
+
+---
+
+## 9. Summary checklist
 
 - [ ] Deploy as a Web Service on Render (build: `npm install`, start: `npm start`).
 - [ ] Set `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID`, `PDF_DOWNLOAD_URL` (and `SITE_URL` if using a custom domain).
