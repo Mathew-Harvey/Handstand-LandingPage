@@ -1,0 +1,11 @@
+# Render Blueprint: single Web Service for landing page + API
+# https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: handstand-landing
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_VERSION
+        value: 18

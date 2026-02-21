@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thank you — The Handstand Guide | The Bodyweight Gym</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .thank-you-page { min-height: 100vh; padding: 8rem 2rem 4rem; }
+    .thank-you-card { max-width: 520px; margin: 0 auto; background: var(--card); border: 1px solid rgba(255,255,255,0.06); padding: 2.5rem; }
+    .thank-you-card h1 { font-family: var(--syne); font-weight: 800; font-size: 1.75rem; color: white; margin-bottom: 0.5rem; }
+    .thank-you-card .sub { color: var(--sub); margin-bottom: 2rem; }
+    .download-box { margin-bottom: 2rem; padding: 1.25rem; background: rgba(45,139,201,0.1); border: 1px solid rgba(45,139,201,0.2); }
+    .download-box a { font-family: var(--syne); font-weight: 700; color: var(--accent2); text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem; }
+    .download-box a:hover { text-decoration: underline; }
+    .form-group { margin-bottom: 1.25rem; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--sub); margin-bottom: 0.4rem; text-transform: uppercase; letter-spacing: 0.08em; }
+    .form-group input { width: 100%; padding: 0.75rem 1rem; background: var(--dark); border: 1px solid rgba(255,255,255,0.1); color: white; font-family: var(--dm); font-size: 1rem; border-radius: 2px; box-sizing: border-box; }
+    .form-group input::placeholder { color: var(--sub); opacity: 0.7; }
+    .form-group input:focus { outline: none; border-color: var(--accent); }
+    .btn-submit { width: 100%; padding: 1rem; font-family: var(--syne); font-weight: 700; font-size: 0.85rem; letter-spacing: 0.08em; text-transform: uppercase; background: var(--accent); color: white; border: none; cursor: pointer; margin-top: 0.5rem; transition: background 0.2s; }
+    .btn-submit:hover { background: var(--accent2); }
+    .btn-submit:disabled { opacity: 0.6; cursor: not-allowed; }
+    .message { margin-top: 1rem; padding: 0.75rem; font-size: 0.9rem; border-radius: 2px; display: none; }
+    .message.success { background: rgba(34,197,94,0.15); color: #86efac; display: block; }
+    .message.error { background: rgba(239,68,68,0.15); color: #fca5a5; display: block; }
+    .tracker-note { font-size: 0.85rem; color: var(--sub); margin-top: 1.5rem; line-height: 1.5; }
+    .spinner { display: inline-block; width: 1em; height: 1em; border: 2px solid rgba(255,255,255,0.3); border-top-color: white; border-radius: 50%; animation: spin 0.8s linear infinite; vertical-align: -0.2em; margin-right: 0.5rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="nav-logo">The <span>Bodyweight</span> Gym</div>
+    <a href="index.html" class="nav-cta">Back to home</a>
+  </nav>
+
+  <main class="thank-you-page">
+    <div class="thank-you-card">
+      <h1>Thank you for your purchase</h1>
+      <p class="sub">Your guide and Progress Tracker access are ready.</p>
+
+      <div id="loading" class="sub">Verifying your payment…</div>
+
+      <div id="content" style="display: none;">
+        <div class="download-box">
+          <p style="margin:0 0 0.5rem 0; font-size:0.8rem; color: var(--sub); text-transform: uppercase; letter-spacing: 0.08em;">Your guide</p>
+          <a id="pdf-download" href="" download>Download the PDF guide &rarr;</a>
+        </div>
+
+        <p style="font-size:0.9rem; color: var(--sub); margin-bottom: 1.5rem;">To set up your <strong>Progress Tracker</strong> account and receive your login details by email, please confirm your details below.</p>
+
+        <form id="tracker-form">
+          <div class="form-group">
+            <label for="name">Full name</label>
+            <input type="text" id="name" name="name" placeholder="Your name" required>
+          </div>
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required>
+          </div>
+          <button type="submit" class="btn-submit" id="submit-btn">Send me my tracker login</button>
+        </form>
+
+        <div id="form-message" class="message" role="alert"></div>
+        <p class="tracker-note">We’ll email you a link to the Progress Tracker and temporary login details. On first login you’ll be asked to set a new password.</p>
+      </div>
+
+      <div id="error" style="display: none;" class="message error"></div>
+    </div>
+  </main>
+
+  <script>
+    (function() {
+      const params = new URLSearchParams(window.location.search);
+      const sessionId = params.get('session_id');
+      const loadingEl = document.getElementById('loading');
+      const contentEl = document.getElementById('content');
+      const errorEl = document.getElementById('error');
+
+      if (!sessionId) {
+        loadingEl.style.display = 'none';
+        errorEl.style.display = 'block';
+        errorEl.textContent = 'Missing payment session. If you just paid, try refreshing the page. Otherwise return to the homepage to purchase.';
+        return;
+      }
+
+      fetch('/api/verify-session?session_id=' + encodeURIComponent(sessionId))
+        .then(function(r) { return r.json().then(function(data) { return { ok: r.ok, data: data }; }); })
+        .then(function(result) {
+          loadingEl.style.display = 'none';
+          if (!result.ok) {
+            errorEl.style.display = 'block';
+            errorEl.textContent = result.data.error || 'Could not verify your payment. Please contact support.';
+            return;
+          }
+          const d = result.data;
+          contentEl.style.display = 'block';
+          var pdfLink = document.getElementById('pdf-download');
+          pdfLink.href = d.downloadUrl || '#';
+          if (d.email) {
+            document.getElementById('email').value = d.email;
+          }
+        })
+        .catch(function() {
+          loadingEl.style.display = 'none';
+          errorEl.style.display = 'block';
+          errorEl.textContent = 'Something went wrong. Please refresh or contact support.';
+        });
+
+      document.getElementById('tracker-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        var btn = document.getElementById('submit-btn');
+        var msg = document.getElementById('form-message');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner"></span>Sending…';
+        msg.className = 'message';
+        msg.style.display = 'none';
+        msg.textContent = '';
+
+        fetch('/api/create-tracker-user', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            sessionId: sessionId,
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim()
+          })
+        })
+          .then(function(r) { return r.json().then(function(data) { return { ok: r.ok, data: data }; }); })
+          .then(function(result) {
+            btn.disabled = false;
+            btn.textContent = 'Send me my tracker login';
+            if (result.ok) {
+              msg.className = 'message success';
+              msg.textContent = 'Check your email for your Progress Tracker login. You’ll set a new password on first sign-in.';
+              document.getElementById('tracker-form').style.display = 'none';
+            } else {
+              msg.className = 'message error';
+              msg.textContent = result.data.error || 'Something went wrong. Please try again or contact support.';
+            }
+            msg.style.display = 'block';
+          })
+          .catch(function() {
+            btn.disabled = false;
+            btn.textContent = 'Send me my tracker login';
+            msg.className = 'message error';
+            msg.textContent = 'Request failed. Please try again.';
+            msg.style.display = 'block';
+          });
+      });
+    })();
+  </script>
+</body>
+</html>
