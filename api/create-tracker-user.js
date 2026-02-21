@@ -90,7 +90,8 @@ module.exports = async (req, res) => {
   const stripeSecret = process.env.STRIPE_SECRET_KEY;
   const trackerApiUrl = process.env.TRACKER_API_URL;
   const trackerApiSecret = process.env.TRACKER_API_SECRET;
-  const trackerLoginUrl = process.env.TRACKER_LOGIN_URL || process.env.TRACKER_APP_URL;
+  const baseUrl = (process.env.SITE_URL || process.env.RENDER_EXTERNAL_URL || '').replace(/\/$/, '');
+  const trackerLoginUrl = process.env.TRACKER_LOGIN_URL || process.env.TRACKER_APP_URL || (baseUrl ? baseUrl : null);
   const fromEmail = process.env.EMAIL_FROM;
   const hasResend = !!process.env.RESEND_API_KEY;
   const hasSendGrid = !!process.env.SENDGRID_API_KEY;
@@ -125,6 +126,7 @@ module.exports = async (req, res) => {
 
   const tempPassword = crypto.randomBytes(12).toString('base64').replace(/[+/=]/g, '').slice(0, 12);
 
+  let setPasswordToken = null;
   if (trackerApiUrl && trackerApiSecret) {
     try {
       const createRes = await fetch(trackerApiUrl, {
@@ -146,13 +148,21 @@ module.exports = async (req, res) => {
         console.error('Tracker API error:', createRes.status, errBody);
         return res.status(500).json({ error: 'Could not create tracker account. Please contact support.' });
       }
+      const createData = await createRes.json().catch(() => ({}));
+      setPasswordToken = createData.setPasswordToken || createData.set_password_token || null;
     } catch (err) {
       console.error('Tracker API request failed:', err.message);
       return res.status(500).json({ error: 'Could not create tracker account. Please try again or contact support.' });
     }
   }
 
-  const { html, text } = buildTrackerLoginEmail(name.trim(), email, tempPassword, trackerLoginUrl);
+  const trackerBase = process.env.TRACKER_LOGIN_URL || process.env.TRACKER_APP_URL;
+  const trackerOrigin = trackerBase ? new URL(trackerBase).origin : '';
+  const loginLink = setPasswordToken && trackerOrigin
+    ? trackerOrigin + '/set-password?token=' + encodeURIComponent(setPasswordToken)
+    : trackerLoginUrl;
+
+  const { html, text } = buildTrackerLoginEmail(name.trim(), email, tempPassword, loginLink);
   const subject = 'Your Progress Tracker login — The Bodyweight Gym';
 
   try {

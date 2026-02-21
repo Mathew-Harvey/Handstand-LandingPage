@@ -54,9 +54,9 @@ Set these in your host (Render: Dashboard → your Web Service → Environment).
 | `STRIPE_PRICE_ID` | Yes | Price ID for the guide (e.g. price_xxx from Stripe Dashboard → Products) |
 | `SITE_URL` | On Render: optional | Full site URL (e.g. `https://yourservice.onrender.com` or custom domain). On Render, defaults to **RENDER_EXTERNAL_URL** if not set. |
 | `PDF_DOWNLOAD_URL` | Optional | Defaults to **/handstand.pdf** (the PDF in this repo). Set only if you serve the PDF from another URL. |
-| `TRACKER_API_URL` | Yes* | Progress Tracker API endpoint to create a user, e.g. `https://tracker.yoursite.com/api/users`. |
-| `TRACKER_API_SECRET` | Yes* | Secret or API key your tracker API expects to authorize create-user requests. |
-| `TRACKER_LOGIN_URL` | Recommended | Full URL to the tracker login page (e.g. `https://tracker.yoursite.com/login`), used in the email. |
+| `TRACKER_API_URL` | Yes* | Backend API create-user endpoint. Set to API base + `/api/users`, e.g. `https://handstand-api.onrender.com/api/users`. Must match the backend’s `TRACKER_API_SECRET`. |
+| `TRACKER_API_SECRET` | Yes* | Shared secret for create-user requests. Use the **same value** as the tracker backend’s `TRACKER_API_SECRET`. |
+| `TRACKER_LOGIN_URL` | Recommended | **Tracker app** (frontend) origin for the set-password link in the email, e.g. `https://handstand-web.onrender.com`. The link will be `TRACKER_LOGIN_URL` + `/set-password?token=...`. |
 | `EMAIL_FROM` | Yes** | Sender address for “Tracker login” email (e.g. `The Bodyweight Gym <noreply@yoursite.com>`). |
 | `EMAIL_PROVIDER` | Yes** | `resend` or `sendgrid`. |
 | `RESEND_API_KEY` | If Resend | From Resend.com. |
@@ -86,28 +86,54 @@ Do **not** use a Payment Link for “Download Now”. The flow uses **Checkout S
 
 ---
 
-## 5. Progress Tracker API (create user)
+## 5. Progress Tracker API (create user) and set-password flow
 
-Your Progress Tracker should expose an endpoint that:
+The landing page calls your tracker when the customer submits the thank-you form, then sends an email with a link. Implement the following so the “Set your password & log in” button works end-to-end.
 
-- Accepts **POST** with JSON body, e.g.:
-  - `email`, `name`, `temporaryPassword`, `forcePasswordChange`
-- Authenticates the request (e.g. with `TRACKER_API_SECRET` in a header like `Authorization: Bearer ...` or `X-API-Key`).
-- Creates a user with that email and temporary password, and marks that they must change password on first login.
-- Returns 2xx on success.
+**Backend contract:** See **[TRACKER_BACKEND_CONTRACT.md](./TRACKER_BACKEND_CONTRACT.md)** for the full API (create-user, validate-set-password-token, set-password, forgot-password). Landing page env: `TRACKER_API_URL`, `TRACKER_API_SECRET`, `TRACKER_LOGIN_URL`.
 
-Example body we send:
+### 5.1 Create/find user endpoint
+
+- **URL:** The value you set as `TRACKER_API_URL` (e.g. `https://handstand-web.onrender.com/api/users` or `/api/create-tracker-user`).
+- **Method:** POST.
+- **Auth:** Require `Authorization: Bearer <TRACKER_API_SECRET>` or `X-API-Key: <TRACKER_API_SECRET>` (same value the landing page sets in Render).
+- **Body (JSON):**
+  - `email` (string, required)
+  - `name` (string, required)
+  - `temporaryPassword` (string, required)
+  - `forcePasswordChange` (boolean, true)
+
+**Behavior:**
+
+- If no user exists for that email: create a user with that email, name, and temporary password (store the temp password so it can be used for one-time token validation; you may clear it after the user sets a permanent password).
+- If a user already exists: update name/temp password if desired, or treat as idempotent.
+- Generate a **one-time set-password token** (cryptographically random, e.g. 32 bytes hex), store it on the user or in a short-lived table (e.g. expiry 1 hour), and return it in the response.
+
+**Response (2xx):** JSON body must include the one-time token so the landing page can put it in the email link:
 
 ```json
 {
-  "email": "customer@example.com",
-  "name": "Jane Doe",
-  "temporaryPassword": "randomlyGenerated",
-  "forcePasswordChange": true
+  "setPasswordToken": "abc123...",
+  "userId": "optional-uuid"
 }
 ```
 
-Implement “force password change on first login” in the tracker app (e.g. a flag on the user, and on login with temp password redirect to “Set new password” and then invalidate the temp password).
+The landing page expects either `setPasswordToken` or `set_password_token`. If present, the email link becomes `https://<TRACKER_ORIGIN>/set-password?token=<token>` instead of a generic login URL.
+
+### 5.2 Set-password page and modal
+
+- **Route:** `GET /set-password?token=...` (or equivalent).
+- **Behavior:**
+  1. Validate the token (look up user by token, check expiry).
+  2. If invalid or expired: show an error and a link to login or “forgot password”.
+  3. If valid: log the user in (create session), then show a **modal** (or full-page form) asking them to **enter a new password** (and confirm).
+  4. On submit: hash the new password (e.g. bcrypt/argon2), save it to the user record, clear the temporary password and the set-password token, then redirect to the app (or close modal and show main app). That password is now their normal login password.
+
+### 5.3 Password storage and recovery
+
+- Store only a **hashed** version of the user’s chosen password (bcrypt, argon2, or similar). Never store plaintext.
+- Implement normal **forgot-password** flow (e.g. “Forgot password?” → enter email → send reset link → set new password).
+- Optionally support **account recovery** (e.g. “Forgot email?”) if you want; the landing page does not depend on it.
 
 ---
 
@@ -151,7 +177,7 @@ The thank-you page and `/api/create-tracker-user` can remain the main path; the 
 
 - [ ] Deploy as a Web Service on Render (build: `npm install`, start: `npm start`).
 - [ ] Set `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID`, `PDF_DOWNLOAD_URL` (and `SITE_URL` if using a custom domain).
-- [ ] Set `TRACKER_API_URL`, `TRACKER_API_SECRET`, `TRACKER_LOGIN_URL` (if tracker is ready).
+- [ ] Set `TRACKER_API_URL` (backend API + `/api/users`), `TRACKER_API_SECRET` (same as backend), `TRACKER_LOGIN_URL` (tracker app origin). See [TRACKER_BACKEND_CONTRACT.md](./TRACKER_BACKEND_CONTRACT.md).
 - [ ] Set `EMAIL_FROM`, `EMAIL_PROVIDER`, and `RESEND_API_KEY` or `SENDGRID_API_KEY`.
 - [ ] In Progress Tracker: implement “create user” API and “force password change on first login”.
 - [ ] Test with Stripe test mode (sk_test_..., price from test product).
