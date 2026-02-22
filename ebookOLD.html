@@ -1,0 +1,1150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Handstand — The Complete Training Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+/* ================================================================
+   PRINT-PERFECT EBOOK — 6×9" page size
+   Hit Ctrl+P / Cmd+P → Save as PDF
+   Set margins to "None" or "Minimum" in print dialog
+   ================================================================ */
+
+:root {
+  --navy: #0F172A;
+  --dark: #1E3A5F;
+  --accent: #2980B9;
+  --accent-light: #EBF5FB;
+  --accent-mid: #D4E6F1;
+  --text: #334155;
+  --sub: #64748B;
+  --light: #F8FAFC;
+  --border: #E2E8F0;
+  --warm: #D97706;
+  --syne: 'Plus Jakarta Sans', sans-serif;
+  --dm: 'Source Sans 3', sans-serif;
+}
+
+/* ===== PAGE SETUP ===== */
+@page {
+  size: 6in 9in;
+  margin: 0.7in 0.65in 0.6in 0.65in;
+  @bottom-center {
+    content: counter(page);
+    font-family: 'Source Sans 3', sans-serif;
+    font-size: 8pt;
+    color: #94A3B8;
+  }
+}
+
+@page :first {
+  margin: 0;
+  @bottom-center { content: none; }
+}
+
+@page cover {
+  margin: 0;
+  @bottom-center { content: none; }
+}
+
+@page frontmatter {
+  @bottom-center { content: none; }
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html {
+  font-size: 10pt;
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+body {
+  font-family: var(--dm);
+  color: var(--text);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== SCREEN-ONLY WRAPPER ===== */
+@media screen {
+  body {
+    background: #e5e7eb;
+    padding: 2rem 0;
+  }
+  .page {
+    width: 6in;
+    min-height: 9in;
+    margin: 1rem auto;
+    background: white;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+    padding: 0.7in 0.65in 0.6in 0.65in;
+    position: relative;
+  }
+  .page-cover {
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .page-frontmatter {
+    /* same as page but no page number display */
+  }
+}
+
+@media print {
+  body { background: white; padding: 0; }
+  .page {
+    page-break-after: always;
+    padding: 0;
+    min-height: auto;
+  }
+  .page:last-child { page-break-after: avoid; }
+  .page-cover { page: cover; }
+  .page-frontmatter { page: frontmatter; }
+}
+
+/* ===== TYPOGRAPHY ===== */
+h1, h2, h3, h4 { font-family: var(--syne); line-height: 1.15; }
+
+h1 { font-size: 22pt; font-weight: 800; color: var(--navy); letter-spacing: -0.02em; }
+h2 { font-size: 14pt; font-weight: 700; color: var(--dark); margin-bottom: 6pt; }
+h3 { font-size: 11pt; font-weight: 700; color: var(--accent); margin-bottom: 4pt; }
+
+p { margin-bottom: 6pt; font-weight: 400; }
+p + p { margin-top: 0; }
+
+strong, b { font-weight: 500; color: var(--dark); }
+
+/* ===== COVER PAGE ===== */
+.cover-inner {
+  width: 6in;
+  height: 9in;
+  background: var(--navy);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 1in;
+  position: relative;
+}
+
+.cover-inner::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 200px;
+  height: 200px;
+  border: 2px solid rgba(41, 128, 185, 0.15);
+  border-radius: 50%;
+}
+
+.cover-inner::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  height: 320px;
+  border: 1px solid rgba(41, 128, 185, 0.08);
+  border-radius: 50%;
+}
+
+.cover-the { font-family: var(--syne); font-size: 18pt; font-weight: 800; color: white; letter-spacing: 0.1em; }
+.cover-title { font-family: var(--syne); font-size: 36pt; font-weight: 800; color: white; letter-spacing: -0.02em; margin: 4pt 0 12pt; }
+.cover-line { width: 60px; height: 2px; background: var(--accent); margin: 0 auto 12pt; }
+.cover-subtitle { font-family: var(--syne); font-size: 11pt; font-weight: 600; color: var(--accent-mid); }
+.cover-tagline { font-family: var(--dm); font-size: 9pt; color: #94A3B8; margin-top: 8pt; font-weight: 400; font-style: italic; }
+.cover-brand-line { width: 120px; height: 1.5px; background: var(--accent); margin: 0 auto; position: absolute; bottom: 1.1in; }
+.cover-brand { font-family: var(--syne); font-size: 8pt; font-weight: 700; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; position: absolute; bottom: 0.7in; }
+
+/* ===== TITLE PAGE ===== */
+.title-page { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 7.7in; text-align: center; }
+.title-page h1 { font-size: 26pt; margin-bottom: 6pt; }
+.title-page .accent-rule { width: 80px; height: 2px; background: var(--accent); margin: 8pt auto; }
+.title-page .subtitle { font-family: var(--syne); font-size: 12pt; font-weight: 600; color: var(--accent); }
+.title-page .tagline { font-size: 10pt; color: var(--sub); font-weight: 400; margin-top: 4pt; }
+.title-page .author { font-family: var(--syne); font-weight: 600; font-size: 10pt; color: var(--text); margin-top: 1.5in; }
+.title-page .edition { font-size: 9pt; color: var(--sub); font-weight: 400; margin-top: 2pt; }
+
+/* ===== DISCLAIMER ===== */
+.disclaimer { padding-top: 0.8in; }
+.disclaimer h2 { color: var(--sub); font-size: 12pt; margin-bottom: 4pt; }
+.disclaimer-rule { width: 100%; height: 1px; background: var(--border); margin-bottom: 10pt; }
+.disclaimer p { font-size: 9pt; line-height: 1.55; color: var(--sub); }
+.disclaimer .copyright { text-align: center; margin-top: 0.6in; font-size: 7.5pt; color: #94A3B8; }
+
+/* ===== TABLE OF CONTENTS ===== */
+.toc h1 { margin-bottom: 6pt; }
+.toc-accent { width: 50px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 16pt; }
+.toc-item { font-size: 10pt; line-height: 2.2; color: var(--text); font-weight: 400; }
+.toc-sub { padding-left: 18pt; color: var(--sub); font-weight: 400; }
+
+/* ===== CHAPTER OPENER ===== */
+.chapter-opener {
+  background: var(--navy);
+  color: white;
+  padding: 14pt 16pt;
+  margin: 0 -0.65in;
+  width: calc(100% + 1.3in);
+  margin-bottom: 12pt;
+  position: relative;
+}
+.chapter-opener h1 {
+  color: white;
+  font-size: 18pt;
+  margin-bottom: 2pt;
+}
+.chapter-opener .ch-accent {
+  width: 50px;
+  height: 2px;
+  background: var(--accent);
+  margin: 6pt 0 4pt;
+}
+.chapter-opener .ch-subtitle {
+  font-family: var(--dm);
+  font-size: 10pt;
+  color: var(--accent-mid);
+  font-weight: 400;
+}
+
+/* ===== LEVEL INTRO ===== */
+.level-intro {
+  font-style: italic;
+  color: var(--sub);
+  font-weight: 400;
+  margin-bottom: 10pt;
+  font-size: 10pt;
+}
+
+/* ===== PLACEHOLDER IMAGES ===== */
+.placeholder-img {
+  width: 55%;
+  aspect-ratio: 4/3;
+  background: #F1F5F9;
+  border: 2px dashed #CBD5E1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 8pt auto;
+  border-radius: 4px;
+  color: #94A3B8;
+  font-size: 8pt;
+  text-align: center;
+  font-family: var(--dm);
+}
+.placeholder-img .ph-icon {
+  font-size: 20pt;
+  margin-bottom: 4pt;
+  opacity: 0.4;
+}
+.placeholder-img .ph-label {
+  font-weight: 500;
+  color: var(--sub);
+  font-size: 9pt;
+}
+.placeholder-img .ph-hint {
+  font-size: 7pt;
+  color: #94A3B8;
+  margin-top: 2pt;
+}
+
+.placeholder-img-tall {
+  aspect-ratio: 3/4;
+  width: 40%;
+}
+
+.placeholder-img-wide {
+  aspect-ratio: 16/9;
+  width: 65%;
+}
+
+/* ===== REAL EXERCISE IMAGES (no crop, large for detail) ===== */
+.ebook-fig {
+  margin: 8pt auto;
+  text-align: center;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.ebook-fig img {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.ebook-fig-wide img {
+  width: 85%;
+  max-width: 4.2in;
+}
+.ebook-fig-tall img {
+  width: 55%;
+  max-width: 2.8in;
+}
+.ebook-fig-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8pt;
+  margin: 8pt auto;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.ebook-fig-group img {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  flex: 1 1 auto;
+  min-width: 0;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.ebook-fig-group img.step {
+  max-width: 48%;
+  max-height: 2.2in;
+}
+.ebook-fig-caption {
+  font-size: 8pt;
+  color: var(--sub);
+  margin-top: 2pt;
+  font-style: italic;
+}
+
+/* ===== EXERCISE BLOCK ===== */
+.exercise-block {
+  margin-bottom: 10pt;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+
+/* ===== EXERCISE BOX (prescription) ===== */
+.ex-box {
+  border-left: 3px solid var(--accent);
+  padding: 6pt 0 6pt 10pt;
+  margin: 4pt 0;
+  background: var(--light);
+}
+.ex-box .ex-rx {
+  font-family: var(--syne);
+  font-size: 9pt;
+  font-weight: 600;
+  color: var(--dark);
+  line-height: 1.5;
+}
+.ex-box .ex-video {
+  font-size: 7.5pt;
+  color: var(--warm);
+  margin-top: 2pt;
+  font-weight: 400;
+  word-break: break-all;
+}
+.ex-box .ex-video a {
+  color: var(--warm);
+  text-decoration: none;
+}
+
+/* ===== CALLOUT ===== */
+.callout {
+  font-style: italic;
+  color: var(--dark);
+  padding: 0 12pt;
+  margin: 6pt 0;
+  font-size: 10pt;
+  font-weight: 400;
+}
+
+/* ===== GRADUATION BOX ===== */
+.grad-box {
+  border: 1.5px solid var(--accent);
+  padding: 10pt 14pt;
+  margin: 10pt 0;
+  display: flex;
+  gap: 10pt;
+  align-items: flex-start;
+  break-inside: avoid;
+}
+.grad-box .grad-check {
+  font-size: 14pt;
+  color: var(--accent);
+  line-height: 1;
+  flex-shrink: 0;
+}
+.grad-box .grad-text {
+  font-family: var(--syne);
+  font-size: 9pt;
+  font-weight: 600;
+  color: var(--dark);
+  line-height: 1.5;
+}
+
+/* ===== BENCHMARKING TABLE ===== */
+.bench-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 9pt;
+  margin: 8pt 0;
+}
+.bench-table th {
+  background: var(--navy);
+  color: white;
+  font-family: var(--syne);
+  font-weight: 600;
+  padding: 5pt 7pt;
+  text-align: left;
+}
+.bench-table th:first-child { text-align: center; width: 12%; }
+.bench-table td {
+  padding: 5pt 7pt;
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+  vertical-align: top;
+}
+.bench-table td:first-child {
+  text-align: center;
+  font-family: var(--syne);
+  font-weight: 600;
+  color: var(--accent);
+}
+
+/* ===== SECTION TITLE ===== */
+.section-title {
+  font-family: var(--syne);
+  font-size: 12pt;
+  font-weight: 700;
+  color: var(--dark);
+  margin: 14pt 0 4pt;
+}
+
+/* ===== BLOCK HEADING (sub-block) ===== */
+.block-heading {
+  font-family: var(--syne);
+  font-size: 10pt;
+  font-weight: 700;
+  color: var(--accent);
+  margin: 8pt 0 2pt;
+}
+
+/* ===== BULLET LIST ===== */
+.priority-list {
+  list-style: none;
+  padding: 0;
+  margin: 4pt 0 8pt 0;
+}
+.priority-list li {
+  padding: 1pt 0 1pt 16pt;
+  font-size: 10pt;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+/* ===== HORIZONTAL RULE ===== */
+.accent-hr {
+  border: none;
+  height: 1.5px;
+  background: var(--accent);
+  margin: 16pt 0;
+}
+
+/* ===== CLOSING ===== */
+.closing {
+  text-align: center;
+  margin-top: 24pt;
+  color: var(--sub);
+}
+.closing .cl-main {
+  font-family: var(--syne);
+  font-weight: 600;
+  font-size: 10pt;
+}
+.closing .cl-sub {
+  font-style: italic;
+  font-size: 9pt;
+  font-weight: 400;
+  margin-top: 3pt;
+}
+
+/* ===== RUNNING HEADER (screen only) ===== */
+.running-header {
+  font-size: 6.5pt;
+  color: #94A3B8;
+  text-align: center;
+  padding-bottom: 6pt;
+  border-bottom: 0.5pt solid var(--border);
+  margin-bottom: 12pt;
+  font-weight: 400;
+}
+
+.page-cover .running-header,
+.page-frontmatter .running-header { display: none; }
+
+/* ===== HELPERS ===== */
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.mb-sm { margin-bottom: 4pt; }
+.mb-md { margin-bottom: 8pt; }
+.mb-lg { margin-bottom: 16pt; }
+.text-center { text-align: center; }
+.text-small { font-size: 9pt; }
+.text-xs { font-size: 7.5pt; }
+.text-sub { color: var(--sub); }
+
+/* ===== PRINT OVERRIDES ===== */
+@media print {
+  .running-header { display: none; } /* handled by @page */
+  .page-cover .cover-inner {
+    width: 6in;
+    height: 9in;
+    margin: -0.7in -0.65in;
+  }
+  .chapter-opener {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .placeholder-img,
+  .ebook-fig img,
+  .ebook-fig-group img {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ============================================================
+     COVER
+     ============================================================ -->
+<div class="page page-cover">
+  <div class="cover-inner">
+    <div class="cover-the">THE</div>
+    <div class="cover-title">HANDSTAND</div>
+    <div class="cover-line"></div>
+    <div class="cover-subtitle">The Complete Training Guide</div>
+    <div class="cover-tagline">From Zero to 60-Second Freestanding Hold</div>
+    <div class="cover-brand-line"></div>
+    <div class="cover-brand">The Bodyweight Gym</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TITLE PAGE
+     ============================================================ -->
+<div class="page page-frontmatter">
+  <div class="title-page">
+    <h1>THE HANDSTAND</h1>
+    <div class="accent-rule"></div>
+    <div class="subtitle">The Complete Training Guide</div>
+    <div class="tagline">From Zero to 60-Second Freestanding Hold</div>
+    <div class="author">The Bodyweight Gym</div>
+    <div class="edition">Second Edition</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     DISCLAIMER
+     ============================================================ -->
+<div class="page page-frontmatter">
+  <div class="disclaimer">
+    <h2>Disclaimer</h2>
+    <div class="disclaimer-rule"></div>
+    <p>Before starting any exercise programme, consult a qualified fitness or sports professional to ensure this programme is suitable for you. Do not undertake training with The Bodyweight Gym without professional or qualified instruction on proper technique. Use common sense when training and understand your personal limitations.</p>
+    <p>Any programme involving resistance training, gymnastics, or activities at height is potentially dangerous and could lead to severe injury. The user assumes all risks and responsibilities for injuries which may occur during or following use of this programme. The Bodyweight Gym cannot be held responsible for any injuries which may occur as a result of training with this programme.</p>
+    <p>The Bodyweight Gym and the buyer disclaim any express or implied warranty, including, but not limited to, warranties of merchantability or fitness for a particular purpose. The buyer assumes all liability in use of this programme.</p>
+    <div class="copyright">
+      <p>© The Bodyweight Gym. All rights reserved.</p>
+      <p>No part of this publication may be reproduced without written permission.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ============================================================
+     TABLE OF CONTENTS
+     ============================================================ -->
+<div class="page page-frontmatter">
+  <div class="toc">
+    <h1>Contents</h1>
+    <div class="toc-accent"></div>
+    <div class="toc-item">Introduction</div>
+    <div class="toc-item">Benchmarking</div>
+    <div class="toc-item">Loading, Deloading, and How to Progress</div>
+    <div class="toc-item">The Workouts</div>
+    <div class="toc-item toc-sub">Level 1 — Building the Foundation</div>
+    <div class="toc-item toc-sub">Level 2 — Going Upside Down</div>
+    <div class="toc-item toc-sub">Level 3 — Learning to Balance</div>
+    <div class="toc-item toc-sub">Level 4 — Finding the Hold</div>
+    <div class="toc-item toc-sub">Level 5 — Building Endurance</div>
+    <div class="toc-item toc-sub">Level 6 — The 60-Second Handstand</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     INTRODUCTION
+     ============================================================ -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+  <div class="chapter-opener">
+    <h1>Introduction</h1>
+  </div>
+
+  <div class="ebook-fig ebook-fig-wide">
+    <img src="assets/images/freestandinghandstand1.png" alt="Freestanding handstand" />
+  </div>
+
+  <p>The handstand is the art of standing still on your hands with straight arms and your entire body stacked vertically above your base of support. At first glance it may appear simple. In practice, most people discover the handstand to be one of the most challenging expressions of strength, mobility, focus, and balance that an adult can pursue.</p>
+
+  <p>Learning the handstand requires a deliberate combination of skill work and physical conditioning. Most adults need to rebuild overhead shoulder mobility, develop the upper-body strength required to support themselves inverted for extended periods, and then — only then — learn to balance. This guide will walk you through each phase systematically.</p>
+
+  <p>The programme is structured across six progressive levels. Each level has a clear graduation test. To progress smoothly and safely, satisfy each graduation requirement before moving on. Skipping levels is the fastest way to stall — or get injured.</p>
+
+  <p><b>What does "a handstand" mean in this guide?</b> It means standing on your hands with locked-out elbows, shoulders fully elevated, body aligned and motionless, for a minimum of 60 seconds.</p>
+
+  <p><b>How long will this take?</b> The honest answer: anywhere from 6 months to 2 years for the average adult. Progress demands consistent effort — training 4 to 7 days per week for at least 30 minutes a day. There are no shortcuts.</p>
+
+  <h2 class="section-title">The Kinetic Chain</h2>
+
+  <p>The handstand demands that your back, shoulders, upper arms, forearms, wrists, and fingers all function as a single integrated unit. Your connective tissue — tendons, ligaments, and joint capsules — must adapt alongside your muscles.</p>
+
+  <p>This is critical: different tissues adapt at very different rates. Muscles remodel in roughly 3 months. Tendons and ligaments take approximately 9 months. Bone remodels over 14 to 15 months. If your muscles are getting strong but your wrists are in pain, the message is clear — slow down.</p>
+
+  <p class="callout">The goal of training is to stress your body enough that it adapts, then allow adequate recovery. If you exceed your body's capacity to recover, the result is injury. You can only progress as fast as the weakest link in the chain.</p>
+</div>
+
+<!-- ============================================================
+     BENCHMARKING
+     ============================================================ -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+  <div class="chapter-opener">
+    <h1>Benchmarking</h1>
+  </div>
+
+  <p>If you are completely new to handstand training, begin at Level 1. If you have some experience, use the tests below to find the appropriate starting level. Be honest — starting too high is worse than starting too low.</p>
+
+  <table class="bench-table">
+    <thead>
+      <tr><th>Level</th><th>Entry Requirements</th></tr>
+    </thead>
+    <tbody>
+      <tr><td>1</td><td>Zero experience or unsure.</td></tr>
+      <tr><td>2</td><td>Protracted plank 1 min, hang 1 min, body-line drill 30 sec.<br>5 sets of each, relatively easy.</td></tr>
+      <tr><td>3</td><td>Chest-to-wall handstand 1 min, hang 1 min, hollow body 1 min.<br>5 sets of each, relatively easy.</td></tr>
+      <tr><td>4</td><td>Can find freestanding balance consistently for 3–5 seconds.</td></tr>
+      <tr><td>5</td><td>Can kick up and hold balance consistently for 10–15 seconds.</td></tr>
+      <tr><td>6</td><td>Have a handstand but have not yet achieved a 60-second hold.</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- ============================================================
+     LOADING, DELOADING
+     ============================================================ -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+  <div class="chapter-opener">
+    <h1>Loading, Deloading</h1>
+    <div class="ch-accent"></div>
+    <div class="ch-subtitle">and How to Progress</div>
+  </div>
+
+  <p>Your training should be structured in repeating blocks of effort and recovery. This approach gives your body enough stress to grow and enough time to adapt.</p>
+
+  <h3 class="block-heading">Block 1 — Establish Your Baseline</h3>
+  <p>Pick a level and set range appropriate to your current strength. If in doubt, be conservative — an injury is always the worst outcome. Train hard for 4 weeks. Take the 5th week completely off.</p>
+
+  <h3 class="block-heading">Block 2 — Add Volume</h3>
+  <p>Add one set to each exercise. Train hard for 4 weeks. Take the 5th week off. Repeat until you reach the upper set range for your level.</p>
+
+  <h3 class="block-heading">Block 3 — Test and Progress</h3>
+  <p>Test against the graduation requirements for the next level. If you meet the criteria, begin the next level at the lower set range.</p>
+
+  <h3 class="block-heading">Block 4 — Continue the Cycle</h3>
+  <p>Keep developing your programme. The cycle of progressive overload followed by recovery is the fundamental engine of adaptation.</p>
+
+  <p class="callout">Learning a handstand from scratch will likely take more than 12 months. Patience is not optional — it is the defining characteristic of everyone who succeeds.</p>
+</div>
+
+<!-- ============================================================
+     LEVEL 1
+     ============================================================ -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+  <div class="chapter-opener">
+    <h1>Level 1</h1>
+    <div class="ch-accent"></div>
+    <div class="ch-subtitle">Building the Foundation</div>
+  </div>
+
+  <p class="level-intro">You are at the very beginning. This level focuses on developing wrist strength, shoulder mobility, and core stability. Do not rush. The work you do here will determine how smoothly you advance through every subsequent level.</p>
+
+  <p class="text-small"><b>Training frequency:</b> 4–7 days per week, 30–45 minutes per session. Warm up for 5–10 minutes with light cardio before each session. Rest 60–90 seconds between sets unless otherwise noted.</p>
+
+  <!-- WRIST HEEL RAISES -->
+  <div class="exercise-block">
+    <h3>Wrist Heel Raises</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/wrist01.png" alt="Wrist heel raises step 1" class="step" />
+      <img src="assets/images/wrist03.png" alt="Wrist heel raises step 2" class="step" />
+      <img src="assets/images/writs02.png" alt="Wrist heel raises step 3" class="step" />
+    </div>
+    <p>Kneel with your hands flat on the floor, fingers pointing forward. Slowly lift the heels of your hands off the ground while keeping your fingertips pressed down, then lower back to flat. On the final rep, hold the raised position for 10 seconds.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 reps, hold last rep 10 seconds</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s">youtube.com/watch?v=Uo4qAzodPlM</a></div>
+    </div>
+  </div>
+
+  <!-- FINGERTIP PUSH-UPS -->
+  <div class="exercise-block">
+    <h3>Fin Push-ups</h3>
+    <div class="ebook-fig">
+      <img src="assets/images/finpushups.png" alt="Fin push-ups — start and lowered (fin) position" />
+    </div>
+    <p>From the same kneeling position, place your hands flat on the floor with your <strong>fingers pointing out to the sides</strong> (perpendicular to your body), so your wrists are flexed and your palms stay down. Perform small push-up motions, letting your <strong>elbows flare out wide</strong> as you lower — this creates the "fin" shape. Lower your chest toward the floor, then press back up. On the final rep, hold the top position for 10 seconds. Superset with wrist heel raises.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 reps, hold last rep 10 seconds<br>Sets: 3–5 supersets (with wrist heel raises)</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s">youtube.com/watch?v=Uo4qAzodPlM</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- LEVEL 1 continued -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+
+  <!-- DESK STRETCH EXTERNAL -->
+  <div class="exercise-block">
+    <h3>Desk Stretch — External Rotation</h3>
+    <div class="ebook-fig">
+      <img src="assets/images/overheaddeskstretch01.png" alt="Desk stretch — external rotation" />
+    </div>
+    <p>Kneel behind a desk or sturdy surface at roughly hip height. Place your hands on the surface with your palms facing the ceiling (externally rotated). Pulse in and out 10 times, then sink as deep as comfortable and hold for 1 to 2 minutes.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 pulses, then hold 1–2 minutes</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=Toe5JOHztek">youtube.com/watch?v=Toe5JOHztek</a></div>
+    </div>
+  </div>
+
+  <!-- OVERHEAD DESK STRETCH -->
+  <div class="exercise-block">
+    <h3>Overhead Desk Stretch</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/overheaddeskstretch01.png" alt="Overhead desk stretch step 1" class="step" />
+      <img src="assets/images/overheaddeskstretch02.png" alt="Overhead desk stretch step 2" class="step" />
+    </div>
+    <p>Kneel behind the same surface and place your hands on it with arms extended overhead, palms down. Pulse gently 10 times, then sink your chest through your arms and hold for 1 to 2 minutes. This directly targets overhead shoulder mobility.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 pulses, then hold 1–2 minutes</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=G4wqA_e9r3I">youtube.com/watch?v=G4wqA_e9r3I</a></div>
+    </div>
+  </div>
+
+  <!-- HANG -->
+  <div class="exercise-block">
+    <h3>Hang</h3>
+    <div class="ebook-fig">
+      <img src="assets/images/hang.png" alt="Dead hang from bar" />
+    </div>
+    <p>Hang from a pull-up bar using any grip. Build toward a 1-minute dead hang. If you cannot hold initially, accumulate 60 seconds across multiple shorter holds.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: Accumulate 1 minute (build to unbroken)<br>Sets: 3–5 sets (stretches + hang combined)</div>
+    </div>
+  </div>
+</div>
+
+<!-- LEVEL 1 continued -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+
+  <!-- PROTRACTED PLANK -->
+  <div class="exercise-block">
+    <h3>Protracted Plank</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/protractedplank.png" alt="Protracted plank" class="step" />
+      <img src="assets/images/protractedplankbeginer.png" alt="Protracted plank (beginner option)" class="step" />
+    </div>
+    <p>Hands under shoulders, elbows locked. Protract your shoulders — spread your shoulder blades apart, pushing your ribcage away from the floor. Tuck your pelvis posteriorly and engage your abdominals. Regress to knees if needed.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: Accumulate 1 minute<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
+    </div>
+  </div>
+
+  <!-- BODY-LINE DRILL -->
+  <div class="exercise-block">
+    <h3>Body-Line Drill</h3>
+    <div class="ebook-fig">
+      <img src="assets/images/hollowbodyBeginner.png" alt="Body-line drill — full-body tension" />
+    </div>
+    <p>Lie face-down, arms overhead. Simultaneously lift arms, chest, and legs off the floor. Squeeze your glutes, point your toes, and hold full-body tension. This teaches the global tension required for a handstand.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: Hold 30 seconds (build to 1 minute)<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
+    </div>
+  </div>
+
+  <div class="grad-box">
+    <div class="grad-check">✓</div>
+    <div class="grad-text">Level 1 Graduation: Complete 5 sets of protracted plank 1 min, hang 1 min, and body-line drill 30 sec. All sets should feel relatively comfortable.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     LEVEL 2
+     ============================================================ -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+  <div class="chapter-opener">
+    <h1>Level 2</h1>
+    <div class="ch-accent"></div>
+    <div class="ch-subtitle">Going Upside Down</div>
+  </div>
+
+  <p class="level-intro">You have baseline strength and mobility. Now you begin inverting, loading significantly more weight into shoulders, arms, and wrists. Take particular care of your wrists — if a movement causes sharp pain, scale back immediately.</p>
+
+  <!-- BRIEF: Wrist + Fin -->
+  <div class="exercise-block">
+    <h3>Wrist Heel Raises + Fin Push-ups</h3>
+    <p>Continue as per Level 1.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 reps each, hold last rep 10 sec<br>Sets: 3–5 supersets</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s">youtube.com/watch?v=Uo4qAzodPlM</a></div>
+    </div>
+  </div>
+
+  <!-- BRIEF: Desk + Hang -->
+  <div class="exercise-block">
+    <h3>Desk Stretches + Hang</h3>
+    <p>Continue as per Level 1.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 pulses + 1–2 min hold; 1 min hang<br>Sets: 3–5 sets</div>
+    </div>
+  </div>
+
+  <!-- CHEST-TO-WALL -->
+  <div class="exercise-block">
+    <h3>Chest-to-Wall Handstand</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/chesttowallhandstand01.png" alt="Chest-to-wall handstand step 1" class="step" />
+      <img src="assets/images/chesttowallhandstand02.png" alt="Chest-to-wall handstand step 2" class="step" />
+    </div>
+    <p>Walk your feet up the wall until your chest faces the wall. Focus on five points: grip the ground; push tall (shoulders touch ears); posterior pelvic tilt; legs pressed together; point toes. Scale to protracted plank hold if needed.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: Accumulate 1 minute (build to unbroken)<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=f1yLxNMq23A">youtube.com/watch?v=f1yLxNMq23A</a></div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=tfVN5t_QykI">youtube.com/watch?v=tfVN5t_QykI</a></div>
+    </div>
+  </div>
+
+  <!-- HOLLOW BODY -->
+  <div class="exercise-block">
+    <h3>Hollow Body Hold</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/hollowbodyBeginner.png" alt="Hollow body hold — beginner" class="step" />
+      <img src="assets/images/hollowbodyAdv.png" alt="Hollow body hold — advanced" class="step" />
+    </div>
+    <p><b>Beginner:</b> Lie on your back, tuck your knees, lift your shoulder blades, and press your lower back into the floor. <b>Advanced:</b> Extend arms overhead and legs straight. Maintain lower back contact throughout.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: Accumulate 1 minute<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
+    </div>
+  </div>
+
+  <div class="grad-box">
+    <div class="grad-check">✓</div>
+    <div class="grad-text">Level 2 Graduation: Complete 5 sets of chest-to-wall 1 min, hang 1 min, and hollow body 1 min. All sets should feel relatively comfortable.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     LEVEL 3
+     ============================================================ -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+  <div class="chapter-opener">
+    <h1>Level 3</h1>
+    <div class="ch-accent"></div>
+    <div class="ch-subtitle">Learning to Balance</div>
+  </div>
+
+  <p class="level-intro">You are comfortable upside down and can hold a chest-to-wall handstand with enough ease to have a conversation. It is time to learn balance. This level introduces heel pulls and toe pulls — the fundamental balance-correction tools.</p>
+
+  <!-- BRIEF: Wrist + Fin -->
+  <div class="exercise-block">
+    <h3>Wrist Heel Raises + Fin Push-ups</h3>
+    <p>Continue as per previous levels.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 reps each, hold last rep 10 sec<br>Sets: 3–5 supersets</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s">youtube.com/watch?v=Uo4qAzodPlM</a></div>
+    </div>
+  </div>
+
+  <!-- BRIEF: Desk + Hang -->
+  <div class="exercise-block">
+    <h3>Desk Stretches + Hang</h3>
+    <p>Continue. You should be completing 1-minute unbroken hangs comfortably by now.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 1 min unbroken hang<br>Sets: 3–5 sets</div>
+    </div>
+  </div>
+
+  <!-- HEEL PULLS -->
+  <div class="exercise-block">
+    <h3>Heel Pulls</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/handstandheelpulls01.png" alt="Heel pulls step 1" class="step" />
+      <img src="assets/images/handstandheelpulls02.png" alt="Heel pulls step 2" class="step" />
+    </div>
+    <p>From chest-to-wall, maintain full-body tension and grip the ground. Press through your fingertips. Do not actively pull your feet from the wall — just observe your heels getting lighter as you increase finger pressure. Eventually, your feet float free. This is the foundation of over-balance correction.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 8–12 reps</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=xm26KPUA7OI">youtube.com/watch?v=xm26KPUA7OI</a></div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=5t796EGmdn8">youtube.com/watch?v=5t796EGmdn8</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- LEVEL 3 continued -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+
+  <!-- TOE PULLS -->
+  <div class="exercise-block">
+    <h3>Toe Pulls</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/handstandtoepulls01.png" alt="Toe pulls step 1" class="step" />
+      <img src="assets/images/handstandtoepull02.png" alt="Toe pulls step 2" class="step" />
+      <img src="assets/images/handstandtoepull03.png" alt="Toe pulls step 3" class="step" />
+    </div>
+    <p>From back-to-wall (toes on wall), maintain tension. Shift your shoulders forward over your wrists while keeping your core locked. Initially, your feet slide down the wall. As you get stronger, they may momentarily leave it. This teaches under-balance correction.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 8–12 reps<br>Sets: 5 sets (heel pulls + toe pulls per set)</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=xm26KPUA7OI">youtube.com/watch?v=xm26KPUA7OI</a></div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=IBnOiDCXVKs">youtube.com/watch?v=IBnOiDCXVKs</a></div>
+    </div>
+  </div>
+
+  <!-- BOX BALANCE GAME -->
+  <div class="exercise-block">
+    <h3>Box-Assisted Balance Game</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/boxassistedhandstand01.png" alt="Box-assisted balance step 1" class="step" />
+      <img src="assets/images/boxassistedhandstand02.png" alt="Box-assisted balance step 2" class="step" />
+      <img src="assets/images/boxassistedhandstand03.png" alt="Box-assisted balance step 3" class="step" />
+    </div>
+    <p>This exercise brings together your heel and toe pull skills. Place a box in front for forearm catches if you overbalance. Set a 10-minute timer. Accumulate holds of increasing duration — start at 3 seconds. Once you can hit 15 holds at 3 seconds, increase to 4 seconds. Continue building until 10-second holds are repeatable.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10-minute practice block</div>
+      <div class="ex-video">▶ <a href="https://youtu.be/huCWZYfvVYY">youtu.be/huCWZYfvVYY</a></div>
+    </div>
+    <p class="callout">This is where the handstand starts to come together. Be patient.</p>
+  </div>
+
+  <!-- BRIEF: Chest-to-Wall -->
+  <div class="exercise-block">
+    <h3>Chest-to-Wall Handstand</h3>
+    <p>Continue as per Level 2.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 1 min unbroken<br>Sets: 3–5 sets</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=f1yLxNMq23A">youtube.com/watch?v=f1yLxNMq23A</a></div>
+    </div>
+  </div>
+
+  <div class="grad-box">
+    <div class="grad-check">✓</div>
+    <div class="grad-text">Level 3 Graduation: Can find freestanding balance consistently for 3 to 5 seconds.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     LEVEL 4
+     ============================================================ -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+  <div class="chapter-opener">
+    <h1>Level 4</h1>
+    <div class="ch-accent"></div>
+    <div class="ch-subtitle">Finding the Hold</div>
+  </div>
+
+  <p class="level-intro">You are finding moments of balance — kicking up, catching a few seconds, coming down. This level extends the balance game and introduces freestanding kick-up practice.</p>
+
+  <div class="exercise-block">
+    <h3>Wrist Heel Raises + Fin Push-ups</h3>
+    <p>Continue as per previous levels.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 reps each, hold last rep 10 sec<br>Sets: 3–5 supersets</div>
+    </div>
+  </div>
+
+  <div class="exercise-block">
+    <h3>Desk Stretches + Hang</h3>
+    <p>Continue.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 1 min unbroken hang<br>Sets: 3–5 sets</div>
+    </div>
+  </div>
+
+  <div class="exercise-block">
+    <h3>15-Minute Balance Game</h3>
+    <p>Extend the balance game to 15 minutes. The box is now optional. Continue accumulating holds of increasing duration — push toward consistent 10–15 second holds.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 15-minute practice block</div>
+      <div class="ex-video">▶ <a href="https://youtu.be/huCWZYfvVYY">youtu.be/huCWZYfvVYY</a></div>
+    </div>
+  </div>
+
+  <div class="exercise-block">
+    <h3>Chest-to-Wall Handstand</h3>
+    <p>All five focus points. 1-minute holds should be solid and automatic.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 1 min unbroken<br>Sets: 5 sets</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=f1yLxNMq23A">youtube.com/watch?v=f1yLxNMq23A</a></div>
+    </div>
+  </div>
+
+  <!-- KICK-UP -->
+  <div class="exercise-block">
+    <h3>Kick-up Practice</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/handstandkickup01.png" alt="Kick-up step 1" class="step" />
+      <img src="assets/images/handstandkickup02.png" alt="Kick-up step 2" class="step" />
+      <img src="assets/images/handstandkickup03.png" alt="Kick-up step 3" class="step" />
+      <img src="assets/images/handstandkickup04.png" alt="Kick-up step 4" class="step" />
+    </div>
+    <p>Practise kicking up to freestanding. Alternate legs. Do not fixate on catching balance — just work through kick-ups with intention. Focus on creating tension before your feet leave the ground. Point your toes from the start. Fewer moving parts means easier balance.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 kick-ups per leg<br>Sets: 5–10 sets</div>
+      <div class="ex-video">▶ <a href="https://youtu.be/7defUKA3D3w">youtu.be/7defUKA3D3w</a></div>
+    </div>
+  </div>
+
+  <div class="grad-box">
+    <div class="grad-check">✓</div>
+    <div class="grad-text">Level 4 Graduation: Can kick up and find balance consistently for 10 to 15 seconds.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     LEVEL 5
+     ============================================================ -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+  <div class="chapter-opener">
+    <h1>Level 5</h1>
+    <div class="ch-accent"></div>
+    <div class="ch-subtitle">Building Endurance</div>
+  </div>
+
+  <p class="level-intro">You can kick up and sustain 15 to 30-second holds regularly. This level develops the endurance and consistency required for a 60-second freestanding handstand. The emphasis shifts from finding balance to keeping it.</p>
+
+  <div class="exercise-block">
+    <h3>Wrist Heel Raises + Fin Push-ups</h3>
+    <p>Continue.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 reps each, hold last rep 10 sec<br>Sets: 3–5 supersets</div>
+    </div>
+  </div>
+
+  <div class="exercise-block">
+    <h3>Desk Stretches + Hang</h3>
+    <p>Continue.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 1 min unbroken hang<br>Sets: 3–5 sets</div>
+    </div>
+  </div>
+
+  <div class="exercise-block">
+    <h3>Chest-to-Wall Handstand</h3>
+    <p>Perfect form. All five focus points should be automatic.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 1 min unbroken<br>Sets: 5 sets</div>
+      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=f1yLxNMq23A">youtube.com/watch?v=f1yLxNMq23A</a></div>
+    </div>
+  </div>
+
+  <div class="exercise-block">
+    <h3>Kick-up Practice</h3>
+    <p>Focus on consistency and extending hold duration with each attempt.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 10 per leg<br>Sets: 5–10 sets</div>
+      <div class="ex-video">▶ <a href="https://youtu.be/7defUKA3D3w">youtu.be/7defUKA3D3w</a></div>
+    </div>
+  </div>
+
+  <!-- SHOULDER TAP -->
+  <div class="exercise-block">
+    <h3>Handstand Shoulder Tap</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/wallhandstandshouldertap01.png" alt="Handstand shoulder tap step 1" class="step" />
+      <img src="assets/images/wallhandstandshouldertap02.png" alt="Handstand shoulder tap step 2" class="step" />
+    </div>
+    <p>From chest-to-wall, shift your weight entirely onto one arm. Elevate strongly — push the ground away as hard as you can. Touch the opposite shoulder with your free hand. Alternate sides. This builds single-arm strength for advanced balance corrections.</p>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 5 taps per side<br>Sets: 3–5 sets</div>
+    </div>
+  </div>
+
+  <div class="grad-box">
+    <div class="grad-check">✓</div>
+    <div class="grad-text">Level 5 Graduation: Have a consistent handstand of 30+ seconds but have not yet achieved a 60-second hold.</div>
+  </div>
+</div>
+
+<!-- ============================================================
+     LEVEL 6
+     ============================================================ -->
+<div class="page">
+  <div class="running-header">The Handstand — The Complete Training Guide</div>
+  <div class="chapter-opener">
+    <h1>Level 6</h1>
+    <div class="ch-accent"></div>
+    <div class="ch-subtitle">The 60-Second Handstand</div>
+  </div>
+
+  <p class="level-intro">This is the grind. You can hold a handstand, but you are chasing 60 seconds. Practise most days. You will record many 50–59 second attempts before you break through. Once you achieve a clean 60-second hold on video, you graduate. Welcome to hand-balancing. You are now — officially — a beginner.</p>
+
+  <div class="exercise-block">
+    <h3>Freestanding Handstand</h3>
+    <div class="ebook-fig-group">
+      <img src="assets/images/freestandinghandstand1.png" alt="Freestanding handstand" class="step" />
+      <img src="assets/images/handstand01.png" alt="Freestanding handstand hold" class="step" />
+    </div>
+    <p>Maintain a freestanding handstand. Scale to chest-to-wall for remaining time if needed. Priorities, in order:</p>
+    <ol class="priority-list">
+      <li><b>1. Don't fall over.</b> Safety first, always.</li>
+      <li><b>2. Grip the ground.</b> Active fingers are your primary balance tool.</li>
+      <li><b>3. Push tall.</b> Shoulders touch your ears. Maximum elevation.</li>
+      <li><b>4. Posterior pelvic tilt.</b> Tuck your pelvis to stack your body.</li>
+      <li><b>5. Legs together.</b> Squeeze as one unit.</li>
+      <li><b>6. Point or flex your toes.</b> Total body tension, tip to tail.</li>
+    </ol>
+    <div class="ex-box">
+      <div class="ex-rx">Reps: 1 minute freestanding handstand<br>Sets: 5 rounds — 1 min work / 1 min rest</div>
+      <div class="ex-video">▶ <a href="https://youtu.be/fBiYbkG_Uqk">youtu.be/fBiYbkG_Uqk</a></div>
+    </div>
+  </div>
+
+  <div class="grad-box">
+    <div class="grad-check">✓</div>
+    <div class="grad-text">Level 6 Graduation: Record a 60-second freestanding handstand on video. Congratulations — you have earned your handstand. Now the real journey begins.</div>
+  </div>
+
+  <hr class="accent-hr">
+
+  <div class="closing">
+    <p class="cl-main">Thank you for training with The Bodyweight Gym.</p>
+    <p class="cl-sub">The handstand is a lifelong skill. Continue practising, continue refining, and enjoy the process.</p>
+  </div>
+</div>
+
+</body>
+</html>

@@ -1,1150 +1,2122 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Handstand — The Complete Training Guide</title>
+<link rel="icon" href="assets/images/freestandinghandstand1.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Source+Sans+3:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
 /* ================================================================
-   PRINT-PERFECT EBOOK — 6×9" page size
-   Hit Ctrl+P / Cmd+P → Save as PDF
-   Set margins to "None" or "Minimum" in print dialog
+   EBOOK READER — The Handstand
+   Scroll-based reader with sidebar TOC, themes, responsive
    ================================================================ */
 
-:root {
-  --navy: #0F172A;
-  --dark: #1E3A5F;
-  --accent: #2980B9;
-  --accent-light: #EBF5FB;
-  --accent-mid: #D4E6F1;
+/* ===== THEME VARIABLES ===== */
+:root, [data-theme="light"] {
+  --bg: #ffffff;
   --text: #334155;
-  --sub: #64748B;
-  --light: #F8FAFC;
-  --border: #E2E8F0;
-  --warm: #D97706;
-  --syne: 'Plus Jakarta Sans', sans-serif;
-  --dm: 'Source Sans 3', sans-serif;
+  --heading: #0f172a;
+  --heading2: #1e3a5f;
+  --sub: #64748b;
+  --border: #e2e8f0;
+  --accent: #2980B9;
+  --accent-soft: rgba(41,128,185,0.10);
+  --exbox-bg: #fafaf9;
+  --table-header-bg: #0f172a;
+  --table-header-text: #fff;
+  --link: #2980B9;
+  --shadow: 0 1px 3px rgba(0,0,0,0.06);
+}
+[data-theme="sepia"] {
+  --bg: #f8f1e3;
+  --text: #5b4636;
+  --heading: #3e2c1c;
+  --heading2: #4a3728;
+  --sub: #7a6652;
+  --border: #d4c4a0;
+  --accent: #2472a4;
+  --accent-soft: rgba(36,114,164,0.10);
+  --exbox-bg: #f0e8d6;
+  --table-header-bg: #3e2c1c;
+  --table-header-text: #f8f1e3;
+  --link: #2472a4;
+  --shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+[data-theme="dark"] {
+  --bg: #16162a;
+  --text: #cbd5e1;
+  --heading: #f1f5f9;
+  --heading2: #e2e8f0;
+  --sub: #94a3b8;
+  --border: #2d2d4a;
+  --accent: #5dade2;
+  --accent-soft: rgba(93,173,226,0.12);
+  --exbox-bg: #1e1e38;
+  --table-header-bg: #0f0f24;
+  --table-header-text: #e2e8f0;
+  --link: #5dade2;
+  --shadow: 0 1px 4px rgba(0,0,0,0.3);
 }
 
-/* ===== PAGE SETUP ===== */
-@page {
-  size: 6in 9in;
-  margin: 0.7in 0.65in 0.6in 0.65in;
-  @bottom-center {
-    content: counter(page);
-    font-family: 'Source Sans 3', sans-serif;
-    font-size: 8pt;
-    color: #94A3B8;
-  }
+/* Chrome (toolbar, sidebar) — always dark */
+:root {
+  --chrome-bg: #0a0a0a;
+  --chrome-text: #f0ede8;
+  --chrome-muted: #8a857d;
+  --chrome-dim: #5a5650;
+  --chrome-border: rgba(255,255,255,0.06);
+  --chrome-hover: rgba(255,255,255,0.06);
+  --chrome-accent: #2980B9;
+  --font-heading: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  --font-body: 'Source Sans 3', -apple-system, sans-serif;
+  --font-scale: 1;
 }
 
-@page :first {
-  margin: 0;
-  @bottom-center { content: none; }
-}
-
-@page cover {
-  margin: 0;
-  @bottom-center { content: none; }
-}
-
-@page frontmatter {
-  @bottom-center { content: none; }
-}
-
+/* ===== RESET ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-html {
-  font-size: 10pt;
-  -webkit-print-color-adjust: exact;
-  print-color-adjust: exact;
-}
-
+html { font-size: 16px; height: 100%; -webkit-text-size-adjust: 100%; }
 body {
-  font-family: var(--dm);
+  font-family: var(--font-body);
   color: var(--text);
   line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+  background: var(--chrome-bg);
+  height: 100%;
+  overflow: hidden;
+  margin: 0;
+}
+img { max-width: 100%; height: auto; display: block; }
+a { color: var(--link); }
+
+/* ===== AUTH GATE ===== */
+#auth-gate {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #0a0a0a;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; text-align: center; padding: 2rem;
+}
+#auth-gate.hidden { display: none; }
+.gate-icon {
+  width: 72px; height: 72px; border: 2px solid var(--chrome-accent);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5rem;
+}
+.gate-icon svg { width: 32px; height: 32px; stroke: var(--chrome-accent); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.gate-title {
+  font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800;
+  color: #fff; margin-bottom: 0.5rem;
+}
+.gate-message { font-size: 1rem; color: #8a857d; max-width: 400px; margin-bottom: 2rem; line-height: 1.6; }
+.gate-message.error { color: #f87171; }
+.gate-btn {
+  display: inline-block; padding: 12px 32px; background: var(--chrome-accent);
+  color: #0a0a0a; font-family: var(--font-heading); font-weight: 700;
+  font-size: 0.9rem; text-decoration: none; border-radius: 8px;
+  transition: background 0.2s;
+}
+.gate-btn:hover { background: #5dade2; }
+.gate-spinner {
+  width: 40px; height: 40px; border: 3px solid #222;
+  border-top-color: var(--chrome-accent); border-radius: 50%;
+  animation: spin 0.8s linear infinite; margin-bottom: 1rem;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ===== READER SHELL ===== */
+#reader { display: none; flex-direction: column; height: 100vh; height: 100dvh; width: 100vw; overflow: hidden; }
+#reader.active { display: flex; }
+
+/* ===== PROGRESS BAR ===== */
+#progress-bar {
+  height: 3px; background: rgba(255,255,255,0.06);
+  flex-shrink: 0; position: relative; z-index: 110;
+}
+#progress-fill {
+  height: 100%; width: 0%; background: var(--chrome-accent);
+  transition: width 0.15s ease-out;
 }
 
-/* ===== SCREEN-ONLY WRAPPER ===== */
-@media screen {
-  body {
-    background: #e5e7eb;
-    padding: 2rem 0;
-  }
-  .page {
-    width: 6in;
-    min-height: 9in;
-    margin: 1rem auto;
-    background: white;
-    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
-    padding: 0.7in 0.65in 0.6in 0.65in;
-    position: relative;
-  }
-  .page-cover {
-    padding: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .page-frontmatter {
-    /* same as page but no page number display */
-  }
+/* ===== TOOLBAR ===== */
+#toolbar {
+  height: 56px; flex-shrink: 0;
+  background: var(--chrome-bg);
+  border-bottom: 1px solid var(--chrome-border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 16px; z-index: 100;
+  user-select: none; -webkit-user-select: none;
+}
+.toolbar-left, .toolbar-right { display: flex; align-items: center; gap: 4px; }
+.toolbar-title-area { flex: 1; min-width: 0; padding: 0 12px; }
+.toolbar-chapter {
+  font-family: var(--font-heading); font-size: 0.85rem; font-weight: 600;
+  color: var(--chrome-text); white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis; display: block;
+}
+.toolbar-sub {
+  font-size: 0.7rem; color: var(--chrome-muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.tb-btn {
+  width: 40px; height: 40px; display: flex; align-items: center; justify-content: center;
+  border: none; background: transparent; cursor: pointer; border-radius: 8px;
+  transition: background 0.15s; color: var(--chrome-text); padding: 0; flex-shrink: 0;
+}
+.tb-btn:hover { background: var(--chrome-hover); }
+.tb-btn svg {
+  width: 20px; height: 20px; stroke: currentColor; fill: none;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
 }
 
-@media print {
-  body { background: white; padding: 0; }
-  .page {
-    page-break-after: always;
-    padding: 0;
-    min-height: auto;
-  }
-  .page:last-child { page-break-after: avoid; }
-  .page-cover { page: cover; }
-  .page-frontmatter { page: frontmatter; }
+/* ===== READER BODY (sidebar + content) ===== */
+#reader-body { flex: 1; display: flex; overflow: hidden; min-height: 0; }
+
+/* ===== TOC SIDEBAR ===== */
+#toc-sidebar {
+  width: 280px; flex-shrink: 0;
+  background: var(--chrome-bg);
+  border-right: 1px solid var(--chrome-border);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  transition: margin-left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+#toc-sidebar.collapsed { margin-left: -280px; }
+
+.toc-header {
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--chrome-border);
+}
+.toc-header h2 {
+  font-family: var(--font-heading); font-size: 0.7rem; font-weight: 700;
+  color: var(--chrome-muted); text-transform: uppercase; letter-spacing: 0.15em;
+}
+.toc-nav {
+  flex: 1; overflow-y: auto; padding: 12px 0;
+  scrollbar-width: thin; scrollbar-color: #333 transparent;
+}
+.toc-link {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 24px; text-decoration: none;
+  font-family: var(--font-body); font-size: 0.88rem; font-weight: 400;
+  color: var(--chrome-muted); cursor: pointer;
+  transition: color 0.15s, background 0.15s;
+  border-left: 3px solid transparent;
+}
+.toc-link:hover { color: var(--chrome-text); background: var(--chrome-hover); }
+.toc-link.active {
+  color: var(--chrome-accent); font-weight: 600;
+  border-left-color: var(--chrome-accent);
+  background: rgba(41,128,185,0.06);
+}
+.toc-link .toc-num {
+  font-family: var(--font-heading); font-size: 0.7rem; font-weight: 700;
+  color: var(--chrome-dim); min-width: 22px;
+}
+.toc-link.active .toc-num { color: var(--chrome-accent); }
+.toc-link-sub { padding-left: 60px; font-size: 0.82rem; }
+
+/* Mobile overlay */
+#toc-overlay {
+  display: none; position: fixed; inset: 0; z-index: 199;
+  background: rgba(0,0,0,0.6); opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+#toc-overlay.visible { opacity: 1; pointer-events: auto; }
+
+/* ===== CONTENT AREA ===== */
+#content-area {
+  flex: 1; overflow-y: auto; overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  background: var(--bg);
+  scroll-behavior: smooth;
 }
 
-/* ===== TYPOGRAPHY ===== */
-h1, h2, h3, h4 { font-family: var(--syne); line-height: 1.15; }
+/* ===== BOOK CONTENT ===== */
 
-h1 { font-size: 22pt; font-weight: 800; color: var(--navy); letter-spacing: -0.02em; }
-h2 { font-size: 14pt; font-weight: 700; color: var(--dark); margin-bottom: 6pt; }
-h3 { font-size: 11pt; font-weight: 700; color: var(--accent); margin-bottom: 4pt; }
-
-p { margin-bottom: 6pt; font-weight: 400; }
-p + p { margin-top: 0; }
-
-strong, b { font-weight: 500; color: var(--dark); }
-
-/* ===== COVER PAGE ===== */
-.cover-inner {
-  width: 6in;
-  height: 9in;
-  background: var(--navy);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  padding: 1in;
-  position: relative;
+/* Cover Hero */
+.cover-hero {
+  position: relative; width: 100%;
+  min-height: 70vh;
+  background: #0a0a0a;
+  display: flex; align-items: center; justify-content: center;
+  overflow: hidden;
 }
-
-.cover-inner::before {
+.cover-hero::before {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 200px;
-  height: 200px;
-  border: 2px solid rgba(41, 128, 185, 0.15);
+  width: 300px; height: 300px;
+  border: 2px solid rgba(41,128,185,0.15);
   border-radius: 50%;
 }
-
-.cover-inner::after {
+.cover-hero::after {
   content: '';
   position: absolute;
-  top: 50%;
-  left: 50%;
+  top: 50%; left: 50%;
   transform: translate(-50%, -50%);
-  width: 320px;
-  height: 320px;
-  border: 1px solid rgba(41, 128, 185, 0.08);
+  width: 480px; height: 480px;
+  border: 1px solid rgba(41,128,185,0.08);
   border-radius: 50%;
 }
+.cover-content {
+  position: relative; z-index: 1; text-align: center; padding: 3rem 2rem;
+}
+.cover-label {
+  font-family: var(--font-heading); font-size: 1rem; font-weight: 800;
+  color: #fff; letter-spacing: 0.2em; display: block; margin-bottom: 0.5rem;
+}
+.cover-title {
+  font-family: var(--font-heading); font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 800; color: #fff; letter-spacing: -0.02em;
+  line-height: 1.1; margin-bottom: 1rem;
+}
+.cover-divider { width: 60px; height: 2px; background: var(--chrome-accent); margin: 0 auto 1rem; }
+.cover-subtitle {
+  font-family: var(--font-heading); font-size: 1rem; font-weight: 600;
+  color: #5dade2;
+}
+.cover-tagline {
+  font-family: var(--font-body); font-size: 0.9rem; font-style: italic;
+  color: #8a857d; margin-top: 0.5rem;
+}
+.cover-brand {
+  margin-top: 2.5rem; display: flex; flex-direction: column; align-items: center; gap: 0.75rem;
+}
+.cover-brand-line { width: 100px; height: 1px; background: var(--chrome-accent); opacity: 0.5; }
+.cover-brand span {
+  font-family: var(--font-heading); font-size: 0.65rem; font-weight: 700;
+  color: var(--chrome-accent); letter-spacing: 0.25em; text-transform: uppercase;
+}
 
-.cover-the { font-family: var(--syne); font-size: 18pt; font-weight: 800; color: white; letter-spacing: 0.1em; }
-.cover-title { font-family: var(--syne); font-size: 36pt; font-weight: 800; color: white; letter-spacing: -0.02em; margin: 4pt 0 12pt; }
-.cover-line { width: 60px; height: 2px; background: var(--accent); margin: 0 auto 12pt; }
-.cover-subtitle { font-family: var(--syne); font-size: 11pt; font-weight: 600; color: var(--accent-mid); }
-.cover-tagline { font-family: var(--dm); font-size: 9pt; color: #94A3B8; margin-top: 8pt; font-weight: 400; font-style: italic; }
-.cover-brand-line { width: 120px; height: 1.5px; background: var(--accent); margin: 0 auto; position: absolute; bottom: 1.1in; }
-.cover-brand { font-family: var(--syne); font-size: 8pt; font-weight: 700; color: var(--accent); letter-spacing: 0.2em; text-transform: uppercase; position: absolute; bottom: 0.7in; }
+/* Chapter Content Wrapper */
+.chapter-content {
+  max-width: 700px; margin: 0 auto;
+  padding: 2.5rem 3rem 3rem;
+  font-size: calc(1.0625rem * var(--font-scale));
+  line-height: 1.8;
+  color: var(--text);
+}
 
-/* ===== TITLE PAGE ===== */
-.title-page { display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 7.7in; text-align: center; }
-.title-page h1 { font-size: 26pt; margin-bottom: 6pt; }
-.title-page .accent-rule { width: 80px; height: 2px; background: var(--accent); margin: 8pt auto; }
-.title-page .subtitle { font-family: var(--syne); font-size: 12pt; font-weight: 600; color: var(--accent); }
-.title-page .tagline { font-size: 10pt; color: var(--sub); font-weight: 400; margin-top: 4pt; }
-.title-page .author { font-family: var(--syne); font-weight: 600; font-size: 10pt; color: var(--text); margin-top: 1.5in; }
-.title-page .edition { font-size: 9pt; color: var(--sub); font-weight: 400; margin-top: 2pt; }
-
-/* ===== DISCLAIMER ===== */
-.disclaimer { padding-top: 0.8in; }
-.disclaimer h2 { color: var(--sub); font-size: 12pt; margin-bottom: 4pt; }
-.disclaimer-rule { width: 100%; height: 1px; background: var(--border); margin-bottom: 10pt; }
-.disclaimer p { font-size: 9pt; line-height: 1.55; color: var(--sub); }
-.disclaimer .copyright { text-align: center; margin-top: 0.6in; font-size: 7.5pt; color: #94A3B8; }
-
-/* ===== TABLE OF CONTENTS ===== */
-.toc h1 { margin-bottom: 6pt; }
-.toc-accent { width: 50px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 16pt; }
-.toc-item { font-size: 10pt; line-height: 2.2; color: var(--text); font-weight: 400; }
-.toc-sub { padding-left: 18pt; color: var(--sub); font-weight: 400; }
-
-/* ===== CHAPTER OPENER ===== */
+/* Chapter Opener (dark bar) */
 .chapter-opener {
-  background: var(--navy);
-  color: white;
-  padding: 14pt 16pt;
-  margin: 0 -0.65in;
-  width: calc(100% + 1.3in);
-  margin-bottom: 12pt;
-  position: relative;
+  background: #0a0a0a; padding: 2rem 3rem; position: relative;
+  border-bottom: 3px solid var(--chrome-accent);
 }
 .chapter-opener h1 {
-  color: white;
-  font-size: 18pt;
-  margin-bottom: 2pt;
+  font-family: var(--font-heading); font-size: 1.75rem; font-weight: 800;
+  color: #fff; letter-spacing: -0.01em; margin: 0;
 }
 .chapter-opener .ch-accent {
-  width: 50px;
-  height: 2px;
-  background: var(--accent);
-  margin: 6pt 0 4pt;
+  width: 40px; height: 2px; background: var(--chrome-accent); margin: 0.5rem 0 0.25rem;
 }
 .chapter-opener .ch-subtitle {
-  font-family: var(--dm);
-  font-size: 10pt;
-  color: var(--accent-mid);
-  font-weight: 400;
+  font-family: var(--font-body); font-size: 0.95rem; color: #8a857d; font-weight: 400;
 }
 
-/* ===== LEVEL INTRO ===== */
+/* Section within book content */
+.book-section { border-bottom: 1px solid var(--border); }
+.book-section:last-child { border-bottom: none; }
+
+/* Typography in chapter-content */
+.chapter-content h1 {
+  font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800;
+  color: var(--heading); margin: 2rem 0 0.75rem; letter-spacing: -0.01em;
+}
+.chapter-content h2, .chapter-content .section-title {
+  font-family: var(--font-heading); font-size: 1.15rem; font-weight: 700;
+  color: var(--heading2); margin: 2.5rem 0 0.75rem;
+}
+.chapter-content h3 {
+  font-family: var(--font-heading); font-size: 1rem; font-weight: 700;
+  color: var(--accent); margin: 1.5rem 0 0.5rem;
+}
+.chapter-content p {
+  margin-bottom: 1em; color: var(--text); font-weight: 400;
+}
+.chapter-content strong, .chapter-content b {
+  font-weight: 600; color: var(--heading2);
+}
+.chapter-content a { color: var(--link); text-decoration-color: rgba(41,128,185,0.3); }
+.chapter-content a:hover { text-decoration-color: var(--link); }
+
+/* Level intro (italic) */
 .level-intro {
-  font-style: italic;
-  color: var(--sub);
-  font-weight: 400;
-  margin-bottom: 10pt;
-  font-size: 10pt;
+  font-style: italic; color: var(--sub); margin-bottom: 1.5em;
+  padding: 1rem 1.25rem; background: var(--accent-soft); border-radius: 8px;
+  border-left: 3px solid var(--accent); line-height: 1.7;
 }
 
-/* ===== PLACEHOLDER IMAGES ===== */
-.placeholder-img {
-  width: 55%;
-  aspect-ratio: 4/3;
-  background: #F1F5F9;
-  border: 2px dashed #CBD5E1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin: 8pt auto;
-  border-radius: 4px;
-  color: #94A3B8;
-  font-size: 8pt;
-  text-align: center;
-  font-family: var(--dm);
-}
-.placeholder-img .ph-icon {
-  font-size: 20pt;
-  margin-bottom: 4pt;
-  opacity: 0.4;
-}
-.placeholder-img .ph-label {
-  font-weight: 500;
-  color: var(--sub);
-  font-size: 9pt;
-}
-.placeholder-img .ph-hint {
-  font-size: 7pt;
-  color: #94A3B8;
-  margin-top: 2pt;
-}
-
-.placeholder-img-tall {
-  aspect-ratio: 3/4;
-  width: 40%;
-}
-
-.placeholder-img-wide {
-  aspect-ratio: 16/9;
-  width: 65%;
-}
-
-/* ===== REAL EXERCISE IMAGES (no crop, large for detail) ===== */
-.ebook-fig {
-  margin: 8pt auto;
-  text-align: center;
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
-.ebook-fig img {
-  max-width: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  display: block;
-  margin: 0 auto;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-.ebook-fig-wide img {
-  width: 85%;
-  max-width: 4.2in;
-}
-.ebook-fig-tall img {
-  width: 55%;
-  max-width: 2.8in;
-}
-.ebook-fig-group {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8pt;
-  margin: 8pt auto;
-  break-inside: avoid;
-  page-break-inside: avoid;
-}
-.ebook-fig-group img {
-  max-width: 100%;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  flex: 1 1 auto;
-  min-width: 0;
-  border-radius: 4px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
-}
-.ebook-fig-group img.step {
-  max-width: 48%;
-  max-height: 2.2in;
-}
-.ebook-fig-caption {
-  font-size: 8pt;
-  color: var(--sub);
-  margin-top: 2pt;
-  font-style: italic;
-}
-
-/* ===== EXERCISE BLOCK ===== */
+/* ===== EXERCISE BLOCKS ===== */
 .exercise-block {
-  margin-bottom: 10pt;
-  break-inside: avoid;
-  page-break-inside: avoid;
+  margin: 1.75rem 0; padding: 1.5rem; background: var(--bg);
+  border: 1px solid var(--border); border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+.exercise-block h3 {
+  margin: 0 0 0.75rem; font-size: 1.05rem;
 }
 
-/* ===== EXERCISE BOX (prescription) ===== */
+/* Exercise images */
+.exercise-img {
+  margin: 1rem 0; border-radius: 8px; overflow: hidden;
+}
+.exercise-img img {
+  width: 100%; border-radius: 8px;
+  object-fit: contain; object-position: center;
+}
+.exercise-img-tall { max-width: 280px; margin-left: auto; margin-right: auto; }
+.exercise-img-wide { max-width: 100%; }
+.exercise-img-mu-hero { max-width: 100%; }
+
+.exercise-sequence {
+  display: grid; gap: 10px; margin: 1rem 0;
+}
+.exercise-sequence img {
+  width: 100%; border-radius: 6px;
+  object-fit: contain; object-position: center;
+}
+.exercise-sequence-2 { grid-template-columns: 1fr 1fr; }
+.exercise-sequence-3 { grid-template-columns: 1fr 1fr 1fr; }
+.exercise-sequence-4 { grid-template-columns: 1fr 1fr; }
+.exercise-sequence-5 { grid-template-columns: 1fr 1fr 1fr; }
+
+.exercise-sequence-caption {
+  font-size: 0.8rem; color: var(--sub); text-align: center;
+  margin: 0.25rem 0 0.5rem; font-style: italic;
+}
+
+/* Prescription box */
 .ex-box {
-  border-left: 3px solid var(--accent);
-  padding: 6pt 0 6pt 10pt;
-  margin: 4pt 0;
-  background: var(--light);
+  margin-top: 1rem; padding: 0.875rem 1rem;
+  background: var(--exbox-bg); border-radius: 8px;
+  border: 1px solid var(--border);
 }
-.ex-box .ex-rx {
-  font-family: var(--syne);
-  font-size: 9pt;
-  font-weight: 600;
-  color: var(--dark);
-  line-height: 1.5;
+.ex-rx {
+  font-family: var(--font-heading); font-size: 0.88rem; font-weight: 600;
+  color: var(--heading2); line-height: 1.6;
 }
-.ex-box .ex-video {
-  font-size: 7.5pt;
-  color: var(--warm);
-  margin-top: 2pt;
-  font-weight: 400;
-  word-break: break-all;
+.ex-video {
+  margin-top: 0.5rem; font-size: 0.8rem;
 }
-.ex-box .ex-video a {
-  color: var(--warm);
-  text-decoration: none;
+.ex-video a {
+  color: var(--accent); text-decoration: none;
+  display: inline-flex; align-items: center; gap: 6px;
+  font-weight: 500; transition: opacity 0.15s;
 }
+.ex-video a:hover { opacity: 0.8; }
+.ex-video a::before {
+  content: '▶'; font-size: 0.65rem;
+}
+.ex-video-none { color: var(--sub); font-size: 0.8rem; margin-top: 0.5rem; }
 
-/* ===== CALLOUT ===== */
-.callout {
-  font-style: italic;
-  color: var(--dark);
-  padding: 0 12pt;
-  margin: 6pt 0;
-  font-size: 10pt;
-  font-weight: 400;
-}
-
-/* ===== GRADUATION BOX ===== */
+/* Graduation box */
 .grad-box {
-  border: 1.5px solid var(--accent);
-  padding: 10pt 14pt;
-  margin: 10pt 0;
-  display: flex;
-  gap: 10pt;
-  align-items: flex-start;
-  break-inside: avoid;
+  border: 2px solid var(--accent);
+  padding: 1rem 1.25rem; margin: 1.25rem 0;
+  display: flex; gap: 12px; align-items: flex-start;
+  border-radius: 8px; background: var(--accent-soft);
 }
-.grad-box .grad-check {
-  font-size: 14pt;
-  color: var(--accent);
-  line-height: 1;
-  flex-shrink: 0;
-}
-.grad-box .grad-text {
-  font-family: var(--syne);
-  font-size: 9pt;
-  font-weight: 600;
-  color: var(--dark);
-  line-height: 1.5;
+.grad-check { font-size: 1.25rem; color: var(--accent); flex-shrink: 0; }
+.grad-text {
+  font-family: var(--font-heading); font-size: 0.9rem; font-weight: 600;
+  color: var(--heading2); line-height: 1.5;
 }
 
-/* ===== BENCHMARKING TABLE ===== */
+/* Callout */
+.callout {
+  font-style: italic; color: var(--heading2);
+  padding: 1rem 1.25rem; margin: 1.5rem 0;
+  background: var(--accent-soft); border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+
+/* Benchmarking table */
 .bench-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 9pt;
-  margin: 8pt 0;
+  width: 100%; border-collapse: collapse; margin: 1rem 0;
+  font-size: 0.9rem; border-radius: 8px; overflow: hidden;
 }
 .bench-table th {
-  background: var(--navy);
-  color: white;
-  font-family: var(--syne);
-  font-weight: 600;
-  padding: 5pt 7pt;
-  text-align: left;
+  background: var(--table-header-bg); color: var(--table-header-text);
+  font-family: var(--font-heading); font-weight: 600;
+  padding: 0.75rem 1rem; text-align: left;
 }
-.bench-table th:first-child { text-align: center; width: 12%; }
+.bench-table th:first-child { text-align: center; width: 60px; }
 .bench-table td {
-  padding: 5pt 7pt;
-  border-bottom: 1px solid var(--border);
-  font-weight: 400;
-  vertical-align: top;
+  padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);
+  color: var(--text); vertical-align: top;
 }
 .bench-table td:first-child {
-  text-align: center;
-  font-family: var(--syne);
-  font-weight: 600;
-  color: var(--accent);
+  text-align: center; font-family: var(--font-heading);
+  font-weight: 700; color: var(--accent);
 }
 
-/* ===== SECTION TITLE ===== */
-.section-title {
-  font-family: var(--syne);
-  font-size: 12pt;
-  font-weight: 700;
-  color: var(--dark);
-  margin: 14pt 0 4pt;
-}
-
-/* ===== BLOCK HEADING (sub-block) ===== */
+/* Block heading */
 .block-heading {
-  font-family: var(--syne);
-  font-size: 10pt;
-  font-weight: 700;
-  color: var(--accent);
-  margin: 8pt 0 2pt;
+  font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700;
+  color: var(--accent); margin: 1.5rem 0 0.25rem;
 }
 
-/* ===== BULLET LIST ===== */
+/* Priority list */
 .priority-list {
-  list-style: none;
-  padding: 0;
-  margin: 4pt 0 8pt 0;
+  list-style: none; padding: 0; margin: 0.5rem 0 1rem;
 }
 .priority-list li {
-  padding: 1pt 0 1pt 16pt;
-  font-size: 10pt;
-  font-weight: 400;
-  line-height: 1.5;
+  padding: 0.2rem 0 0.2rem 1.25rem; font-size: 0.95rem;
+  line-height: 1.6;
 }
 
-/* ===== HORIZONTAL RULE ===== */
-.accent-hr {
-  border: none;
-  height: 1.5px;
-  background: var(--accent);
-  margin: 16pt 0;
-}
-
-/* ===== CLOSING ===== */
+/* Closing section */
 .closing {
-  text-align: center;
-  margin-top: 24pt;
-  color: var(--sub);
+  text-align: center; padding: 3rem 0 1rem;
 }
 .closing .cl-main {
-  font-family: var(--syne);
-  font-weight: 600;
-  font-size: 10pt;
+  font-family: var(--font-heading); font-weight: 700; font-size: 1.25rem;
+  color: var(--heading);
 }
 .closing .cl-sub {
-  font-style: italic;
-  font-size: 9pt;
-  font-weight: 400;
-  margin-top: 3pt;
+  font-style: italic; color: var(--sub); margin-top: 0.5rem;
 }
 
-/* ===== RUNNING HEADER (screen only) ===== */
-.running-header {
-  font-size: 6.5pt;
-  color: #94A3B8;
-  text-align: center;
-  padding-bottom: 6pt;
-  border-bottom: 0.5pt solid var(--border);
-  margin-bottom: 12pt;
-  font-weight: 400;
+/* Title page */
+.title-page {
+  display: flex; flex-direction: column; justify-content: center;
+  align-items: center; min-height: 50vh; text-align: center;
+  padding: 3rem 2rem;
 }
+.title-page h1 {
+  font-family: var(--font-heading); font-size: 2rem; font-weight: 800;
+  color: var(--heading); margin-bottom: 0.5rem;
+}
+.title-page .accent-rule { width: 60px; height: 2px; background: var(--accent); margin: 0.5rem auto; }
+.title-page .subtitle { font-family: var(--font-heading); font-size: 1.05rem; font-weight: 600; color: var(--accent); }
+.title-page .tagline { font-size: 0.9rem; color: var(--sub); margin-top: 0.25rem; }
+.title-page .author { font-family: var(--font-heading); font-weight: 600; font-size: 0.95rem; color: var(--text); margin-top: 3rem; }
+.title-page .edition { font-size: 0.85rem; color: var(--sub); margin-top: 0.25rem; }
 
-.page-cover .running-header,
-.page-frontmatter .running-header { display: none; }
+/* Disclaimer */
+.disclaimer { padding: 2rem 0; }
+.disclaimer h2 { font-family: var(--font-heading); color: var(--sub); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+.disclaimer-rule { width: 100%; height: 1px; background: var(--border); margin-bottom: 1rem; }
+.disclaimer p { font-size: 0.88rem; color: var(--sub); line-height: 1.6; margin-bottom: 0.75rem; }
+.copyright { text-align: center; margin-top: 2rem; }
+.copyright p { font-size: 0.75rem; color: var(--sub); margin-bottom: 0.25rem; }
 
-/* ===== HELPERS ===== */
-.mt-0 { margin-top: 0; }
-.mb-0 { margin-bottom: 0; }
-.mb-sm { margin-bottom: 4pt; }
-.mb-md { margin-bottom: 8pt; }
-.mb-lg { margin-bottom: 16pt; }
-.text-center { text-align: center; }
-.text-small { font-size: 9pt; }
-.text-xs { font-size: 7.5pt; }
+/* In-content TOC */
+.book-toc .toc-accent { width: 40px; height: 3px; background: var(--accent); border-radius: 2px; margin-bottom: 1.25rem; }
+.book-toc .toc-item {
+  padding: 0.4rem 0; font-size: 0.95rem; color: var(--text);
+  cursor: pointer; transition: color 0.15s;
+}
+.book-toc .toc-item:hover { color: var(--accent); }
+.book-toc .toc-sub { padding-left: 1.25rem; color: var(--sub); }
+
+/* Accent HR */
+.accent-hr { border: none; height: 2px; background: var(--accent); margin: 2rem 0; border-radius: 1px; }
+
+/* Helper classes */
+.text-small { font-size: 0.88rem; }
 .text-sub { color: var(--sub); }
 
-/* ===== PRINT OVERRIDES ===== */
+/* Back to top */
+#back-to-top {
+  position: fixed; bottom: 24px; right: 24px; z-index: 90;
+  width: 44px; height: 44px; border-radius: 50%;
+  background: var(--chrome-accent); color: #0a0a0a;
+  border: none; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+  opacity: 0; transform: translateY(12px);
+  transition: opacity 0.3s, transform 0.3s;
+  pointer-events: none;
+}
+#back-to-top.visible { opacity: 1; transform: translateY(0); pointer-events: auto; }
+#back-to-top:hover { background: #5dade2; }
+#back-to-top svg {
+  width: 20px; height: 20px; stroke: currentColor; fill: none;
+  stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ===== SETTINGS PANEL ===== */
+.dropdown-panel {
+  position: fixed; top: 60px; right: 16px;
+  background: var(--chrome-bg); border: 1px solid var(--chrome-border);
+  border-radius: 12px; padding: 20px; z-index: 300;
+  min-width: 260px; box-shadow: 0 12px 40px rgba(0,0,0,0.5);
+  transform: translateY(-8px); opacity: 0; pointer-events: none;
+  transition: transform 0.2s, opacity 0.2s;
+}
+.dropdown-panel.open { transform: translateY(0); opacity: 1; pointer-events: auto; }
+
+.panel-section { margin-bottom: 16px; }
+.panel-section:last-child { margin-bottom: 0; }
+.panel-label {
+  font-family: var(--font-heading); font-size: 0.65rem; font-weight: 700;
+  color: var(--chrome-dim); text-transform: uppercase;
+  letter-spacing: 0.12em; margin-bottom: 10px;
+}
+
+/* Font size controls */
+.font-size-row { display: flex; align-items: center; gap: 12px; }
+.font-btn {
+  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
+  border: 1px solid rgba(255,255,255,0.1); background: transparent;
+  cursor: pointer; border-radius: 8px; color: var(--chrome-text);
+  font-family: var(--font-heading); font-size: 0.95rem; font-weight: 700;
+  transition: background 0.15s;
+}
+.font-btn:hover { background: var(--chrome-hover); }
+.font-size-display {
+  flex: 1; text-align: center; font-family: var(--font-body);
+  font-size: 0.88rem; color: var(--chrome-text); font-variant-numeric: tabular-nums;
+}
+
+/* Theme buttons */
+.theme-row { display: flex; gap: 8px; }
+.theme-btn {
+  flex: 1; height: 38px; border: 2px solid rgba(255,255,255,0.1);
+  border-radius: 8px; cursor: pointer;
+  font-family: var(--font-heading); font-size: 0.75rem; font-weight: 600;
+  transition: border-color 0.15s, transform 0.1s;
+}
+.theme-btn:hover { transform: scale(1.03); }
+.theme-btn.active { border-color: var(--chrome-accent); box-shadow: 0 0 0 1px var(--chrome-accent); }
+.theme-btn-light { background: #fff; color: #1a1a2e; }
+.theme-btn-sepia { background: #f8f1e3; color: #5b4636; }
+.theme-btn-dark { background: #16162a; color: #e2e8f0; }
+
+/* ===== DOWNLOAD PANEL ===== */
+.dl-btn {
+  display: flex; align-items: center; gap: 12px; width: 100%;
+  padding: 12px 14px; border: 1px solid rgba(255,255,255,0.08);
+  background: transparent; border-radius: 10px; cursor: pointer;
+  margin-bottom: 8px; transition: background 0.15s;
+  text-align: left; color: var(--chrome-text);
+}
+.dl-btn:last-of-type { margin-bottom: 0; }
+.dl-btn:hover { background: var(--chrome-hover); }
+.dl-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.dl-icon.pdf { background: rgba(239,68,68,0.15); }
+.dl-icon.pdf svg { stroke: #ef4444; }
+.dl-icon.epub { background: rgba(34,197,94,0.15); }
+.dl-icon.epub svg { stroke: #22c55e; }
+.dl-icon svg { width: 20px; height: 20px; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.dl-btn-text { flex: 1; }
+.dl-btn-title { font-family: var(--font-heading); font-size: 0.88rem; font-weight: 700; color: var(--chrome-text); }
+.dl-btn-hint { font-size: 0.7rem; color: var(--chrome-dim); margin-top: 2px; }
+
+/* ===== TOAST ===== */
+#toast {
+  position: fixed; bottom: 32px; left: 50%; transform: translateX(-50%) translateY(20px);
+  background: #1a1a1a; color: #f0ede8; padding: 12px 24px;
+  border-radius: 10px; font-size: 0.88rem; font-family: var(--font-body);
+  box-shadow: 0 8px 30px rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.08);
+  opacity: 0; pointer-events: none; z-index: 500;
+  transition: opacity 0.3s, transform 0.3s;
+}
+#toast.visible { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 900px) {
+  #toc-sidebar {
+    position: fixed; top: 0; left: 0; bottom: 0;
+    z-index: 200; width: 300px; max-width: 85vw;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    margin-left: 0 !important;
+    border-right: none;
+  }
+  #toc-sidebar.mobile-open { transform: translateX(0); }
+  #toc-overlay { display: block; }
+  #toc-overlay.visible { pointer-events: auto; }
+
+  .chapter-content { padding: 1.75rem 1.5rem 2rem; }
+  .chapter-opener { padding: 1.5rem 1.5rem; }
+  .exercise-sequence-3 { grid-template-columns: 1fr 1fr; }
+  .exercise-sequence-5 { grid-template-columns: 1fr 1fr; }
+  .cover-hero { min-height: 60vh; }
+}
+
+@media (max-width: 480px) {
+  .chapter-content { padding: 1.25rem 1rem 1.5rem; }
+  .chapter-opener { padding: 1.25rem 1rem; }
+  .chapter-opener h1 { font-size: 1.4rem; }
+  .exercise-block { padding: 1rem; }
+  .exercise-sequence-2,
+  .exercise-sequence-3,
+  .exercise-sequence-4,
+  .exercise-sequence-5 { grid-template-columns: 1fr 1fr; }
+  .exercise-sequence-3 img:last-child:nth-child(odd) {
+    grid-column: 1 / -1; max-width: 60%; margin: 0 auto;
+  }
+}
+
+/* ===== PRINT — A4 book pagination ===== */
 @media print {
-  .running-header { display: none; } /* handled by @page */
-  .page-cover .cover-inner {
-    width: 6in;
-    height: 9in;
-    margin: -0.7in -0.65in;
+  #toolbar, #toc-sidebar, #toc-overlay, #progress-bar,
+  #settings-panel, #download-panel, #back-to-top,
+  #auth-gate, #toast { display: none !important; }
+
+  html, body {
+    overflow: visible !important; height: auto !important;
+    background: white !important; color: #222 !important;
+    font-size: 11pt !important; line-height: 1.55 !important;
   }
+  #reader { display: block !important; height: auto !important; overflow: visible !important; width: auto !important; }
+  #reader-body { display: block !important; overflow: visible !important; height: auto !important; }
+  #content-area { overflow: visible !important; height: auto !important; background: white !important; }
+  .book-section { border-bottom: none !important; }
+
+  @page { size: A4; margin: 2.2cm 2cm 2.5cm 2cm; }
+  @page :first { margin: 0; }
+
+  #cover { page-break-after: always; }
+  .cover-hero {
+    min-height: 0 !important; padding: 6cm 2cm 3cm !important;
+    background: transparent !important;
+  }
+  .cover-hero::before, .cover-hero::after { display: none !important; }
+  .cover-content { position: static !important; }
+  .cover-label { color: #000 !important; font-size: 12pt !important; }
+  .cover-title { color: #000 !important; font-size: 30pt !important; }
+  .cover-divider {
+    background: #000 !important; height: 3px !important; width: 80px !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .cover-subtitle { color: #444 !important; font-size: 13pt !important; }
+  .cover-tagline { color: #777 !important; }
+  .cover-brand span { color: #444 !important; }
+  .cover-brand-line {
+    background: #000 !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  #frontmatter { page-break-after: always; }
+  .title-page { min-height: auto !important; padding: 4cm 0 2cm !important; page-break-after: always; }
+  .title-page h1 { color: #000 !important; font-size: 24pt !important; }
+  .title-page .accent-rule {
+    background: #000 !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .title-page .subtitle { color: #444 !important; }
+  .title-page .tagline { color: #777 !important; }
+  .title-page .author { color: #222 !important; }
+  .title-page .edition { color: #777 !important; }
+  .disclaimer h2 { color: #555 !important; }
+  .disclaimer p { color: #555 !important; }
+
   .chapter-opener {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+    page-break-before: always;
+    background: transparent !important;
+    border-bottom: 3px solid #222 !important;
+    padding: 1.5cm 0 0.8cm !important;
+    margin: 0 !important;
   }
-  .placeholder-img,
-  .ebook-fig img,
-  .ebook-fig-group img {
-    -webkit-print-color-adjust: exact;
-    print-color-adjust: exact;
+  .chapter-opener h1 { color: #000 !important; font-size: 22pt !important; }
+  .chapter-opener .ch-accent {
+    background: #222 !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
   }
+  .chapter-opener .ch-subtitle { color: #555 !important; }
+  #frontmatter .chapter-opener { display: none !important; }
+
+  .chapter-content {
+    max-width: none !important; padding: 0.8cm 0 1cm !important;
+    font-size: 11pt !important;
+  }
+  .chapter-content p { color: #333 !important; }
+  .chapter-content h2, .chapter-content .section-title { color: #111 !important; font-size: 14pt !important; }
+  .chapter-content h3, .chapter-content .block-heading { color: #444 !important; font-size: 12pt !important; }
+  .chapter-content strong, .chapter-content b { color: #111 !important; }
+  .chapter-content a { color: #333 !important; text-decoration: underline !important; }
+  .ex-video a::before { content: '' !important; }
+
+  .level-intro {
+    background: #f5f5f5 !important; border-left: 3px solid #999 !important;
+    color: #444 !important; border-radius: 0 !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  .exercise-block {
+    break-inside: avoid !important; page-break-inside: avoid !important;
+    border: 1px solid #ccc !important; border-radius: 0 !important;
+    box-shadow: none !important; margin: 1cm 0 !important;
+  }
+  .exercise-block h3 { color: #444 !important; }
+
+  .ex-box {
+    background: #f5f5f5 !important; border: 1px solid #ddd !important;
+    border-radius: 0 !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .ex-rx { color: #222 !important; }
+
+  .exercise-img, .exercise-sequence {
+    break-inside: avoid !important; page-break-inside: avoid !important;
+  }
+  .exercise-img img, .exercise-sequence img { max-height: 8cm !important; }
+  .exercise-img-tall { max-width: 5cm !important; }
+
+  .bench-table {
+    break-inside: avoid !important; page-break-inside: avoid !important;
+  }
+  .bench-table th {
+    background: #333 !important; color: #fff !important;
+    -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important;
+  }
+  .bench-table td { color: #333 !important; }
+  .bench-table td:first-child { color: #333 !important; font-weight: 700 !important; }
+
+  .callout {
+    background: #f5f5f5 !important; border-left: 3px solid #999 !important;
+    color: #333 !important; border-radius: 0 !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  .grad-box {
+    break-inside: avoid !important;
+    border: 2px solid #444 !important; border-radius: 0 !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  .accent-hr {
+    background: #444 !important;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+
+  .closing { padding-top: 3cm !important; }
+  .closing .cl-main { color: #000 !important; }
+  .closing .cl-sub { color: #555 !important; }
 }
 </style>
 </head>
 <body>
 
 <!-- ============================================================
-     COVER
+     AUTH GATE
      ============================================================ -->
-<div class="page page-cover">
-  <div class="cover-inner">
-    <div class="cover-the">THE</div>
-    <div class="cover-title">HANDSTAND</div>
-    <div class="cover-line"></div>
-    <div class="cover-subtitle">The Complete Training Guide</div>
-    <div class="cover-tagline">From Zero to 60-Second Freestanding Hold</div>
-    <div class="cover-brand-line"></div>
-    <div class="cover-brand">The Bodyweight Gym</div>
+<div id="auth-gate">
+  <div class="gate-spinner" id="gate-spinner"></div>
+  <div class="gate-icon" id="gate-icon" style="display:none;">
+    <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
   </div>
+  <div class="gate-title" id="gate-title">Verifying Purchase…</div>
+  <div class="gate-message" id="gate-message">Please wait while we verify your access.</div>
+  <a href="/" class="gate-btn" id="gate-btn" style="display:none;">Purchase the Guide</a>
 </div>
 
 <!-- ============================================================
-     TITLE PAGE
+     READER
      ============================================================ -->
-<div class="page page-frontmatter">
-  <div class="title-page">
-    <h1>THE HANDSTAND</h1>
-    <div class="accent-rule"></div>
-    <div class="subtitle">The Complete Training Guide</div>
-    <div class="tagline">From Zero to 60-Second Freestanding Hold</div>
-    <div class="author">The Bodyweight Gym</div>
-    <div class="edition">Second Edition</div>
-  </div>
-</div>
+<div id="reader">
 
-<!-- ============================================================
-     DISCLAIMER
-     ============================================================ -->
-<div class="page page-frontmatter">
-  <div class="disclaimer">
-    <h2>Disclaimer</h2>
-    <div class="disclaimer-rule"></div>
-    <p>Before starting any exercise programme, consult a qualified fitness or sports professional to ensure this programme is suitable for you. Do not undertake training with The Bodyweight Gym without professional or qualified instruction on proper technique. Use common sense when training and understand your personal limitations.</p>
-    <p>Any programme involving resistance training, gymnastics, or activities at height is potentially dangerous and could lead to severe injury. The user assumes all risks and responsibilities for injuries which may occur during or following use of this programme. The Bodyweight Gym cannot be held responsible for any injuries which may occur as a result of training with this programme.</p>
-    <p>The Bodyweight Gym and the buyer disclaim any express or implied warranty, including, but not limited to, warranties of merchantability or fitness for a particular purpose. The buyer assumes all liability in use of this programme.</p>
-    <div class="copyright">
-      <p>© The Bodyweight Gym. All rights reserved.</p>
-      <p>No part of this publication may be reproduced without written permission.</p>
+  <!-- Progress Bar -->
+  <div id="progress-bar"><div id="progress-fill"></div></div>
+
+  <!-- Toolbar -->
+  <header id="toolbar">
+    <div class="toolbar-left">
+      <button class="tb-btn" id="btn-toc" aria-label="Table of Contents">
+        <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="15" y2="12"/><line x1="3" y1="18" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="toolbar-title-area">
+      <span class="toolbar-chapter" id="toolbar-chapter">The Handstand</span>
+      <span class="toolbar-sub" id="toolbar-sub">The Complete Training Guide</span>
+    </div>
+    <div class="toolbar-right">
+      <button class="tb-btn" id="btn-settings" aria-label="Settings">
+        <svg viewBox="0 0 24 24"><text x="4" y="17" font-size="15" font-family="Plus Jakarta Sans, sans-serif" font-weight="700" fill="currentColor" stroke="none">Aa</text></svg>
+      </button>
+      <button class="tb-btn" id="btn-download" aria-label="Download">
+        <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- Settings Panel -->
+  <div class="dropdown-panel" id="settings-panel">
+    <div class="panel-section">
+      <div class="panel-label">Font Size</div>
+      <div class="font-size-row">
+        <button class="font-btn" id="font-decrease">A−</button>
+        <div class="font-size-display" id="font-size-display">100%</div>
+        <button class="font-btn" id="font-increase">A+</button>
+      </div>
+    </div>
+    <div class="panel-section">
+      <div class="panel-label">Theme</div>
+      <div class="theme-row">
+        <button class="theme-btn theme-btn-light active" data-theme="light">Light</button>
+        <button class="theme-btn theme-btn-sepia" data-theme="sepia">Sepia</button>
+        <button class="theme-btn theme-btn-dark" data-theme="dark">Dark</button>
+      </div>
     </div>
   </div>
-</div>
+
+  <!-- Download Panel -->
+  <div class="dropdown-panel" id="download-panel">
+    <div class="panel-section">
+      <div class="panel-label">Download</div>
+      <button class="dl-btn" id="dl-pdf">
+        <div class="dl-icon pdf">
+          <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        </div>
+        <div class="dl-btn-text">
+          <div class="dl-btn-title">Download PDF</div>
+          <div class="dl-btn-hint">Best for printing (A4 format)</div>
+        </div>
+      </button>
+      <button class="dl-btn" id="dl-epub">
+        <div class="dl-icon epub">
+          <svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        </div>
+        <div class="dl-btn-text">
+          <div class="dl-btn-title">Download ePub</div>
+          <div class="dl-btn-hint">For Apple Books, Kindle, Kobo</div>
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <!-- Reader Body -->
+  <div id="reader-body">
+
+    <!-- TOC Overlay (mobile) -->
+    <div id="toc-overlay"></div>
+
+    <!-- TOC Sidebar -->
+    <aside id="toc-sidebar">
+      <div class="toc-header"><h2>Contents</h2></div>
+      <nav class="toc-nav" id="toc-nav">
+        <a href="#cover" class="toc-link active" data-section="cover">Cover</a>
+        <a href="#frontmatter" class="toc-link" data-section="frontmatter">Title &amp; Disclaimer</a>
+        <a href="#introduction" class="toc-link" data-section="introduction">Introduction</a>
+        <a href="#benchmarking" class="toc-link" data-section="benchmarking">Benchmarking</a>
+        <a href="#loading" class="toc-link" data-section="loading">Loading &amp; Deloading</a>
+        <a href="#workouts" class="toc-link" data-section="workouts">The Workouts</a>
+        <a href="#level-1" class="toc-link toc-link-sub" data-section="level-1"><span class="toc-num">01</span> Level 1 — Foundation</a>
+        <a href="#level-2" class="toc-link toc-link-sub" data-section="level-2"><span class="toc-num">02</span> Level 2 — Upside Down</a>
+        <a href="#level-3" class="toc-link toc-link-sub" data-section="level-3"><span class="toc-num">03</span> Level 3 — Balance</a>
+        <a href="#level-4" class="toc-link toc-link-sub" data-section="level-4"><span class="toc-num">04</span> Level 4 — The Hold</a>
+        <a href="#level-5" class="toc-link toc-link-sub" data-section="level-5"><span class="toc-num">05</span> Level 5 — Endurance</a>
+        <a href="#level-6" class="toc-link toc-link-sub" data-section="level-6"><span class="toc-num">06</span> Level 6 — 60 Seconds</a>
+      </nav>
+    </aside>
+
+    <!-- Content Area -->
+    <main id="content-area">
 
 <!-- ============================================================
-     TABLE OF CONTENTS
+     COVER
      ============================================================ -->
-<div class="page page-frontmatter">
-  <div class="toc">
-    <h1>Contents</h1>
-    <div class="toc-accent"></div>
-    <div class="toc-item">Introduction</div>
-    <div class="toc-item">Benchmarking</div>
-    <div class="toc-item">Loading, Deloading, and How to Progress</div>
-    <div class="toc-item">The Workouts</div>
-    <div class="toc-item toc-sub">Level 1 — Building the Foundation</div>
-    <div class="toc-item toc-sub">Level 2 — Going Upside Down</div>
-    <div class="toc-item toc-sub">Level 3 — Learning to Balance</div>
-    <div class="toc-item toc-sub">Level 4 — Finding the Hold</div>
-    <div class="toc-item toc-sub">Level 5 — Building Endurance</div>
-    <div class="toc-item toc-sub">Level 6 — The 60-Second Handstand</div>
+<section id="cover" class="book-section">
+  <div class="cover-hero">
+    <div class="cover-content">
+      <span class="cover-label">THE</span>
+      <div class="cover-title">HANDSTAND</div>
+      <div class="cover-divider"></div>
+      <div class="cover-subtitle">The Complete Training Guide</div>
+      <div class="cover-tagline">From Zero to 60-Second Freestanding Hold</div>
+      <div class="cover-brand">
+        <div class="cover-brand-line"></div>
+        <span>The Bodyweight Gym</span>
+      </div>
+    </div>
   </div>
-</div>
+</section>
+
+<!-- ============================================================
+     FRONTMATTER (title + disclaimer)
+     ============================================================ -->
+<section id="frontmatter" class="book-section">
+  <div class="chapter-content">
+    <div class="title-page">
+      <h1>THE HANDSTAND</h1>
+      <div class="accent-rule"></div>
+      <div class="subtitle">The Complete Training Guide</div>
+      <div class="tagline">From Zero to 60-Second Freestanding Hold</div>
+      <div class="author">The Bodyweight Gym</div>
+      <div class="edition">Second Edition</div>
+    </div>
+    <hr class="accent-hr">
+    <div class="disclaimer">
+      <h2>Disclaimer</h2>
+      <div class="disclaimer-rule"></div>
+      <p>Before starting any exercise programme, consult a qualified fitness or sports professional to ensure this programme is suitable for you. Do not undertake training with The Bodyweight Gym without professional or qualified instruction on proper technique. Use common sense when training and understand your personal limitations.</p>
+      <p>Any programme involving resistance training, gymnastics, or activities at height is potentially dangerous and could lead to severe injury. The user assumes all risks and responsibilities for injuries which may occur during or following use of this programme. The Bodyweight Gym cannot be held responsible for any injuries which may occur as a result of training with this programme.</p>
+      <p>The Bodyweight Gym and the buyer disclaim any express or implied warranty, including, but not limited to, warranties of merchantability or fitness for a particular purpose. The buyer assumes all liability in use of this programme.</p>
+      <div class="copyright">
+        <p>© The Bodyweight Gym. All rights reserved.</p>
+        <p>No part of this publication may be reproduced without written permission.</p>
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- ============================================================
      INTRODUCTION
      ============================================================ -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
+<section id="introduction" class="book-section">
   <div class="chapter-opener">
     <h1>Introduction</h1>
   </div>
+  <div class="chapter-content">
+    <div class="exercise-img exercise-img-wide">
+      <img src="assets/images/freestandinghandstand1.png" alt="Freestanding handstand">
+    </div>
 
-  <div class="ebook-fig ebook-fig-wide">
-    <img src="assets/images/freestandinghandstand1.png" alt="Freestanding handstand" />
+    <p>The handstand is the art of standing still on your hands with straight arms and your entire body stacked vertically above your base of support. At first glance it may appear simple. In practice, most people discover the handstand to be one of the most challenging expressions of strength, mobility, focus, and balance that an adult can pursue.</p>
+
+    <p>Learning the handstand requires a deliberate combination of skill work and physical conditioning. Most adults need to rebuild overhead shoulder mobility, develop the upper-body strength required to support themselves inverted for extended periods, and then — only then — learn to balance. This guide will walk you through each phase systematically.</p>
+
+    <p>The programme is structured across six progressive levels. Each level has a clear graduation test. To progress smoothly and safely, satisfy each graduation requirement before moving on. Skipping levels is the fastest way to stall — or get injured.</p>
+
+    <p><b>What does "a handstand" mean in this guide?</b> It means standing on your hands with locked-out elbows, shoulders fully elevated, body aligned and motionless, for a minimum of 60 seconds.</p>
+
+    <p><b>How long will this take?</b> The honest answer: anywhere from 6 months to 2 years for the average adult. Progress demands consistent effort — training 4 to 7 days per week for at least 30 minutes a day. There are no shortcuts.</p>
+
+    <h2 class="section-title">The Kinetic Chain</h2>
+
+    <p>The handstand demands that your back, shoulders, upper arms, forearms, wrists, and fingers all function as a single integrated unit. Your connective tissue — tendons, ligaments, and joint capsules — must adapt alongside your muscles.</p>
+
+    <p>This is critical: different tissues adapt at very different rates. Muscles remodel in roughly 3 months. Tendons and ligaments take approximately 9 months. Bone remodels over 14 to 15 months. If your muscles are getting strong but your wrists are in pain, the message is clear — slow down.</p>
+
+    <p class="callout">The goal of training is to stress your body enough that it adapts, then allow adequate recovery. If you exceed your body's capacity to recover, the result is injury. You can only progress as fast as the weakest link in the chain.</p>
   </div>
-
-  <p>The handstand is the art of standing still on your hands with straight arms and your entire body stacked vertically above your base of support. At first glance it may appear simple. In practice, most people discover the handstand to be one of the most challenging expressions of strength, mobility, focus, and balance that an adult can pursue.</p>
-
-  <p>Learning the handstand requires a deliberate combination of skill work and physical conditioning. Most adults need to rebuild overhead shoulder mobility, develop the upper-body strength required to support themselves inverted for extended periods, and then — only then — learn to balance. This guide will walk you through each phase systematically.</p>
-
-  <p>The programme is structured across six progressive levels. Each level has a clear graduation test. To progress smoothly and safely, satisfy each graduation requirement before moving on. Skipping levels is the fastest way to stall — or get injured.</p>
-
-  <p><b>What does "a handstand" mean in this guide?</b> It means standing on your hands with locked-out elbows, shoulders fully elevated, body aligned and motionless, for a minimum of 60 seconds.</p>
-
-  <p><b>How long will this take?</b> The honest answer: anywhere from 6 months to 2 years for the average adult. Progress demands consistent effort — training 4 to 7 days per week for at least 30 minutes a day. There are no shortcuts.</p>
-
-  <h2 class="section-title">The Kinetic Chain</h2>
-
-  <p>The handstand demands that your back, shoulders, upper arms, forearms, wrists, and fingers all function as a single integrated unit. Your connective tissue — tendons, ligaments, and joint capsules — must adapt alongside your muscles.</p>
-
-  <p>This is critical: different tissues adapt at very different rates. Muscles remodel in roughly 3 months. Tendons and ligaments take approximately 9 months. Bone remodels over 14 to 15 months. If your muscles are getting strong but your wrists are in pain, the message is clear — slow down.</p>
-
-  <p class="callout">The goal of training is to stress your body enough that it adapts, then allow adequate recovery. If you exceed your body's capacity to recover, the result is injury. You can only progress as fast as the weakest link in the chain.</p>
-</div>
+</section>
 
 <!-- ============================================================
      BENCHMARKING
      ============================================================ -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
+<section id="benchmarking" class="book-section">
   <div class="chapter-opener">
     <h1>Benchmarking</h1>
   </div>
+  <div class="chapter-content">
+    <p>If you are completely new to handstand training, begin at Level 1. If you have some experience, use the tests below to find the appropriate starting level. Be honest — starting too high is worse than starting too low.</p>
 
-  <p>If you are completely new to handstand training, begin at Level 1. If you have some experience, use the tests below to find the appropriate starting level. Be honest — starting too high is worse than starting too low.</p>
-
-  <table class="bench-table">
-    <thead>
-      <tr><th>Level</th><th>Entry Requirements</th></tr>
-    </thead>
-    <tbody>
-      <tr><td>1</td><td>Zero experience or unsure.</td></tr>
-      <tr><td>2</td><td>Protracted plank 1 min, hang 1 min, body-line drill 30 sec.<br>5 sets of each, relatively easy.</td></tr>
-      <tr><td>3</td><td>Chest-to-wall handstand 1 min, hang 1 min, hollow body 1 min.<br>5 sets of each, relatively easy.</td></tr>
-      <tr><td>4</td><td>Can find freestanding balance consistently for 3–5 seconds.</td></tr>
-      <tr><td>5</td><td>Can kick up and hold balance consistently for 10–15 seconds.</td></tr>
-      <tr><td>6</td><td>Have a handstand but have not yet achieved a 60-second hold.</td></tr>
-    </tbody>
-  </table>
-</div>
+    <table class="bench-table">
+      <thead>
+        <tr><th>Level</th><th>Entry Requirements</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Zero experience or unsure.</td></tr>
+        <tr><td>2</td><td>Protracted plank 1 min, hang 1 min, body-line drill 30 sec. 5 sets of each, relatively easy.</td></tr>
+        <tr><td>3</td><td>Chest-to-wall handstand 1 min, hang 1 min, hollow body 1 min. 5 sets of each, relatively easy.</td></tr>
+        <tr><td>4</td><td>Can find freestanding balance consistently for 3–5 seconds.</td></tr>
+        <tr><td>5</td><td>Can kick up and hold balance consistently for 10–15 seconds.</td></tr>
+        <tr><td>6</td><td>Have a handstand but have not yet achieved a 60-second hold.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
 
 <!-- ============================================================
      LOADING, DELOADING
      ============================================================ -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
+<section id="loading" class="book-section">
   <div class="chapter-opener">
     <h1>Loading, Deloading</h1>
     <div class="ch-accent"></div>
     <div class="ch-subtitle">and How to Progress</div>
   </div>
+  <div class="chapter-content">
+    <p>Your training should be structured in repeating blocks of effort and recovery. This approach gives your body enough stress to grow and enough time to adapt.</p>
 
-  <p>Your training should be structured in repeating blocks of effort and recovery. This approach gives your body enough stress to grow and enough time to adapt.</p>
+    <h3 class="block-heading">Block 1 — Establish Your Baseline</h3>
+    <p>Pick a level and set range appropriate to your current strength. If in doubt, be conservative — an injury is always the worst outcome. Train hard for 4 weeks. Take the 5th week completely off.</p>
 
-  <h3 class="block-heading">Block 1 — Establish Your Baseline</h3>
-  <p>Pick a level and set range appropriate to your current strength. If in doubt, be conservative — an injury is always the worst outcome. Train hard for 4 weeks. Take the 5th week completely off.</p>
+    <h3 class="block-heading">Block 2 — Add Volume</h3>
+    <p>Add one set to each exercise. Train hard for 4 weeks. Take the 5th week off. Repeat until you reach the upper set range for your level.</p>
 
-  <h3 class="block-heading">Block 2 — Add Volume</h3>
-  <p>Add one set to each exercise. Train hard for 4 weeks. Take the 5th week off. Repeat until you reach the upper set range for your level.</p>
+    <h3 class="block-heading">Block 3 — Test and Progress</h3>
+    <p>Test against the graduation requirements for the next level. If you meet the criteria, begin the next level at the lower set range.</p>
 
-  <h3 class="block-heading">Block 3 — Test and Progress</h3>
-  <p>Test against the graduation requirements for the next level. If you meet the criteria, begin the next level at the lower set range.</p>
+    <h3 class="block-heading">Block 4 — Continue the Cycle</h3>
+    <p>Keep developing your programme. The cycle of progressive overload followed by recovery is the fundamental engine of adaptation.</p>
 
-  <h3 class="block-heading">Block 4 — Continue the Cycle</h3>
-  <p>Keep developing your programme. The cycle of progressive overload followed by recovery is the fundamental engine of adaptation.</p>
+    <p class="callout">Learning a handstand from scratch will likely take more than 12 months. Patience is not optional — it is the defining characteristic of everyone who succeeds.</p>
+  </div>
+</section>
 
-  <p class="callout">Learning a handstand from scratch will likely take more than 12 months. Patience is not optional — it is the defining characteristic of everyone who succeeds.</p>
-</div>
+<!-- ============================================================
+     THE WORKOUTS INTRO
+     ============================================================ -->
+<section id="workouts" class="book-section">
+  <div class="chapter-opener">
+    <h1>The Workouts</h1>
+  </div>
+  <div class="chapter-content">
+    <p>This programme offers 6 different levels in order to safely progress you from zero experience to a clean, 60-second freestanding handstand. Each level requires you to possess greater strength, mobility, and balance. Be conservative and start with a level that is achievable. If you find you are not progressing at a particular level, drop back to the previous level for one block of training before moving forward again.</p>
+    <p>Before each workout, warm yourself up adequately. 5–10 minutes of any light cardio of your choice — anything to get a light sweat on.</p>
+  </div>
+</section>
 
 <!-- ============================================================
      LEVEL 1
      ============================================================ -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
+<section id="level-1" class="book-section">
   <div class="chapter-opener">
     <h1>Level 1</h1>
     <div class="ch-accent"></div>
     <div class="ch-subtitle">Building the Foundation</div>
   </div>
+  <div class="chapter-content">
+    <p class="level-intro">You are at the very beginning. This level focuses on developing wrist strength, shoulder mobility, and core stability. Do not rush. The work you do here will determine how smoothly you advance through every subsequent level.</p>
 
-  <p class="level-intro">You are at the very beginning. This level focuses on developing wrist strength, shoulder mobility, and core stability. Do not rush. The work you do here will determine how smoothly you advance through every subsequent level.</p>
+    <p class="text-small"><b>Training frequency:</b> 4–7 days per week, 30–45 minutes per session. Warm up for 5–10 minutes with light cardio before each session. Rest 60–90 seconds between sets unless otherwise noted.</p>
 
-  <p class="text-small"><b>Training frequency:</b> 4–7 days per week, 30–45 minutes per session. Warm up for 5–10 minutes with light cardio before each session. Rest 60–90 seconds between sets unless otherwise noted.</p>
+    <h2 class="section-title">Mobility work</h2>
 
-  <!-- WRIST HEEL RAISES -->
-  <div class="exercise-block">
-    <h3>Wrist Heel Raises</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/wrist01.png" alt="Wrist heel raises step 1" class="step" />
-      <img src="assets/images/wrist03.png" alt="Wrist heel raises step 2" class="step" />
-      <img src="assets/images/writs02.png" alt="Wrist heel raises step 3" class="step" />
+    <div class="exercise-block">
+      <h3>Wrist Heel Raises</h3>
+      <p class="exercise-sequence-caption">Start → Raise → Hold (last rep 10 sec)</p>
+      <div class="exercise-sequence exercise-sequence-3">
+        <img src="assets/images/wrist01.png" alt="Wrist heel raises — start">
+        <img src="assets/images/wrist03.png" alt="Wrist heel raises — raise">
+        <img src="assets/images/writs02.png" alt="Wrist heel raises — hold">
+      </div>
+      <p>Kneel with your hands flat on the floor, fingers pointing forward. Slowly lift the heels of your hands off the ground while keeping your fingertips pressed down, then lower back to flat. On the final rep, hold the raised position for 10 seconds.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10, hold last rep (HLR) 10 seconds</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
     </div>
-    <p>Kneel with your hands flat on the floor, fingers pointing forward. Slowly lift the heels of your hands off the ground while keeping your fingertips pressed down, then lower back to flat. On the final rep, hold the raised position for 10 seconds.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 reps, hold last rep 10 seconds</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s">youtube.com/watch?v=Uo4qAzodPlM</a></div>
+
+    <div class="exercise-block">
+      <h3>Fin Push-ups</h3>
+      <div class="exercise-img">
+        <img src="assets/images/finpushups.png" alt="Fin push-ups — start and lowered (fin) position">
+      </div>
+      <p>From the same kneeling position, place your hands flat on the floor with your <strong>fingers pointing out to the sides</strong> (perpendicular to your body), so your wrists are flexed and your palms stay down. Perform small push-up motions, letting your <strong>elbows flare out wide</strong> as you lower — this creates the “fin” shape. Lower your chest toward the floor, then press back up. On the final rep, hold the top position for 10 seconds. Superset with wrist heel raises.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10, HLR 10 seconds<br>Sets: 3–5 supersets (with wrist heel raises)</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Desk Stretch — External Rotation</h3>
+      <div class="exercise-img">
+        <img src="assets/images/overheaddeskstretch01.png" alt="Desk stretch — external rotation">
+      </div>
+      <p>Kneel behind a desk or sturdy surface at roughly hip height. Place your hands on the surface with your palms facing the ceiling (externally rotated). Pulse in and out 10 times, then sink as deep as comfortable and hold for 1 to 2 minutes.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10 pulses, then hold 1–2 minutes</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=Toe5JOHztek" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Overhead Desk Stretch</h3>
+      <p class="exercise-sequence-caption">Start (arms extended) → Sink (chest through arms)</p>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/overheaddeskstretch01.png" alt="Overhead desk stretch — start">
+        <img src="assets/images/overheaddeskstretch02.png" alt="Overhead desk stretch — sink">
+      </div>
+      <p>Kneel behind the same surface and place your hands on it with arms extended overhead, palms down. Pulse gently 10 times, then sink your chest through your arms and hold for 1 to 2 minutes. This directly targets overhead shoulder mobility.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10 pulses, then hold 1–2 minutes</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=G4wqA_e9r3I" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Strength work</h2>
+
+    <div class="exercise-block">
+      <h3>Hang</h3>
+      <div class="exercise-img exercise-img-tall">
+        <img src="assets/images/hang.png" alt="Dead hang from bar">
+      </div>
+      <p>Hang from a pull-up bar using any grip. Build toward a 1-minute dead hang. If you cannot hold initially, accumulate 60 seconds across multiple shorter holds.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: Accumulate 1 minute (build to unbroken)<br>Sets: 3–5 sets (stretches + hang combined)</div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Protracted Plank</h3>
+      <p class="exercise-sequence-caption">Full version → Beginner (knees down)</p>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/protractedplank.png" alt="Protracted plank">
+        <img src="assets/images/protractedplankbeginer.png" alt="Protracted plank — beginner on knees">
+      </div>
+      <p>Hands under shoulders, elbows locked. Protract your shoulders — spread your shoulder blades apart, pushing your ribcage away from the floor. Tuck your pelvis posteriorly and engage your abdominals. Regress to knees if needed.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: Accumulate 1 minute<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Body-Line Drill</h3>
+      <div class="exercise-img">
+        <img src="assets/images/bodylinedrill.png" alt="Body-line drill — prone hold, arms overhead, full-body tension">
+      </div>
+      <p>Lie face-down, arms overhead. Simultaneously lift arms, chest, and legs off the floor. Squeeze your glutes, point your toes, and hold full-body tension. This teaches the global tension required for a handstand.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: Hold 30 seconds (build to 1 minute)<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
+      </div>
+    </div>
+
+    <div class="grad-box">
+      <div class="grad-check">✓</div>
+      <div class="grad-text">Level 1 Graduation: Complete 5 sets of protracted plank 1 min, hang 1 min, and body-line drill 30 sec. All sets should feel relatively comfortable.</div>
     </div>
   </div>
-
-  <!-- FINGERTIP PUSH-UPS -->
-  <div class="exercise-block">
-    <h3>Fin Push-ups</h3>
-    <div class="ebook-fig">
-      <img src="assets/images/wrist01.png" alt="Fin push-ups — wrist position" />
-    </div>
-    <p>From the same kneeling position, flip your hands over so the backs of your hands are flat on the floor with fingers pointing toward your knees. Perform small push-up motions, pressing through the backs of your hands. On the final rep, hold the top position for 10 seconds. Superset with wrist heel raises.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 reps, hold last rep 10 seconds<br>Sets: 3–5 supersets (with wrist heel raises)</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s">youtube.com/watch?v=Uo4qAzodPlM</a></div>
-    </div>
-  </div>
-</div>
-
-<!-- LEVEL 1 continued -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
-
-  <!-- DESK STRETCH EXTERNAL -->
-  <div class="exercise-block">
-    <h3>Desk Stretch — External Rotation</h3>
-    <div class="ebook-fig">
-      <img src="assets/images/overheaddeskstretch01.png" alt="Desk stretch — external rotation" />
-    </div>
-    <p>Kneel behind a desk or sturdy surface at roughly hip height. Place your hands on the surface with your palms facing the ceiling (externally rotated). Pulse in and out 10 times, then sink as deep as comfortable and hold for 1 to 2 minutes.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 pulses, then hold 1–2 minutes</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=Toe5JOHztek">youtube.com/watch?v=Toe5JOHztek</a></div>
-    </div>
-  </div>
-
-  <!-- OVERHEAD DESK STRETCH -->
-  <div class="exercise-block">
-    <h3>Overhead Desk Stretch</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/overheaddeskstretch01.png" alt="Overhead desk stretch step 1" class="step" />
-      <img src="assets/images/overheaddeskstretch02.png" alt="Overhead desk stretch step 2" class="step" />
-    </div>
-    <p>Kneel behind the same surface and place your hands on it with arms extended overhead, palms down. Pulse gently 10 times, then sink your chest through your arms and hold for 1 to 2 minutes. This directly targets overhead shoulder mobility.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 pulses, then hold 1–2 minutes</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=G4wqA_e9r3I">youtube.com/watch?v=G4wqA_e9r3I</a></div>
-    </div>
-  </div>
-
-  <!-- HANG -->
-  <div class="exercise-block">
-    <h3>Hang</h3>
-    <div class="ebook-fig">
-      <img src="assets/images/hang.png" alt="Dead hang from bar" />
-    </div>
-    <p>Hang from a pull-up bar using any grip. Build toward a 1-minute dead hang. If you cannot hold initially, accumulate 60 seconds across multiple shorter holds.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: Accumulate 1 minute (build to unbroken)<br>Sets: 3–5 sets (stretches + hang combined)</div>
-    </div>
-  </div>
-</div>
-
-<!-- LEVEL 1 continued -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
-
-  <!-- PROTRACTED PLANK -->
-  <div class="exercise-block">
-    <h3>Protracted Plank</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/protractedplank.png" alt="Protracted plank" class="step" />
-      <img src="assets/images/protractedplankbeginer.png" alt="Protracted plank (beginner option)" class="step" />
-    </div>
-    <p>Hands under shoulders, elbows locked. Protract your shoulders — spread your shoulder blades apart, pushing your ribcage away from the floor. Tuck your pelvis posteriorly and engage your abdominals. Regress to knees if needed.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: Accumulate 1 minute<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
-    </div>
-  </div>
-
-  <!-- BODY-LINE DRILL -->
-  <div class="exercise-block">
-    <h3>Body-Line Drill</h3>
-    <div class="ebook-fig">
-      <img src="assets/images/hollowbodyBeginner.png" alt="Body-line drill — full-body tension" />
-    </div>
-    <p>Lie face-down, arms overhead. Simultaneously lift arms, chest, and legs off the floor. Squeeze your glutes, point your toes, and hold full-body tension. This teaches the global tension required for a handstand.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: Hold 30 seconds (build to 1 minute)<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
-    </div>
-  </div>
-
-  <div class="grad-box">
-    <div class="grad-check">✓</div>
-    <div class="grad-text">Level 1 Graduation: Complete 5 sets of protracted plank 1 min, hang 1 min, and body-line drill 30 sec. All sets should feel relatively comfortable.</div>
-  </div>
-</div>
+</section>
 
 <!-- ============================================================
      LEVEL 2
      ============================================================ -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
+<section id="level-2" class="book-section">
   <div class="chapter-opener">
     <h1>Level 2</h1>
     <div class="ch-accent"></div>
     <div class="ch-subtitle">Going Upside Down</div>
   </div>
+  <div class="chapter-content">
+    <p class="level-intro">You have baseline strength and mobility. Now you begin inverting, loading significantly more weight into shoulders, arms, and wrists. Take particular care of your wrists — if a movement causes sharp pain, scale back immediately.</p>
 
-  <p class="level-intro">You have baseline strength and mobility. Now you begin inverting, loading significantly more weight into shoulders, arms, and wrists. Take particular care of your wrists — if a movement causes sharp pain, scale back immediately.</p>
+    <h2 class="section-title">Mobility work</h2>
 
-  <!-- BRIEF: Wrist + Fin -->
-  <div class="exercise-block">
-    <h3>Wrist Heel Raises + Fin Push-ups</h3>
-    <p>Continue as per Level 1.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 reps each, hold last rep 10 sec<br>Sets: 3–5 supersets</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s">youtube.com/watch?v=Uo4qAzodPlM</a></div>
+    <div class="exercise-block">
+      <h3>Wrist Heel Raises + Fin Push-ups</h3>
+      <div class="exercise-img">
+        <img src="assets/images/finpushups.png" alt="Wrist heel raises + Fin push-ups — continue as Level 1">
+      </div>
+      <p>Continue as per Level 1.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10 each, HLR 10 sec<br>Sets: 3–5 supersets</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Desk Stretches + Hang</h3>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/overheaddeskstretch01.png" alt="Desk stretches">
+        <img src="assets/images/hang.png" alt="Hang from bar">
+      </div>
+      <p>Continue as per Level 1.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10 pulses + 1–2 min hold; 1 min hang<br>Sets: 3–5 sets</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Strength work</h2>
+
+    <div class="exercise-block">
+      <h3>Chest-to-Wall Handstand</h3>
+      <p class="exercise-sequence-caption">Walk up → Full hold (chest facing wall)</p>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/chesttowallhandstand01.png" alt="Chest-to-wall handstand — walk up">
+        <img src="assets/images/chesttowallhandstand02.png" alt="Chest-to-wall handstand — full hold">
+      </div>
+      <p>Walk your feet up the wall until your chest faces the wall. Focus on five points: grip the ground; push tall (shoulders touch ears); posterior pelvic tilt; legs pressed together; point toes. Scale to protracted plank hold if needed.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: Accumulate 1 minute (build to unbroken)<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=f1yLxNMq23A" target="_blank" rel="noopener">Watch demonstration</a></div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=tfVN5t_QykI" target="_blank" rel="noopener">Watch five focus points</a></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Hollow Body Hold</h3>
+      <p class="exercise-sequence-caption">Beginner (knees tucked) → Advanced (fully extended)</p>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/hollowbodyBeginner.png" alt="Hollow body hold — beginner, knees tucked">
+        <img src="assets/images/hollowbodyAdv.png" alt="Hollow body hold — advanced, fully extended">
+      </div>
+      <p><b>Beginner:</b> Lie on your back, tuck your knees, lift your shoulder blades, and press your lower back into the floor. <b>Advanced:</b> Extend arms overhead and legs straight. Maintain lower back contact throughout.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: Accumulate 1 minute<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
+      </div>
+    </div>
+
+    <div class="grad-box">
+      <div class="grad-check">✓</div>
+      <div class="grad-text">Level 2 Graduation: Complete 5 sets of chest-to-wall 1 min, hang 1 min, and hollow body 1 min. All sets should feel relatively comfortable.</div>
     </div>
   </div>
-
-  <!-- BRIEF: Desk + Hang -->
-  <div class="exercise-block">
-    <h3>Desk Stretches + Hang</h3>
-    <p>Continue as per Level 1.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 pulses + 1–2 min hold; 1 min hang<br>Sets: 3–5 sets</div>
-    </div>
-  </div>
-
-  <!-- CHEST-TO-WALL -->
-  <div class="exercise-block">
-    <h3>Chest-to-Wall Handstand</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/chesttowallhandstand01.png" alt="Chest-to-wall handstand step 1" class="step" />
-      <img src="assets/images/chesttowallhandstand02.png" alt="Chest-to-wall handstand step 2" class="step" />
-    </div>
-    <p>Walk your feet up the wall until your chest faces the wall. Focus on five points: grip the ground; push tall (shoulders touch ears); posterior pelvic tilt; legs pressed together; point toes. Scale to protracted plank hold if needed.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: Accumulate 1 minute (build to unbroken)<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=f1yLxNMq23A">youtube.com/watch?v=f1yLxNMq23A</a></div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=tfVN5t_QykI">youtube.com/watch?v=tfVN5t_QykI</a></div>
-    </div>
-  </div>
-
-  <!-- HOLLOW BODY -->
-  <div class="exercise-block">
-    <h3>Hollow Body Hold</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/hollowbodyBeginner.png" alt="Hollow body hold — beginner" class="step" />
-      <img src="assets/images/hollowbodyAdv.png" alt="Hollow body hold — advanced" class="step" />
-    </div>
-    <p><b>Beginner:</b> Lie on your back, tuck your knees, lift your shoulder blades, and press your lower back into the floor. <b>Advanced:</b> Extend arms overhead and legs straight. Maintain lower back contact throughout.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: Accumulate 1 minute<br>Sets: 3–5 sets, 1 min work / 1 min rest</div>
-    </div>
-  </div>
-
-  <div class="grad-box">
-    <div class="grad-check">✓</div>
-    <div class="grad-text">Level 2 Graduation: Complete 5 sets of chest-to-wall 1 min, hang 1 min, and hollow body 1 min. All sets should feel relatively comfortable.</div>
-  </div>
-</div>
+</section>
 
 <!-- ============================================================
      LEVEL 3
      ============================================================ -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
+<section id="level-3" class="book-section">
   <div class="chapter-opener">
     <h1>Level 3</h1>
     <div class="ch-accent"></div>
     <div class="ch-subtitle">Learning to Balance</div>
   </div>
+  <div class="chapter-content">
+    <p class="level-intro">You are comfortable upside down and can hold a chest-to-wall handstand with enough ease to have a conversation. It is time to learn balance. This level introduces heel pulls and toe pulls — the fundamental balance-correction tools.</p>
 
-  <p class="level-intro">You are comfortable upside down and can hold a chest-to-wall handstand with enough ease to have a conversation. It is time to learn balance. This level introduces heel pulls and toe pulls — the fundamental balance-correction tools.</p>
+    <h2 class="section-title">Mobility work</h2>
 
-  <!-- BRIEF: Wrist + Fin -->
-  <div class="exercise-block">
-    <h3>Wrist Heel Raises + Fin Push-ups</h3>
-    <p>Continue as per previous levels.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 reps each, hold last rep 10 sec<br>Sets: 3–5 supersets</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s">youtube.com/watch?v=Uo4qAzodPlM</a></div>
+    <div class="exercise-block">
+      <h3>Wrist Heel Raises + Fin Push-ups</h3>
+      <div class="exercise-img">
+        <img src="assets/images/finpushups.png" alt="Wrist heel raises + Fin push-ups — continue as previous levels">
+      </div>
+      <p>Continue as per previous levels.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10 each, HLR 10 sec<br>Sets: 3–5 supersets</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=Uo4qAzodPlM&t=14s" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Desk Stretches + Hang</h3>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/overheaddeskstretch01.png" alt="Desk stretches">
+        <img src="assets/images/hang.png" alt="Hang from bar">
+      </div>
+      <p>Continue. You should be completing 1-minute unbroken hangs comfortably by now.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: 1 min unbroken hang<br>Sets: 3–5 sets</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Balance work</h2>
+
+    <div class="exercise-block">
+      <h3>Heel Pulls</h3>
+      <p class="exercise-sequence-caption">Chest-to-wall → Press fingertips → Feet lighten</p>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/handstandheelpulls01.png" alt="Heel pulls — chest to wall start">
+        <img src="assets/images/handstandheelpulls02.png" alt="Heel pulls — feet lightening">
+      </div>
+      <p>From chest-to-wall, maintain full-body tension and grip the ground. Press through your fingertips. Do not actively pull your feet from the wall — just observe your heels getting lighter as you increase finger pressure. Eventually, your feet float free. This is the foundation of over-balance correction.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 8–12</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=xm26KPUA7OI" target="_blank" rel="noopener">Watch demonstration</a></div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=5t796EGmdn8" target="_blank" rel="noopener">Watch detailed breakdown</a></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Toe Pulls</h3>
+      <p class="exercise-sequence-caption">Back-to-wall → Shift forward → Feet lighten</p>
+      <div class="exercise-sequence exercise-sequence-3">
+        <img src="assets/images/handstandtoepulls01.png" alt="Toe pulls — back to wall">
+        <img src="assets/images/handstandtoepull02.png" alt="Toe pulls — shift forward">
+        <img src="assets/images/handstandtoepull03.png" alt="Toe pulls — feet lightening">
+      </div>
+      <p>From back-to-wall (toes on wall), maintain tension. Shift your shoulders forward over your wrists while keeping your core locked. Initially, your feet slide down the wall. As you get stronger, they may momentarily leave it. This teaches under-balance correction.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 8–12<br>Sets: 5 sets (heel pulls + toe pulls per set)</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=xm26KPUA7OI" target="_blank" rel="noopener">Watch demonstration</a></div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=IBnOiDCXVKs" target="_blank" rel="noopener">Watch detailed breakdown</a></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Box-Assisted Balance Game</h3>
+      <p class="exercise-sequence-caption">Set up with box → Find balance → Catch on forearms if needed</p>
+      <div class="exercise-sequence exercise-sequence-3">
+        <img src="assets/images/boxassistedhandstand01.png" alt="Box-assisted balance — setup">
+        <img src="assets/images/boxassistedhandstand02.png" alt="Box-assisted balance — finding balance">
+        <img src="assets/images/boxassistedhandstand03.png" alt="Box-assisted balance — forearm catch">
+      </div>
+      <p>This exercise brings together your heel and toe pull skills. Place a box in front for forearm catches if you overbalance. Set a 10-minute timer. Accumulate holds of increasing duration — start at 3 seconds. Once you can hit 15 holds at 3 seconds, increase to 4 seconds. Continue building until 10-second holds are repeatable.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: 10-minute practice block</div>
+        <div class="ex-video"><a href="https://youtu.be/huCWZYfvVYY" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+      <p class="callout">This is where the handstand starts to come together. Be patient.</p>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Chest-to-Wall Handstand</h3>
+      <p class="exercise-sequence-caption">Walk up → Full hold (chest facing wall)</p>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/chesttowallhandstand01.png" alt="Chest-to-wall handstand — walk up">
+        <img src="assets/images/chesttowallhandstand02.png" alt="Chest-to-wall handstand — full hold">
+      </div>
+      <p>Continue as per Level 2.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: 1 min unbroken<br>Sets: 3–5 sets</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=f1yLxNMq23A" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <div class="grad-box">
+      <div class="grad-check">✓</div>
+      <div class="grad-text">Level 3 Graduation: Can find freestanding balance consistently for 3 to 5 seconds.</div>
     </div>
   </div>
-
-  <!-- BRIEF: Desk + Hang -->
-  <div class="exercise-block">
-    <h3>Desk Stretches + Hang</h3>
-    <p>Continue. You should be completing 1-minute unbroken hangs comfortably by now.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 1 min unbroken hang<br>Sets: 3–5 sets</div>
-    </div>
-  </div>
-
-  <!-- HEEL PULLS -->
-  <div class="exercise-block">
-    <h3>Heel Pulls</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/handstandheelpulls01.png" alt="Heel pulls step 1" class="step" />
-      <img src="assets/images/handstandheelpulls02.png" alt="Heel pulls step 2" class="step" />
-    </div>
-    <p>From chest-to-wall, maintain full-body tension and grip the ground. Press through your fingertips. Do not actively pull your feet from the wall — just observe your heels getting lighter as you increase finger pressure. Eventually, your feet float free. This is the foundation of over-balance correction.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 8–12 reps</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=xm26KPUA7OI">youtube.com/watch?v=xm26KPUA7OI</a></div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=5t796EGmdn8">youtube.com/watch?v=5t796EGmdn8</a></div>
-    </div>
-  </div>
-</div>
-
-<!-- LEVEL 3 continued -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
-
-  <!-- TOE PULLS -->
-  <div class="exercise-block">
-    <h3>Toe Pulls</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/handstandtoepulls01.png" alt="Toe pulls step 1" class="step" />
-      <img src="assets/images/handstandtoepull02.png" alt="Toe pulls step 2" class="step" />
-      <img src="assets/images/handstandtoepull03.png" alt="Toe pulls step 3" class="step" />
-    </div>
-    <p>From back-to-wall (toes on wall), maintain tension. Shift your shoulders forward over your wrists while keeping your core locked. Initially, your feet slide down the wall. As you get stronger, they may momentarily leave it. This teaches under-balance correction.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 8–12 reps<br>Sets: 5 sets (heel pulls + toe pulls per set)</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=xm26KPUA7OI">youtube.com/watch?v=xm26KPUA7OI</a></div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=IBnOiDCXVKs">youtube.com/watch?v=IBnOiDCXVKs</a></div>
-    </div>
-  </div>
-
-  <!-- BOX BALANCE GAME -->
-  <div class="exercise-block">
-    <h3>Box-Assisted Balance Game</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/boxassistedhandstand01.png" alt="Box-assisted balance step 1" class="step" />
-      <img src="assets/images/boxassistedhandstand02.png" alt="Box-assisted balance step 2" class="step" />
-      <img src="assets/images/boxassistedhandstand03.png" alt="Box-assisted balance step 3" class="step" />
-    </div>
-    <p>This exercise brings together your heel and toe pull skills. Place a box in front for forearm catches if you overbalance. Set a 10-minute timer. Accumulate holds of increasing duration — start at 3 seconds. Once you can hit 15 holds at 3 seconds, increase to 4 seconds. Continue building until 10-second holds are repeatable.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10-minute practice block</div>
-      <div class="ex-video">▶ <a href="https://youtu.be/huCWZYfvVYY">youtu.be/huCWZYfvVYY</a></div>
-    </div>
-    <p class="callout">This is where the handstand starts to come together. Be patient.</p>
-  </div>
-
-  <!-- BRIEF: Chest-to-Wall -->
-  <div class="exercise-block">
-    <h3>Chest-to-Wall Handstand</h3>
-    <p>Continue as per Level 2.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 1 min unbroken<br>Sets: 3–5 sets</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=f1yLxNMq23A">youtube.com/watch?v=f1yLxNMq23A</a></div>
-    </div>
-  </div>
-
-  <div class="grad-box">
-    <div class="grad-check">✓</div>
-    <div class="grad-text">Level 3 Graduation: Can find freestanding balance consistently for 3 to 5 seconds.</div>
-  </div>
-</div>
+</section>
 
 <!-- ============================================================
      LEVEL 4
      ============================================================ -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
+<section id="level-4" class="book-section">
   <div class="chapter-opener">
     <h1>Level 4</h1>
     <div class="ch-accent"></div>
     <div class="ch-subtitle">Finding the Hold</div>
   </div>
+  <div class="chapter-content">
+    <p class="level-intro">You are finding moments of balance — kicking up, catching a few seconds, coming down. This level extends the balance game and introduces freestanding kick-up practice.</p>
 
-  <p class="level-intro">You are finding moments of balance — kicking up, catching a few seconds, coming down. This level extends the balance game and introduces freestanding kick-up practice.</p>
+    <h2 class="section-title">Mobility work</h2>
 
-  <div class="exercise-block">
-    <h3>Wrist Heel Raises + Fin Push-ups</h3>
-    <p>Continue as per previous levels.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 reps each, hold last rep 10 sec<br>Sets: 3–5 supersets</div>
+    <div class="exercise-block">
+      <h3>Wrist Heel Raises + Fin Push-ups</h3>
+      <div class="exercise-img">
+        <img src="assets/images/finpushups.png" alt="Wrist heel raises + Fin push-ups — continue as previous levels">
+      </div>
+      <p>Continue as per previous levels.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10 each, HLR 10 sec<br>Sets: 3–5 supersets</div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Desk Stretches + Hang</h3>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/overheaddeskstretch01.png" alt="Desk stretches">
+        <img src="assets/images/hang.png" alt="Hang from bar">
+      </div>
+      <p>Continue.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: 1 min unbroken hang<br>Sets: 3–5 sets</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Balance work</h2>
+
+    <div class="exercise-block">
+      <h3>15-Minute Balance Game</h3>
+      <p class="exercise-sequence-caption">Balance game — extend to 15 minutes</p>
+      <div class="exercise-sequence exercise-sequence-3">
+        <img src="assets/images/boxassistedhandstand01.png" alt="Balance game — setup">
+        <img src="assets/images/boxassistedhandstand02.png" alt="Balance game — finding balance">
+        <img src="assets/images/boxassistedhandstand03.png" alt="Balance game — forearm catch if needed">
+      </div>
+      <p>Extend the balance game to 15 minutes. The box is now optional. Continue accumulating holds of increasing duration — push toward consistent 10–15 second holds.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: 15-minute practice block</div>
+        <div class="ex-video"><a href="https://youtu.be/huCWZYfvVYY" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Strength work</h2>
+
+    <div class="exercise-block">
+      <h3>Chest-to-Wall Handstand</h3>
+      <p class="exercise-sequence-caption">Walk up → Full hold (chest facing wall)</p>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/chesttowallhandstand01.png" alt="Chest-to-wall handstand — walk up">
+        <img src="assets/images/chesttowallhandstand02.png" alt="Chest-to-wall handstand — full hold">
+      </div>
+      <p>All five focus points. 1-minute holds should be solid and automatic.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: 1 min unbroken<br>Sets: 5 sets</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=f1yLxNMq23A" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Kick-up Practice</h3>
+      <p class="exercise-sequence-caption">Step 1 → Step 2 → Step 3 → Full kick-up</p>
+      <div class="exercise-sequence exercise-sequence-4">
+        <img src="assets/images/handstandkickup01.png" alt="Kick-up — step 1">
+        <img src="assets/images/handstandkickup02.png" alt="Kick-up — step 2">
+        <img src="assets/images/handstandkickup03.png" alt="Kick-up — step 3">
+        <img src="assets/images/handstandkickup04.png" alt="Kick-up — full kick-up">
+      </div>
+      <p>Practise kicking up to freestanding. Alternate legs. Do not fixate on catching balance — just work through kick-ups with intention. Focus on creating tension before your feet leave the ground. Point your toes from the start. Fewer moving parts means easier balance.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10 kick-ups per leg<br>Sets: 5–10 sets</div>
+        <div class="ex-video"><a href="https://youtu.be/7defUKA3D3w" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <div class="grad-box">
+      <div class="grad-check">✓</div>
+      <div class="grad-text">Level 4 Graduation: Can kick up and find balance consistently for 10 to 15 seconds.</div>
     </div>
   </div>
-
-  <div class="exercise-block">
-    <h3>Desk Stretches + Hang</h3>
-    <p>Continue.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 1 min unbroken hang<br>Sets: 3–5 sets</div>
-    </div>
-  </div>
-
-  <div class="exercise-block">
-    <h3>15-Minute Balance Game</h3>
-    <p>Extend the balance game to 15 minutes. The box is now optional. Continue accumulating holds of increasing duration — push toward consistent 10–15 second holds.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 15-minute practice block</div>
-      <div class="ex-video">▶ <a href="https://youtu.be/huCWZYfvVYY">youtu.be/huCWZYfvVYY</a></div>
-    </div>
-  </div>
-
-  <div class="exercise-block">
-    <h3>Chest-to-Wall Handstand</h3>
-    <p>All five focus points. 1-minute holds should be solid and automatic.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 1 min unbroken<br>Sets: 5 sets</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=f1yLxNMq23A">youtube.com/watch?v=f1yLxNMq23A</a></div>
-    </div>
-  </div>
-
-  <!-- KICK-UP -->
-  <div class="exercise-block">
-    <h3>Kick-up Practice</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/handstandkickup01.png" alt="Kick-up step 1" class="step" />
-      <img src="assets/images/handstandkickup02.png" alt="Kick-up step 2" class="step" />
-      <img src="assets/images/handstandkickup03.png" alt="Kick-up step 3" class="step" />
-      <img src="assets/images/handstandkickup04.png" alt="Kick-up step 4" class="step" />
-    </div>
-    <p>Practise kicking up to freestanding. Alternate legs. Do not fixate on catching balance — just work through kick-ups with intention. Focus on creating tension before your feet leave the ground. Point your toes from the start. Fewer moving parts means easier balance.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 kick-ups per leg<br>Sets: 5–10 sets</div>
-      <div class="ex-video">▶ <a href="https://youtu.be/7defUKA3D3w">youtu.be/7defUKA3D3w</a></div>
-    </div>
-  </div>
-
-  <div class="grad-box">
-    <div class="grad-check">✓</div>
-    <div class="grad-text">Level 4 Graduation: Can kick up and find balance consistently for 10 to 15 seconds.</div>
-  </div>
-</div>
+</section>
 
 <!-- ============================================================
      LEVEL 5
      ============================================================ -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
+<section id="level-5" class="book-section">
   <div class="chapter-opener">
     <h1>Level 5</h1>
     <div class="ch-accent"></div>
     <div class="ch-subtitle">Building Endurance</div>
   </div>
+  <div class="chapter-content">
+    <p class="level-intro">You can kick up and sustain 15 to 30-second holds regularly. This level develops the endurance and consistency required for a 60-second freestanding handstand. The emphasis shifts from finding balance to keeping it.</p>
 
-  <p class="level-intro">You can kick up and sustain 15 to 30-second holds regularly. This level develops the endurance and consistency required for a 60-second freestanding handstand. The emphasis shifts from finding balance to keeping it.</p>
+    <h2 class="section-title">Mobility work</h2>
 
-  <div class="exercise-block">
-    <h3>Wrist Heel Raises + Fin Push-ups</h3>
-    <p>Continue.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 reps each, hold last rep 10 sec<br>Sets: 3–5 supersets</div>
+    <div class="exercise-block">
+      <h3>Wrist Heel Raises + Fin Push-ups</h3>
+      <div class="exercise-img">
+        <img src="assets/images/finpushups.png" alt="Wrist heel raises + Fin push-ups — continue">
+      </div>
+      <p>Continue.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10 each, HLR 10 sec<br>Sets: 3–5 supersets</div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Desk Stretches + Hang</h3>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/overheaddeskstretch01.png" alt="Desk stretches">
+        <img src="assets/images/hang.png" alt="Hang from bar">
+      </div>
+      <p>Continue.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: 1 min unbroken hang<br>Sets: 3–5 sets</div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Strength work</h2>
+
+    <div class="exercise-block">
+      <h3>Chest-to-Wall Handstand</h3>
+      <p class="exercise-sequence-caption">Walk up → Full hold (chest facing wall)</p>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/chesttowallhandstand01.png" alt="Chest-to-wall handstand — walk up">
+        <img src="assets/images/chesttowallhandstand02.png" alt="Chest-to-wall handstand — full hold">
+      </div>
+      <p>Perfect form. All five focus points should be automatic.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: 1 min unbroken<br>Sets: 5 sets</div>
+        <div class="ex-video"><a href="https://www.youtube.com/watch?v=f1yLxNMq23A" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Kick-up Practice</h3>
+      <p class="exercise-sequence-caption">Step 1 → Step 2 → Step 3 → Full kick-up</p>
+      <div class="exercise-sequence exercise-sequence-4">
+        <img src="assets/images/handstandkickup01.png" alt="Kick-up — step 1">
+        <img src="assets/images/handstandkickup02.png" alt="Kick-up — step 2">
+        <img src="assets/images/handstandkickup03.png" alt="Kick-up — step 3">
+        <img src="assets/images/handstandkickup04.png" alt="Kick-up — full kick-up">
+      </div>
+      <p>Focus on consistency and extending hold duration with each attempt.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 10 per leg<br>Sets: 5–10 sets</div>
+        <div class="ex-video"><a href="https://youtu.be/7defUKA3D3w" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
+    </div>
+
+    <div class="exercise-block">
+      <h3>Handstand Shoulder Tap</h3>
+      <p class="exercise-sequence-caption">Shift weight → Tap opposite shoulder</p>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/wallhandstandshouldertap01.png" alt="Handstand shoulder tap — shift weight">
+        <img src="assets/images/wallhandstandshouldertap02.png" alt="Handstand shoulder tap — tap shoulder">
+      </div>
+      <p>From chest-to-wall, shift your weight entirely onto one arm. Elevate strongly — push the ground away as hard as you can. Touch the opposite shoulder with your free hand. Alternate sides. This builds single-arm strength for advanced balance corrections.</p>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: × 5 taps per side<br>Sets: 3–5 sets</div>
+      </div>
+    </div>
+
+    <div class="grad-box">
+      <div class="grad-check">✓</div>
+      <div class="grad-text">Level 5 Graduation: Have a consistent handstand of 30+ seconds but have not yet achieved a 60-second hold.</div>
     </div>
   </div>
-
-  <div class="exercise-block">
-    <h3>Desk Stretches + Hang</h3>
-    <p>Continue.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 1 min unbroken hang<br>Sets: 3–5 sets</div>
-    </div>
-  </div>
-
-  <div class="exercise-block">
-    <h3>Chest-to-Wall Handstand</h3>
-    <p>Perfect form. All five focus points should be automatic.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 1 min unbroken<br>Sets: 5 sets</div>
-      <div class="ex-video">▶ <a href="https://www.youtube.com/watch?v=f1yLxNMq23A">youtube.com/watch?v=f1yLxNMq23A</a></div>
-    </div>
-  </div>
-
-  <div class="exercise-block">
-    <h3>Kick-up Practice</h3>
-    <p>Focus on consistency and extending hold duration with each attempt.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 10 per leg<br>Sets: 5–10 sets</div>
-      <div class="ex-video">▶ <a href="https://youtu.be/7defUKA3D3w">youtu.be/7defUKA3D3w</a></div>
-    </div>
-  </div>
-
-  <!-- SHOULDER TAP -->
-  <div class="exercise-block">
-    <h3>Handstand Shoulder Tap</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/wallhandstandshouldertap01.png" alt="Handstand shoulder tap step 1" class="step" />
-      <img src="assets/images/wallhandstandshouldertap02.png" alt="Handstand shoulder tap step 2" class="step" />
-    </div>
-    <p>From chest-to-wall, shift your weight entirely onto one arm. Elevate strongly — push the ground away as hard as you can. Touch the opposite shoulder with your free hand. Alternate sides. This builds single-arm strength for advanced balance corrections.</p>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 5 taps per side<br>Sets: 3–5 sets</div>
-    </div>
-  </div>
-
-  <div class="grad-box">
-    <div class="grad-check">✓</div>
-    <div class="grad-text">Level 5 Graduation: Have a consistent handstand of 30+ seconds but have not yet achieved a 60-second hold.</div>
-  </div>
-</div>
+</section>
 
 <!-- ============================================================
      LEVEL 6
      ============================================================ -->
-<div class="page">
-  <div class="running-header">The Handstand — The Complete Training Guide</div>
+<section id="level-6" class="book-section">
   <div class="chapter-opener">
     <h1>Level 6</h1>
     <div class="ch-accent"></div>
     <div class="ch-subtitle">The 60-Second Handstand</div>
   </div>
+  <div class="chapter-content">
+    <p class="level-intro">This is the grind. You can hold a handstand, but you are chasing 60 seconds. Practise most days. You will record many 50–59 second attempts before you break through. Once you achieve a clean 60-second hold on video, you graduate. Welcome to hand-balancing. You are now — officially — a beginner.</p>
 
-  <p class="level-intro">This is the grind. You can hold a handstand, but you are chasing 60 seconds. Practise most days. You will record many 50–59 second attempts before you break through. Once you achieve a clean 60-second hold on video, you graduate. Welcome to hand-balancing. You are now — officially — a beginner.</p>
+    <h2 class="section-title">Strength work</h2>
 
-  <div class="exercise-block">
-    <h3>Freestanding Handstand</h3>
-    <div class="ebook-fig-group">
-      <img src="assets/images/freestandinghandstand1.png" alt="Freestanding handstand" class="step" />
-      <img src="assets/images/handstand01.png" alt="Freestanding handstand hold" class="step" />
+    <div class="exercise-block">
+      <h3>Freestanding Handstand</h3>
+      <p class="exercise-sequence-caption">Full freestanding hold</p>
+      <div class="exercise-sequence exercise-sequence-2">
+        <img src="assets/images/freestandinghandstand1.png" alt="Freestanding handstand">
+        <img src="assets/images/handstand01.png" alt="Freestanding handstand hold">
+      </div>
+      <p>Maintain a freestanding handstand. Scale to chest-to-wall for remaining time if needed. Priorities, in order:</p>
+      <ul class="priority-list">
+        <li><b>1. Don't fall over.</b> Safety first, always.</li>
+        <li><b>2. Grip the ground.</b> Active fingers are your primary balance tool.</li>
+        <li><b>3. Push tall.</b> Shoulders touch your ears. Maximum elevation.</li>
+        <li><b>4. Posterior pelvic tilt.</b> Tuck your pelvis to stack your body.</li>
+        <li><b>5. Legs together.</b> Squeeze as one unit.</li>
+        <li><b>6. Point or flex your toes.</b> Total body tension, tip to tail.</li>
+      </ul>
+      <div class="ex-box">
+        <div class="ex-rx">Reps: 1 minute freestanding handstand<br>Sets: 5 rounds — 1 min work / 1 min rest</div>
+        <div class="ex-video"><a href="https://youtu.be/fBiYbkG_Uqk" target="_blank" rel="noopener">Watch demonstration</a></div>
+      </div>
     </div>
-    <p>Maintain a freestanding handstand. Scale to chest-to-wall for remaining time if needed. Priorities, in order:</p>
-    <ol class="priority-list">
-      <li><b>1. Don't fall over.</b> Safety first, always.</li>
-      <li><b>2. Grip the ground.</b> Active fingers are your primary balance tool.</li>
-      <li><b>3. Push tall.</b> Shoulders touch your ears. Maximum elevation.</li>
-      <li><b>4. Posterior pelvic tilt.</b> Tuck your pelvis to stack your body.</li>
-      <li><b>5. Legs together.</b> Squeeze as one unit.</li>
-      <li><b>6. Point or flex your toes.</b> Total body tension, tip to tail.</li>
-    </ol>
-    <div class="ex-box">
-      <div class="ex-rx">Reps: 1 minute freestanding handstand<br>Sets: 5 rounds — 1 min work / 1 min rest</div>
-      <div class="ex-video">▶ <a href="https://youtu.be/fBiYbkG_Uqk">youtu.be/fBiYbkG_Uqk</a></div>
+
+    <div class="grad-box">
+      <div class="grad-check">✓</div>
+      <div class="grad-text">Level 6 Graduation: Record a 60-second freestanding handstand on video. Congratulations — you have earned your handstand. Now the journey continues.</div>
+    </div>
+
+    <hr class="accent-hr">
+
+    <div class="closing">
+      <p class="cl-main">Thank you for training with The Bodyweight Gym.</p>
+      <p class="cl-sub">The handstand is a lifelong skill. Continue practising, continue refining, and enjoy the process.</p>
     </div>
   </div>
+</section>
 
-  <div class="grad-box">
-    <div class="grad-check">✓</div>
-    <div class="grad-text">Level 6 Graduation: Record a 60-second freestanding handstand on video. Congratulations — you have earned your handstand. Now the real journey begins.</div>
-  </div>
+    </main><!-- end #content-area -->
+  </div><!-- end #reader-body -->
+</div><!-- end #reader -->
 
-  <hr class="accent-hr">
+<!-- Back to Top -->
+<button id="back-to-top" aria-label="Back to top">
+  <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+</button>
 
-  <div class="closing">
-    <p class="cl-main">Thank you for training with The Bodyweight Gym.</p>
-    <p class="cl-sub">The handstand is a lifelong skill. Continue practising, continue refining, and enjoy the process.</p>
-  </div>
-</div>
+<!-- Toast -->
+<div id="toast"></div>
 
+<!-- JSZip for ePub generation -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
+<script>
+/* ================================================================
+   EBOOK READER — Logic
+   ================================================================ */
+(function() {
+  'use strict';
+
+  // ===== STATE =====
+  let fontScale = 100;
+  let currentTheme = 'light';
+  let currentSection = 'cover';
+
+  // ===== DOM =====
+  const authGate = document.getElementById('auth-gate');
+  const gateSpinner = document.getElementById('gate-spinner');
+  const gateIcon = document.getElementById('gate-icon');
+  const gateTitle = document.getElementById('gate-title');
+  const gateMessage = document.getElementById('gate-message');
+  const gateBtn = document.getElementById('gate-btn');
+
+  const reader = document.getElementById('reader');
+  const contentArea = document.getElementById('content-area');
+  const progressFill = document.getElementById('progress-fill');
+  const toolbarChapter = document.getElementById('toolbar-chapter');
+  const toolbarSub = document.getElementById('toolbar-sub');
+
+  const btnToc = document.getElementById('btn-toc');
+  const tocSidebar = document.getElementById('toc-sidebar');
+  const tocOverlay = document.getElementById('toc-overlay');
+  const tocNav = document.getElementById('toc-nav');
+
+  const btnSettings = document.getElementById('btn-settings');
+  const settingsPanel = document.getElementById('settings-panel');
+  const btnDownload = document.getElementById('btn-download');
+  const downloadPanel = document.getElementById('download-panel');
+
+  const fontDecrease = document.getElementById('font-decrease');
+  const fontIncrease = document.getElementById('font-increase');
+  const fontSizeDisplay = document.getElementById('font-size-display');
+
+  const dlPdf = document.getElementById('dl-pdf');
+  const dlEpub = document.getElementById('dl-epub');
+  const backToTop = document.getElementById('back-to-top');
+  const toast = document.getElementById('toast');
+
+  const isMobile = () => window.innerWidth <= 900;
+
+  const sections = Array.from(document.querySelectorAll('.book-section'));
+  const tocLinks = Array.from(tocNav.querySelectorAll('.toc-link'));
+
+  const chapterNames = {
+    'cover': 'The Handstand',
+    'frontmatter': 'Title & Disclaimer',
+    'introduction': 'Introduction',
+    'benchmarking': 'Benchmarking',
+    'loading': 'Loading & Deloading',
+    'workouts': 'The Workouts',
+    'level-1': 'Level 1 — Foundation',
+    'level-2': 'Level 2 — Upside Down',
+    'level-3': 'Level 3 — Balance',
+    'level-4': 'Level 4 — The Hold',
+    'level-5': 'Level 5 — Endurance',
+    'level-6': 'Level 6 — 60 Seconds'
+  };
+
+  // ===== 1. AUTH =====
+  function getSessionId() {
+    return new URLSearchParams(window.location.search).get('session_id');
+  }
+  function isLocalDev() {
+    var h = window.location.hostname;
+    return h === 'localhost' || h === '127.0.0.1';
+  }
+
+  async function verifyAccess() {
+    var sessionId = getSessionId();
+    if (!sessionId) {
+      if (isLocalDev()) { showReader(); return; }
+      showGateError('Purchase Required', 'You need to purchase the guide to access this ebook.', true);
+      return;
+    }
+    try {
+      var resp = await fetch('/api/verify-session?session_id=' + encodeURIComponent(sessionId));
+      var data = await resp.json().catch(function() { return {}; });
+      if (resp.ok) { showReader(); }
+      else {
+        var msg = data.error || 'Your purchase could not be verified. Please try again or contact support.';
+        showGateError('Access Denied', msg, true);
+      }
+    } catch (err) {
+      if (isLocalDev()) { showReader(); }
+      else { showGateError('Connection Error', 'We couldn\'t verify your access. Please check your connection and try again.', true); }
+    }
+  }
+
+  function showGateError(title, message, showBtn) {
+    gateSpinner.style.display = 'none';
+    gateIcon.style.display = 'flex';
+    gateTitle.textContent = title;
+    gateMessage.textContent = message;
+    if (showBtn) gateBtn.style.display = 'inline-block';
+  }
+
+  function showReader() {
+    authGate.classList.add('hidden');
+    reader.classList.add('active');
+    loadPreferences();
+    restoreScroll();
+    updateSidebarForViewport();
+  }
+
+  // ===== 2. SCROLL PROGRESS + CHAPTER DETECTION =====
+  function onContentScroll() {
+    var el = contentArea;
+    var scrollTop = el.scrollTop;
+    var scrollMax = el.scrollHeight - el.clientHeight;
+    var pct = scrollMax > 0 ? (scrollTop / scrollMax) * 100 : 0;
+    progressFill.style.width = pct + '%';
+
+    backToTop.classList.toggle('visible', scrollTop > 400);
+
+    detectCurrentSection(scrollTop);
+    saveScroll();
+  }
+
+  function detectCurrentSection(scrollTop) {
+    var found = sections[0] ? sections[0].id : 'cover';
+    var offset = contentArea.getBoundingClientRect().top + 100;
+    for (var i = sections.length - 1; i >= 0; i--) {
+      var rect = sections[i].getBoundingClientRect();
+      if (rect.top <= offset) { found = sections[i].id; break; }
+    }
+    if (found !== currentSection) {
+      currentSection = found;
+      updateTocHighlight(found);
+      updateToolbarTitle(found);
+    }
+  }
+
+  function updateTocHighlight(sectionId) {
+    tocLinks.forEach(function(link) {
+      link.classList.toggle('active', link.getAttribute('data-section') === sectionId);
+    });
+  }
+
+  function updateToolbarTitle(sectionId) {
+    toolbarChapter.textContent = chapterNames[sectionId] || 'The Handstand';
+  }
+
+  // ===== 3. TOC NAVIGATION =====
+  function navigateToSection(sectionId) {
+    var target = document.getElementById(sectionId);
+    if (!target) return;
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (isMobile()) closeTOC();
+  }
+
+  tocLinks.forEach(function(link) {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+      navigateToSection(link.getAttribute('data-section'));
+    });
+  });
+
+  function toggleTOC() {
+    if (isMobile()) {
+      var isOpen = tocSidebar.classList.contains('mobile-open');
+      if (isOpen) closeTOC(); else openTOC();
+    } else {
+      tocSidebar.classList.toggle('collapsed');
+    }
+  }
+  function openTOC() {
+    tocSidebar.classList.add('mobile-open');
+    tocOverlay.classList.add('visible');
+  }
+  function closeTOC() {
+    tocSidebar.classList.remove('mobile-open');
+    tocOverlay.classList.remove('visible');
+  }
+
+  function updateSidebarForViewport() {
+    if (isMobile()) {
+      tocSidebar.classList.remove('collapsed');
+      tocSidebar.classList.remove('mobile-open');
+      tocOverlay.classList.remove('visible');
+    }
+  }
+
+  // ===== 4. SETTINGS =====
+  function setFontScale(scale) {
+    fontScale = Math.max(80, Math.min(140, scale));
+    document.documentElement.style.setProperty('--font-scale', fontScale / 100);
+    fontSizeDisplay.textContent = fontScale + '%';
+    localStorage.setItem('ebook-font-size', fontScale);
+  }
+
+  function setTheme(theme) {
+    currentTheme = theme;
+    document.documentElement.setAttribute('data-theme', theme);
+    document.querySelectorAll('.theme-btn').forEach(function(btn) {
+      btn.classList.toggle('active', btn.dataset.theme === theme);
+    });
+    localStorage.setItem('ebook-theme', theme);
+  }
+
+  function loadPreferences() {
+    var savedTheme = localStorage.getItem('ebook-theme');
+    if (savedTheme) setTheme(savedTheme);
+    var savedFontSize = localStorage.getItem('ebook-font-size');
+    if (savedFontSize) { fontScale = parseInt(savedFontSize, 10); setFontScale(fontScale); }
+  }
+
+  function saveScroll() {
+    localStorage.setItem('ebook-scroll', contentArea.scrollTop);
+  }
+  function restoreScroll() {
+    var saved = localStorage.getItem('ebook-scroll');
+    if (saved) contentArea.scrollTop = parseInt(saved, 10) || 0;
+  }
+
+  // ===== 5. PANELS =====
+  function togglePanel(panel) {
+    var isOpen = panel.classList.contains('open');
+    closeAllPanels();
+    if (!isOpen) panel.classList.add('open');
+  }
+  function closeAllPanels() {
+    settingsPanel.classList.remove('open');
+    downloadPanel.classList.remove('open');
+  }
+
+  // ===== 6. DOWNLOADS =====
+  function downloadPDF() {
+    closeAllPanels();
+    window.print();
+  }
+
+  function escapeXml(s) {
+    return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  async function downloadEPub() {
+    closeAllPanels();
+    if (typeof JSZip === 'undefined') {
+      showToast('ePub library failed to load — please refresh and try again.', 4000);
+      return;
+    }
+    showToast('Generating ePub — this may take a moment…', 15000);
+
+    try {
+      var zip = new JSZip();
+      zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
+
+      zip.file('META-INF/container.xml',
+        '<?xml version="1.0" encoding="UTF-8"?>\n' +
+        '<container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">\n' +
+        '  <rootfiles>\n' +
+        '    <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>\n' +
+        '  </rootfiles>\n' +
+        '</container>'
+      );
+
+      var imgMap = {};
+      var imgList = [];
+      var imgEls = document.querySelectorAll('#content-area img');
+      for (var i = 0; i < imgEls.length; i++) {
+        var src = imgEls[i].getAttribute('src');
+        if (!src || imgMap[src]) continue;
+        imgMap[src] = true;
+        var fname = src.split('/').pop();
+        try {
+          var absSrc = new URL(src, window.location.href).href;
+          var resp = await fetch(absSrc);
+          var blob = await resp.blob();
+          imgList.push({ filename: fname, blob: blob, type: blob.type || 'image/png' });
+          zip.file('OEBPS/assets/images/' + fname, blob);
+        } catch (e) { /* skip failed images */ }
+      }
+
+      var epubCSS =
+        'body{font-family:Georgia,"Times New Roman",serif;line-height:1.7;color:#333;margin:1em;padding:0;}\n' +
+        'h1{font-size:1.6em;font-weight:bold;margin:1em 0 0.5em;line-height:1.2;}\n' +
+        'h2{font-size:1.3em;font-weight:bold;margin:1.5em 0 0.5em;}\n' +
+        'h3{font-size:1.1em;color:#2980B9;font-weight:bold;margin:1em 0 0.3em;}\n' +
+        'p{margin:0.6em 0;}\n' +
+        'strong,b{font-weight:bold;color:#222;}\n' +
+        'a{color:#2980B9;}\n' +
+        'img{max-width:100%;height:auto;}\n' +
+        'table{width:100%;border-collapse:collapse;margin:1em 0;}\n' +
+        'th{background:#333;color:#fff;padding:0.5em;text-align:left;}\n' +
+        'td{padding:0.5em;border-bottom:1px solid #ddd;vertical-align:top;}\n' +
+        '.chapter-opener{padding:1.5em 1em;margin:0 -1em 1em;border-bottom:3px solid #2980B9;}\n' +
+        '.chapter-opener h1{margin:0;font-size:1.6em;}\n' +
+        '.chapter-opener .ch-accent{width:40px;height:2px;background:#2980B9;margin:0.3em 0;}\n' +
+        '.chapter-opener .ch-subtitle{color:#888;font-size:0.9em;}\n' +
+        '.cover-hero{text-align:center;padding:4em 1em;page-break-after:always;}\n' +
+        '.cover-hero>img,.cover-overlay,.cover-brand-line{display:none;}\n' +
+        '.cover-content{position:static;}\n' +
+        '.cover-label{font-size:0.9em;letter-spacing:0.2em;}\n' +
+        '.cover-title{font-size:2.2em;font-weight:bold;margin:0.3em 0;}\n' +
+        '.cover-divider{width:60px;height:2px;background:#2980B9;margin:0.6em auto;}\n' +
+        '.cover-subtitle{color:#2980B9;}\n' +
+        '.cover-tagline{color:#888;font-style:italic;margin-top:0.3em;}\n' +
+        '.cover-brand span{font-size:0.7em;text-transform:uppercase;letter-spacing:0.2em;color:#2980B9;}\n' +
+        '.title-page{text-align:center;padding:4em 1em;page-break-after:always;}\n' +
+        '.title-page .accent-rule{width:60px;height:2px;background:#2980B9;margin:0.5em auto;}\n' +
+        '.title-page .subtitle{color:#2980B9;}\n' +
+        '.title-page .tagline{color:#888;}\n' +
+        '.title-page .author{margin-top:2em;}\n' +
+        '.disclaimer{margin-top:1.5em;}\n' +
+        '.disclaimer h2{color:#888;font-size:1.1em;}\n' +
+        '.disclaimer-rule{height:1px;background:#ddd;margin-bottom:1em;}\n' +
+        '.disclaimer p{font-size:0.88em;color:#777;}\n' +
+        '.copyright{text-align:center;margin-top:2em;}\n' +
+        '.copyright p{font-size:0.75em;color:#aaa;}\n' +
+        '.level-intro{font-style:italic;color:#555;padding:0.8em 1em;border-left:3px solid #2980B9;margin:1em 0;background:#f0f7fb;}\n' +
+        '.section-title{font-size:1.15em;font-weight:bold;margin:1.5em 0 0.5em;}\n' +
+        '.block-heading{font-weight:bold;color:#2980B9;margin:1.2em 0 0.2em;}\n' +
+        '.exercise-block{margin:1.5em 0;padding:1em;border:1px solid #ddd;}\n' +
+        '.exercise-sequence{display:flex;flex-wrap:wrap;gap:6px;margin:0.8em 0;}\n' +
+        '.exercise-sequence img{width:48%;}\n' +
+        '.exercise-sequence-caption{font-size:0.82em;color:#888;font-style:italic;text-align:center;margin:0.3em 0;}\n' +
+        '.exercise-img{margin:0.8em 0;}\n' +
+        '.exercise-img-tall{max-width:200px;margin-left:auto;margin-right:auto;}\n' +
+        '.ex-box{margin-top:0.8em;padding:0.8em;background:#f5f5f5;border:1px solid #eee;}\n' +
+        '.ex-rx{font-weight:bold;font-size:0.9em;line-height:1.5;}\n' +
+        '.ex-video{margin-top:0.4em;font-size:0.82em;}\n' +
+        '.ex-video a{color:#2980B9;text-decoration:none;}\n' +
+        '.ex-video a::before{content:"▶ ";font-size:0.8em;}\n' +
+        '.callout{font-style:italic;padding:0.8em 1em;border-left:3px solid #2980B9;margin:1em 0;background:#f0f7fb;}\n' +
+        '.bench-table th:first-child{text-align:center;width:50px;}\n' +
+        '.bench-table td:first-child{text-align:center;font-weight:bold;color:#2980B9;}\n' +
+        '.grad-box{border:2px solid #2980B9;padding:0.8em;margin:1em 0;display:flex;gap:8px;}\n' +
+        '.priority-list{list-style:none;padding:0;margin:0.5em 0;}\n' +
+        '.priority-list li{padding:0.2em 0 0.2em 1em;}\n' +
+        '.closing{text-align:center;margin-top:2em;}\n' +
+        '.accent-hr{border:none;height:2px;background:#2980B9;margin:2em 0;}\n' +
+        '.text-small{font-size:0.88em;}\n';
+
+      zip.file('OEBPS/style.css', epubCSS);
+
+      var chaptersData = [];
+      var sectionEls = document.querySelectorAll('.book-section');
+      sectionEls.forEach(function(section, idx) {
+        var id = section.id;
+        var title = chapterNames[id] || 'Section ' + (idx + 1);
+        var filename = 'chapter-' + (idx + 1) + '.xhtml';
+
+        var clone = section.cloneNode(true);
+        clone.querySelectorAll('[style]').forEach(function(el) { el.removeAttribute('style'); });
+
+        var html = clone.innerHTML;
+        var voidTags = ['br','hr','img','input','link','meta'];
+        voidTags.forEach(function(tag) {
+          var re = new RegExp('<(' + tag + ')(\\s[^>]*?)?\\s*>', 'gi');
+          html = html.replace(re, function(m, t, attrs) {
+            if (m.slice(-2) === '/>') return m;
+            return '<' + t + (attrs || '') + '/>';
+          });
+        });
+
+        var xhtml =
+          '<?xml version="1.0" encoding="UTF-8"?>\n' +
+          '<!' + 'DOCTYPE html>\n' +
+          '<html xmlns="http://www.w3.org/1999/xhtml">\n' +
+          '<head>\n<title>' + escapeXml(title) + '<' + '/title>\n' +
+          '<' + 'link rel="stylesheet" type="text/css" href="style.css"/>\n' +
+          '<' + '/head>\n<body>\n' + html + '\n<' + '/body>\n<' + '/html>';
+
+        chaptersData.push({ id: id, title: title, filename: filename, content: xhtml });
+      });
+
+      var manifestItems = '    <item id="nav" href="toc.xhtml" media-type="application/xhtml+xml" properties="nav"/>\n' +
+        '    <item id="style" href="style.css" media-type="text' + '/css"/>\n';
+      var spineItems = '';
+
+      chaptersData.forEach(function(ch, idx) {
+        manifestItems += '    <item id="ch' + (idx+1) + '" href="' + ch.filename + '" media-type="application/xhtml+xml"/>\n';
+        spineItems += '    <itemref idref="ch' + (idx+1) + '"/>\n';
+      });
+      imgList.forEach(function(img, idx) {
+        var mt = img.type.indexOf('png') >= 0 ? 'image/png' : img.type.indexOf('jpeg') >= 0 ? 'image/jpeg' : 'image/png';
+        manifestItems += '    <item id="img' + idx + '" href="assets/images/' + escapeXml(img.filename) + '" media-type="' + mt + '"/>\n';
+      });
+
+      var now = new Date().toISOString().replace(/\.\d+Z$/, 'Z');
+      var opf =
+        '<?xml version="1.0" encoding="UTF-8"?>\n' +
+        '<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="uid">\n' +
+        '  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">\n' +
+        '    <dc:identifier id="uid">handstand-training-guide-v2</dc:identifier>\n' +
+        '    <dc:title>The Handstand — The Complete Training Guide</dc:title>\n' +
+        '    <dc:creator>The Bodyweight Gym</dc:creator>\n' +
+        '    <dc:language>en</dc:language>\n' +
+        '    <meta property="dcterms:modified">' + now + '</meta>\n' +
+        '  </metadata>\n' +
+        '  <manifest>\n' + manifestItems + '  </manifest>\n' +
+        '  <spine>\n' + spineItems + '  </spine>\n' +
+        '</package>';
+      zip.file('OEBPS/content.opf', opf);
+
+      var tocOl = '';
+      chaptersData.forEach(function(ch) {
+        tocOl += '      <li><a href="' + ch.filename + '">' + escapeXml(ch.title) + '</a></li>\n';
+      });
+      var tocXhtml =
+        '<?xml version="1.0" encoding="UTF-8"?>\n' +
+        '<!' + 'DOCTYPE html>\n' +
+        '<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">\n' +
+        '<head><title>Contents<' + '/title>\n' +
+        '<' + 'link rel="stylesheet" type="text/css" href="style.css"/>\n' +
+        '<' + '/head>\n<body>\n' +
+        '  <nav epub:type="toc">\n' +
+        '    <h1>Contents<' + '/h1>\n' +
+        '    <ol>\n' + tocOl + '    <' + '/ol>\n' +
+        '  <' + '/nav>\n' +
+        '<' + '/body>\n<' + '/html>';
+      zip.file('OEBPS/toc.xhtml', tocXhtml);
+
+      chaptersData.forEach(function(ch) { zip.file('OEBPS/' + ch.filename, ch.content); });
+
+      var epubBlob = await zip.generateAsync({
+        type: 'blob',
+        mimeType: 'application/epub+zip',
+        compression: 'DEFLATE',
+        compressionOptions: { level: 9 }
+      });
+
+      var a = document.createElement('a');
+      a.href = URL.createObjectURL(epubBlob);
+      a.download = 'The-Handstand-Training-Guide.epub';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+
+      showToast('ePub downloaded successfully!', 3000);
+    } catch (err) {
+      console.error('ePub generation failed:', err);
+      showToast('ePub generation failed — please try PDF instead.', 5000);
+    }
+  }
+
+  // ===== 7. TOAST =====
+  function showToast(msg, duration) {
+    toast.textContent = msg;
+    toast.classList.add('visible');
+    setTimeout(function() { toast.classList.remove('visible'); }, duration || 3000);
+  }
+
+  // ===== 8. IN-CONTENT TOC LINKS =====
+  document.querySelectorAll('.book-toc .toc-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var text = item.textContent.trim().toLowerCase();
+      for (var key in chapterNames) {
+        if (chapterNames[key].toLowerCase().indexOf(text.substring(0, 8)) >= 0) {
+          navigateToSection(key);
+          break;
+        }
+      }
+    });
+  });
+
+  // ===== 9. EVENT LISTENERS =====
+  contentArea.addEventListener('scroll', onContentScroll, { passive: true });
+
+  btnToc.addEventListener('click', toggleTOC);
+  tocOverlay.addEventListener('click', closeTOC);
+
+  btnSettings.addEventListener('click', function(e) {
+    e.stopPropagation();
+    downloadPanel.classList.remove('open');
+    togglePanel(settingsPanel);
+  });
+  btnDownload.addEventListener('click', function(e) {
+    e.stopPropagation();
+    settingsPanel.classList.remove('open');
+    togglePanel(downloadPanel);
+  });
+
+  document.addEventListener('click', function(e) {
+    if (!settingsPanel.contains(e.target) && !btnSettings.contains(e.target) &&
+        !downloadPanel.contains(e.target) && !btnDownload.contains(e.target)) {
+      closeAllPanels();
+    }
+  });
+
+  settingsPanel.addEventListener('click', function(e) { e.stopPropagation(); });
+  downloadPanel.addEventListener('click', function(e) { e.stopPropagation(); });
+
+  fontDecrease.addEventListener('click', function() { setFontScale(fontScale - 10); });
+  fontIncrease.addEventListener('click', function() { setFontScale(fontScale + 10); });
+
+  document.querySelectorAll('.theme-btn').forEach(function(btn) {
+    btn.addEventListener('click', function() { setTheme(btn.dataset.theme); });
+  });
+
+  dlPdf.addEventListener('click', downloadPDF);
+  dlEpub.addEventListener('click', downloadEPub);
+
+  backToTop.addEventListener('click', function() {
+    contentArea.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'Escape') { closeTOC(); closeAllPanels(); }
+  });
+
+  window.addEventListener('resize', function() { updateSidebarForViewport(); });
+
+  // ===== INIT =====
+  verifyAccess();
+
+})();
+</script>
 </body>
 </html>

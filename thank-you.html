@@ -46,6 +46,10 @@
       <div id="loading" class="sub">Verifying your payment…</div>
 
       <div id="content" style="display: none;">
+        <div class="download-box" style="margin-bottom: 1rem;">
+          <p style="margin:0 0 0.5rem 0; font-size:0.8rem; color: var(--sub); text-transform: uppercase; letter-spacing: 0.08em;">Read online</p>
+          <a id="ebook-link" href="">Read your guide in the browser &rarr;</a>
+        </div>
         <div class="download-box">
           <p style="margin:0 0 0.5rem 0; font-size:0.8rem; color: var(--sub); text-transform: uppercase; letter-spacing: 0.08em;">Your guide</p>
           <a id="pdf-download" href="" download>Download the PDF guide &rarr;</a>
@@ -99,6 +103,8 @@
           }
           const d = result.data;
           contentEl.style.display = 'block';
+          var ebookLink = document.getElementById('ebook-link');
+          ebookLink.href = window.location.pathname.replace(/thank-you\.html$/, 'ebook.html') + '?session_id=' + encodeURIComponent(sessionId);
           var pdfLink = document.getElementById('pdf-download');
           var url = d.downloadUrl || '/handstand.pdf';
           pdfLink.href = url.startsWith('http') ? url : (window.location.origin + (url.startsWith('/') ? url : '/' + url));
