@@ -267,6 +267,61 @@ strong, b { font-weight: 500; color: var(--dark); }
   width: 65%;
 }
 
+/* ===== REAL EXERCISE IMAGES (no crop, large for detail) ===== */
+.ebook-fig {
+  margin: 8pt auto;
+  text-align: center;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.ebook-fig img {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.ebook-fig-wide img {
+  width: 85%;
+  max-width: 4.2in;
+}
+.ebook-fig-tall img {
+  width: 55%;
+  max-width: 2.8in;
+}
+.ebook-fig-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8pt;
+  margin: 8pt auto;
+  break-inside: avoid;
+  page-break-inside: avoid;
+}
+.ebook-fig-group img {
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  flex: 1 1 auto;
+  min-width: 0;
+  border-radius: 4px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.ebook-fig-group img.step {
+  max-width: 48%;
+  max-height: 2.2in;
+}
+.ebook-fig-caption {
+  font-size: 8pt;
+  color: var(--sub);
+  margin-top: 2pt;
+  font-style: italic;
+}
+
 /* ===== EXERCISE BLOCK ===== */
 .exercise-block {
   margin-bottom: 10pt;
@@ -457,7 +512,9 @@ strong, b { font-weight: 500; color: var(--dark); }
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
-  .placeholder-img {
+  .placeholder-img,
+  .ebook-fig img,
+  .ebook-fig-group img {
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
@@ -541,10 +598,8 @@ strong, b { font-weight: 500; color: var(--dark); }
     <h1>Introduction</h1>
   </div>
 
-  <div class="placeholder-img placeholder-img-wide">
-    <div class="ph-icon">📸</div>
-    <div class="ph-label">Hero — Freestanding Handstand</div>
-    <div class="ph-hint">Replace with your best handstand photo</div>
+  <div class="ebook-fig ebook-fig-wide">
+    <img src="assets/images/freestandinghandstand1.png" alt="Freestanding handstand" />
   </div>
 
   <p>The handstand is the art of standing still on your hands with straight arms and your entire body stacked vertically above your base of support. At first glance it may appear simple. In practice, most people discover the handstand to be one of the most challenging expressions of strength, mobility, focus, and balance that an adult can pursue.</p>
@@ -638,10 +693,10 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- WRIST HEEL RAISES -->
   <div class="exercise-block">
     <h3>Wrist Heel Raises</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Wrist Heel Raises</div>
-      <div class="ph-hint">Kneeling, hands flat, lifting heel of palm</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/wrist01.png" alt="Wrist heel raises step 1" class="step" />
+      <img src="assets/images/wrist03.png" alt="Wrist heel raises step 2" class="step" />
+      <img src="assets/images/writs02.png" alt="Wrist heel raises step 3" class="step" />
     </div>
     <p>Kneel with your hands flat on the floor, fingers pointing forward. Slowly lift the heels of your hands off the ground while keeping your fingertips pressed down, then lower back to flat. On the final rep, hold the raised position for 10 seconds.</p>
     <div class="ex-box">
@@ -653,10 +708,8 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- FINGERTIP PUSH-UPS -->
   <div class="exercise-block">
     <h3>Fin Push-ups</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Fin Push-ups</div>
-      <div class="ph-hint">Kneeling, backs of hands on floor, pressing up</div>
+    <div class="ebook-fig">
+      <img src="assets/images/wrist01.png" alt="Fin push-ups — wrist position" />
     </div>
     <p>From the same kneeling position, flip your hands over so the backs of your hands are flat on the floor with fingers pointing toward your knees. Perform small push-up motions, pressing through the backs of your hands. On the final rep, hold the top position for 10 seconds. Superset with wrist heel raises.</p>
     <div class="ex-box">
@@ -673,10 +726,8 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- DESK STRETCH EXTERNAL -->
   <div class="exercise-block">
     <h3>Desk Stretch — External Rotation</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Desk Stretch — External Rotation</div>
-      <div class="ph-hint">Kneeling behind desk, palms facing ceiling</div>
+    <div class="ebook-fig">
+      <img src="assets/images/overheaddeskstretch01.png" alt="Desk stretch — external rotation" />
     </div>
     <p>Kneel behind a desk or sturdy surface at roughly hip height. Place your hands on the surface with your palms facing the ceiling (externally rotated). Pulse in and out 10 times, then sink as deep as comfortable and hold for 1 to 2 minutes.</p>
     <div class="ex-box">
@@ -688,10 +739,9 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- OVERHEAD DESK STRETCH -->
   <div class="exercise-block">
     <h3>Overhead Desk Stretch</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Overhead Desk Stretch</div>
-      <div class="ph-hint">Kneeling, arms extended overhead on desk, chest sinking through</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/overheaddeskstretch01.png" alt="Overhead desk stretch step 1" class="step" />
+      <img src="assets/images/overheaddeskstretch02.png" alt="Overhead desk stretch step 2" class="step" />
     </div>
     <p>Kneel behind the same surface and place your hands on it with arms extended overhead, palms down. Pulse gently 10 times, then sink your chest through your arms and hold for 1 to 2 minutes. This directly targets overhead shoulder mobility.</p>
     <div class="ex-box">
@@ -703,10 +753,8 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- HANG -->
   <div class="exercise-block">
     <h3>Hang</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Dead Hang</div>
-      <div class="ph-hint">Hanging from bar, full extension, any grip</div>
+    <div class="ebook-fig">
+      <img src="assets/images/hang.png" alt="Dead hang from bar" />
     </div>
     <p>Hang from a pull-up bar using any grip. Build toward a 1-minute dead hang. If you cannot hold initially, accumulate 60 seconds across multiple shorter holds.</p>
     <div class="ex-box">
@@ -722,10 +770,9 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- PROTRACTED PLANK -->
   <div class="exercise-block">
     <h3>Protracted Plank</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Protracted Plank</div>
-      <div class="ph-hint">Plank position, shoulder blades spread apart, ribcage lifted</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/protractedplank.png" alt="Protracted plank" class="step" />
+      <img src="assets/images/protractedplankbeginer.png" alt="Protracted plank (beginner option)" class="step" />
     </div>
     <p>Hands under shoulders, elbows locked. Protract your shoulders — spread your shoulder blades apart, pushing your ribcage away from the floor. Tuck your pelvis posteriorly and engage your abdominals. Regress to knees if needed.</p>
     <div class="ex-box">
@@ -736,10 +783,8 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- BODY-LINE DRILL -->
   <div class="exercise-block">
     <h3>Body-Line Drill</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Body-Line Drill (Superman Hold)</div>
-      <div class="ph-hint">Face-down, arms overhead, everything lifted off floor</div>
+    <div class="ebook-fig">
+      <img src="assets/images/hollowbodyBeginner.png" alt="Body-line drill — full-body tension" />
     </div>
     <p>Lie face-down, arms overhead. Simultaneously lift arms, chest, and legs off the floor. Squeeze your glutes, point your toes, and hold full-body tension. This teaches the global tension required for a handstand.</p>
     <div class="ex-box">
@@ -788,10 +833,9 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- CHEST-TO-WALL -->
   <div class="exercise-block">
     <h3>Chest-to-Wall Handstand</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Chest-to-Wall Handstand</div>
-      <div class="ph-hint">Chest facing wall, fully inverted, arms locked</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/chesttowallhandstand01.png" alt="Chest-to-wall handstand step 1" class="step" />
+      <img src="assets/images/chesttowallhandstand02.png" alt="Chest-to-wall handstand step 2" class="step" />
     </div>
     <p>Walk your feet up the wall until your chest faces the wall. Focus on five points: grip the ground; push tall (shoulders touch ears); posterior pelvic tilt; legs pressed together; point toes. Scale to protracted plank hold if needed.</p>
     <div class="ex-box">
@@ -804,10 +848,9 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- HOLLOW BODY -->
   <div class="exercise-block">
     <h3>Hollow Body Hold</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Hollow Body Hold</div>
-      <div class="ph-hint">Supine, shoulder blades lifted, lower back pressed flat</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/hollowbodyBeginner.png" alt="Hollow body hold — beginner" class="step" />
+      <img src="assets/images/hollowbodyAdv.png" alt="Hollow body hold — advanced" class="step" />
     </div>
     <p><b>Beginner:</b> Lie on your back, tuck your knees, lift your shoulder blades, and press your lower back into the floor. <b>Advanced:</b> Extend arms overhead and legs straight. Maintain lower back contact throughout.</p>
     <div class="ex-box">
@@ -856,10 +899,9 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- HEEL PULLS -->
   <div class="exercise-block">
     <h3>Heel Pulls</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Heel Pulls</div>
-      <div class="ph-hint">Chest-to-wall, pressing through fingertips, heels floating off wall</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/handstandheelpulls01.png" alt="Heel pulls step 1" class="step" />
+      <img src="assets/images/handstandheelpulls02.png" alt="Heel pulls step 2" class="step" />
     </div>
     <p>From chest-to-wall, maintain full-body tension and grip the ground. Press through your fingertips. Do not actively pull your feet from the wall — just observe your heels getting lighter as you increase finger pressure. Eventually, your feet float free. This is the foundation of over-balance correction.</p>
     <div class="ex-box">
@@ -877,10 +919,10 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- TOE PULLS -->
   <div class="exercise-block">
     <h3>Toe Pulls</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Toe Pulls</div>
-      <div class="ph-hint">Back-to-wall (toes on wall), shoulders shifting forward</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/handstandtoepulls01.png" alt="Toe pulls step 1" class="step" />
+      <img src="assets/images/handstandtoepull02.png" alt="Toe pulls step 2" class="step" />
+      <img src="assets/images/handstandtoepull03.png" alt="Toe pulls step 3" class="step" />
     </div>
     <p>From back-to-wall (toes on wall), maintain tension. Shift your shoulders forward over your wrists while keeping your core locked. Initially, your feet slide down the wall. As you get stronger, they may momentarily leave it. This teaches under-balance correction.</p>
     <div class="ex-box">
@@ -893,10 +935,10 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- BOX BALANCE GAME -->
   <div class="exercise-block">
     <h3>Box-Assisted Balance Game</h3>
-    <div class="placeholder-img placeholder-img-tall">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Box Balance</div>
-      <div class="ph-hint">Freestanding handstand with box in front for forearm catches</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/boxassistedhandstand01.png" alt="Box-assisted balance step 1" class="step" />
+      <img src="assets/images/boxassistedhandstand02.png" alt="Box-assisted balance step 2" class="step" />
+      <img src="assets/images/boxassistedhandstand03.png" alt="Box-assisted balance step 3" class="step" />
     </div>
     <p>This exercise brings together your heel and toe pull skills. Place a box in front for forearm catches if you overbalance. Set a 10-minute timer. Accumulate holds of increasing duration — start at 3 seconds. Once you can hit 15 holds at 3 seconds, increase to 4 seconds. Continue building until 10-second holds are repeatable.</p>
     <div class="ex-box">
@@ -972,10 +1014,11 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- KICK-UP -->
   <div class="exercise-block">
     <h3>Kick-up Practice</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Kick-up to Freestanding</div>
-      <div class="ph-hint">Lunge position transitioning to handstand</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/handstandkickup01.png" alt="Kick-up step 1" class="step" />
+      <img src="assets/images/handstandkickup02.png" alt="Kick-up step 2" class="step" />
+      <img src="assets/images/handstandkickup03.png" alt="Kick-up step 3" class="step" />
+      <img src="assets/images/handstandkickup04.png" alt="Kick-up step 4" class="step" />
     </div>
     <p>Practise kicking up to freestanding. Alternate legs. Do not fixate on catching balance — just work through kick-ups with intention. Focus on creating tension before your feet leave the ground. Point your toes from the start. Fewer moving parts means easier balance.</p>
     <div class="ex-box">
@@ -1040,10 +1083,9 @@ strong, b { font-weight: 500; color: var(--dark); }
   <!-- SHOULDER TAP -->
   <div class="exercise-block">
     <h3>Handstand Shoulder Tap</h3>
-    <div class="placeholder-img">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Handstand Shoulder Tap</div>
-      <div class="ph-hint">Chest-to-wall, one hand touching opposite shoulder</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/wallhandstandshouldertap01.png" alt="Handstand shoulder tap step 1" class="step" />
+      <img src="assets/images/wallhandstandshouldertap02.png" alt="Handstand shoulder tap step 2" class="step" />
     </div>
     <p>From chest-to-wall, shift your weight entirely onto one arm. Elevate strongly — push the ground away as hard as you can. Touch the opposite shoulder with your free hand. Alternate sides. This builds single-arm strength for advanced balance corrections.</p>
     <div class="ex-box">
@@ -1072,10 +1114,9 @@ strong, b { font-weight: 500; color: var(--dark); }
 
   <div class="exercise-block">
     <h3>Freestanding Handstand</h3>
-    <div class="placeholder-img placeholder-img-tall">
-      <div class="ph-icon">📸</div>
-      <div class="ph-label">Freestanding Handstand</div>
-      <div class="ph-hint">Your best full handstand photo</div>
+    <div class="ebook-fig-group">
+      <img src="assets/images/freestandinghandstand1.png" alt="Freestanding handstand" class="step" />
+      <img src="assets/images/handstand01.png" alt="Freestanding handstand hold" class="step" />
     </div>
     <p>Maintain a freestanding handstand. Scale to chest-to-wall for remaining time if needed. Priorities, in order:</p>
     <ol class="priority-list">
