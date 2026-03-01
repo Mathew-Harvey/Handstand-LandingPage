@@ -50,11 +50,6 @@
           <p style="margin:0 0 0.5rem 0; font-size:0.8rem; color: var(--sub); text-transform: uppercase; letter-spacing: 0.08em;">Read online</p>
           <a id="ebook-link" href="">Read your guide in the browser &rarr;</a>
         </div>
-        <div class="download-box">
-          <p style="margin:0 0 0.5rem 0; font-size:0.8rem; color: var(--sub); text-transform: uppercase; letter-spacing: 0.08em;">Your guide</p>
-          <a id="pdf-download" href="" download>Download the PDF guide &rarr;</a>
-        </div>
-
         <p style="font-size:0.9rem; color: var(--sub); margin-bottom: 1.5rem;">To set up your <strong>Progress Tracker</strong> account and receive your login details by email, please confirm your details below.</p>
 
         <form id="tracker-form">
@@ -105,10 +100,6 @@
           contentEl.style.display = 'block';
           var ebookLink = document.getElementById('ebook-link');
           ebookLink.href = window.location.pathname.replace(/thank-you\.html$/, 'ebook.html') + '?session_id=' + encodeURIComponent(sessionId);
-          var pdfLink = document.getElementById('pdf-download');
-          var url = d.downloadUrl || '/handstand.pdf';
-          pdfLink.href = url.startsWith('http') ? url : (window.location.origin + (url.startsWith('/') ? url : '/' + url));
-          pdfLink.download = 'handstand.pdf';
           if (d.email) {
             document.getElementById('email').value = d.email;
           }
